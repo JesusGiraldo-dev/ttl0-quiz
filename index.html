@@ -145,6 +145,14 @@ button:active{transform:scale(.94)}
 .tb.in tr{animation:rise .4s backwards;animation-delay:calc(var(--i,0)*60ms)}
 #rv>h1{animation:rise .4s backwards}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+#adb{font:700 11px ui-monospace,Consolas,monospace;letter-spacing:.08em;padding:3px 8px;border-radius:99px;border:1px solid var(--ln);color:var(--mu);flex:none;white-space:nowrap}
+#adb:empty{display:none}#adb.ad{color:#facc15;border-color:#facc1566}#adb.lv{color:var(--g);border-color:#4ade8055}#adb.lv::before{content:"●";margin-right:.4em;animation:bl 1.6s ease-in-out infinite}#adb.off{color:#f87171;border-color:#f8717155}
+@keyframes bl{50%{opacity:.25}}
+body.lk .adm,body.lk #ctl{display:none!important}
+body:not(.ad) .ao{display:none!important}
+.wt{display:none;color:var(--mu)}body.lk .wt{display:block}
+.cta:disabled{opacity:.5;animation:none;cursor:default;transform:none;filter:none}
 </style></style>
 <svg width="0" height="0" style="position:absolute"><defs>
 <symbol id="i-win" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M3 5.5l8-1.1v7H3zM12 4.3l9-1.3v8.4h-9zM3 12.6h8v7l-8-1.1zM12 12.6h9V21l-9-1.3z"/></symbol>
@@ -164,7 +172,7 @@ button:active{transform:scale(.94)}
 <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M7 4l13 8-13 8z"/></symbol>
 <symbol id="i-fs" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol><symbol id="i-fs" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol></defs></svg>
 <div id="app">
-<div id="top"><div class="brand">TTL=<b id="ttl">7</b></div><div id="dots"></div><div id="ctl"><button id="pb" onclick="go(-1)">◀</button><button id="nb" onclick="go(1)">▶</button></div><button id="fb" onclick="fs()" title="Pantalla completa"><svg class="ico"><use href="#i-fs"/></svg></button></div>
+<div id="top"><div class="brand">TTL=<b id="ttl">7</b></div><span id="adb"></span><div id="dots"></div><div id="ctl"><button id="pb" onclick="go(-1)">◀</button><button id="nb" onclick="go(1)">▶</button></div><button id="fb" onclick="fs()" title="Pantalla completa"><svg class="ico"><use href="#i-fs"/></svg></button></div>
 <div id="sv" class="v"></div><div id="qv" class="v" hidden></div><div id="rv" class="v" hidden></div>
 </div>
 <div id="tmh"><div id="tm"><div id="chr"><i></i><i></i><i></i><span>&nbsp;ttl0@redes · terminal simulada</span></div><div id="otabs"></div><div id="o"></div><div id="ch"></div><div id="ipt"><span id="pr"></span><input id="in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" placeholder="help"></div></div></div>
@@ -323,8 +331,8 @@ out('// toca un comando o escribe help');
 const hd = s => `<div class="hd"><span class="ic">${ic(s.i)}</span><div><div class="who"><span class="av">${s.w[0]}</span>${s.w}</div><h1>${s.t}</h1></div></div>`;
 const bs = s => `<div class="bs">${['¿Qué es?', '¿Cómo funciona?', '¿Por qué ese nombre?'].map((t, i) => `<div class="bc"><h3>${t}</h3><p>${em(s.b[i])}</p></div>`).join('')}<div class="an"><b>Es como…</b> ${s.an}</div></div>`;
 const pts = s => `<ul class="pts">${s.p.map(x => `<li>${em(x)}</li>`).join('')}</ul>`;
-const hero = s => `<div class="hero"><div class="big">TTL=0</div><h2>${s.t}</h2><p class="who">${s.w}</p><div class="chips">${OSN.map(([i, n], k) => `<span style="color:var(--${'wlc'[k]})">${ic(i)}${n}</span>`).join('')}</div>${s.p.map(x => `<p>${em(x)}</p>`).join('')}<button class="cta" onclick="go(1)">Empezar</button></div>`;
-const last = s => `<div class="hero">${hd(s)}${pts(s)}<button class="cta" onclick="nav('#quiz')">Ir al quiz</button></div>`;
+const hero = s => `<div class="hero"><div class="big">TTL=0</div><h2>${s.t}</h2><p class="who">${s.w}</p><div class="chips">${OSN.map(([i, n], k) => `<span style="color:var(--${'wlc'[k]})">${ic(i)}${n}</span>`).join('')}</div>${s.p.map(x => `<p>${em(x)}</p>`).join('')}<button class="cta adm" onclick="go(1)">Empezar</button><p class="wt">Esperando al presentador…</p></div>`;
+const last = s => `<div class="hero">${hd(s)}${pts(s)}<button class="cta adm" onclick="nav('#quiz')">Ir al quiz</button><p class="wt">Esperando al presentador…</p></div>`;
 
 let cur = 0, qi = 0, score = 0, hits = 0, tms = 0, nick = localStorage.nm || '', tm, rti, qs = [], t0, lock = 0, tt, FR = null, rz;
 function fit(root, box) {
@@ -355,8 +363,49 @@ function slide() {
   if (s.hero || s.q) { $('sv').innerHTML = s.hero ? hero(s) : last(s); fit($('sv'), $('sv')); }
   else panel();
 }
-const nav = h => { history.replaceState(null, '', h); route(); };
-const go = d => { $('sv').style.setProperty('--dx', d < 0 ? '-48px' : '48px'); nav('#s' + Math.max(0, Math.min(SL.length - 1, cur + d))); };
+let ADM = 0, CTRL = 0, PIN = '', lastV = '', playOn = 0, HH = '#s0', pt;
+const free = () => ADM || !CTRL;
+const navTo = h => { HH = h; history.replaceState(null, '', h); route(); };
+const nav = h => { if (!free() && h !== '#ranking') return; if (ADM) push(h.slice(1)); navTo(h); };
+const go = d => { if (!free()) return; $('sv').style.setProperty('--dx', d < 0 ? '-48px' : '48px'); nav('#s' + Math.max(0, Math.min(SL.length - 1, cur + d))); };
+function push(v) {
+  lastV = v; playOn = v === 'play';
+  if (API) fetch(API + '?a=set&k=' + encodeURIComponent(PIN) + '&v=' + v + '&t=' + Date.now(), { mode: 'no-cors', keepalive: true }).catch(() => {});
+}
+function apply(v) {
+  v = v || 's0'; if (v === lastV) return; lastV = v; playOn = v === 'play';
+  if (v === 'play' && !$('qv').hidden && $('nm')) return unlock();
+  const m = v.match(/^s(\d+)$/); if (m) $('sv').style.setProperty('--dx', +m[1] < cur ? '-48px' : '48px');
+  navTo(v === 'play' ? '#quiz' : '#' + v);
+}
+function setMode() {
+  document.body.classList.toggle('lk', !!CTRL && !ADM); document.body.classList.toggle('ad', !!ADM);
+  const b = $('adb'); b.className = ADM ? 'ad' : CTRL ? 'lv' : ''; b.textContent = ADM ? 'ADMIN' : CTRL ? 'EN VIVO' : '';
+}
+function poll() {
+  if (!API) return;
+  fetch(API + '?a=get&_=' + Date.now()).then(r => r.json()).then(d => {
+    if (!d || typeof d.v !== 'string') return;
+    if (!CTRL) { CTRL = 1; setMode(); }
+    if (!ADM) { $('adb').className = 'lv'; $('adb').textContent = 'EN VIVO'; }
+    if (!ADM || !lastV) apply(d.v);
+  }).catch(() => { if (!ADM && CTRL) { $('adb').className = 'off'; $('adb').textContent = 'RECONECTANDO'; } });
+}
+async function boot() {
+  if (location.hash === '#salir') { localStorage.removeItem('adm'); history.replaceState(null, '', '#s0'); }
+  if (API && (location.hash === '#admin' || localStorage.adm)) {
+    const k = localStorage.adm || prompt('Clave de administrador:') || '';
+    if (k) {
+      try {
+        const d = await (await fetch(API + '?a=chk&k=' + encodeURIComponent(k))).json();
+        if (d && d.ok) { ADM = 1; CTRL = 1; PIN = k; localStorage.adm = k; } else { localStorage.removeItem('adm'); toast('Clave incorrecta'); }
+      } catch (e) {}
+    }
+    if (location.hash === '#admin') history.replaceState(null, '', '#s0');
+  }
+  setMode(); route(); poll();
+  if (!ADM) pt = setInterval(poll, 3000);
+}
 function route() {
   const h = location.hash;
   if (h === '#ranking') return rank();
@@ -368,8 +417,14 @@ function toast(t) { const e = $('toast'); e.textContent = t; e.classList.add('on
 
 function quizName() {
   show('q'); document.documentElement.style.setProperty('--a', '#4ade80');
-  $('qv').innerHTML = '<div class="fin"><div class="e">📝</div><h1>Quiz de repaso</h1><p>10 preguntas · 20 s cada una</p><input id="nm" maxlength="14" placeholder="Tu nombre" autocomplete="off"><button class="cta" onclick="begin()">Empezar</button><button class="cta alt" onclick="nav(\'#s7\')">Volver a las slides</button></div>';
+  const w = !ADM && CTRL && !playOn;
+  $('qv').innerHTML = `<div class="fin"><div class="e">📝</div><h1>Quiz de repaso</h1><p>10 preguntas · 20 s cada una</p><input id="nm" maxlength="14" placeholder="Tu nombre" autocomplete="off"><button id="go" class="cta" onclick="begin()"${w ? ' disabled' : ''}>${w ? 'Esperando al presentador…' : 'Empezar'}</button><button class="cta ao" onclick="startAll()">Iniciar para todos</button><button class="cta alt ao" onclick="nav('#ranking')">Ver clasificación</button><button class="cta alt adm" onclick="nav('#s7')">Volver a las slides</button></div>`;
   $('nm').value = nick; fit($('qv'), $('qv'));
+}
+function startAll() { push('play'); toast('Quiz iniciado para todos'); }
+function unlock() {
+  const b = $('go'); if (b) { b.disabled = false; b.textContent = 'Empezar'; }
+  if ($('nm') && $('nm').value.trim()) begin();
 }
 function begin() {
   nick = $('nm').value.trim(); if (!nick) return $('nm').focus(); localStorage.nm = nick;
@@ -411,7 +466,7 @@ function send() {
 let rkd = 0;
 function rank() {
   rkd = 0; show('r'); document.documentElement.style.setProperty('--a', '#22d3ee');
-  $('rv').innerHTML = '<h1>Clasificación</h1><div id="rtb">Cargando…</div><div class="row"><button class="cta alt" onclick="load()">Actualizar</button><button class="cta alt" onclick="nav(\'#quiz\')">Quiz</button></div>';
+  $('rv').innerHTML = '<h1>Clasificación</h1><div id="rtb">Cargando…</div><div class="row"><button class="cta alt" onclick="load()">Actualizar</button><button class="cta alt adm" onclick="nav(\'#quiz\')">Quiz</button></div>';
   fit($('rv'), $('rv')); load(); rti = setInterval(load, 10000);
 }
 function load() {
@@ -439,6 +494,6 @@ $('sv').addEventListener('touchstart', e => { sx = e.touches[0].clientX; sy = e.
 $('sv').addEventListener('touchend', e => { if (e.target.closest('#tm')) return; const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy; if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) go(dx < 0 ? 1 : -1); }, { passive: true });
 document.addEventListener('keydown', e => { if (e.target.tagName === 'INPUT' || $('sv').hidden) return; if (e.key === 'ArrowRight') go(1); else if (e.key === 'ArrowLeft') go(-1); });
 addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if (FR && FR[0].isConnected && document.activeElement !== $('in')) fit(FR[0], FR[1]); }, 150); });
-addEventListener('hashchange', route);
-route();
+addEventListener('hashchange', () => { if (free()) route(); else if (location.hash !== HH) history.replaceState(null, '', HH); });
+boot();
 </script>
