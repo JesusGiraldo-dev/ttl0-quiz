@@ -95,7 +95,7 @@ h1{font-size:clamp(24px,5vw,44px);line-height:1.1;letter-spacing:-.02em;font-wei
 <div id="toast"></div>
 <div id="fo" hidden><div class="brand" style="font-size:44px">TTL=0</div><p id="ft">Para ver mejor, usa pantalla completa.</p><button class="cta" id="fy" onclick="fs();closeFo()">Pantalla completa</button><button class="cta alt" onclick="closeFo()">Continuar así</button></div>
 <script>
-const API = '', T = 20000, SH = ['▲', '◆', '●', '■'];
+const API = 'https://script.google.com/macros/s/AKfycbwzW0YCXH9xLu23zSKCoDB_K7QkZ6XAbzWPn-HQeTnTgOAvnRRHmaXM5dbfvJvRzoI/exec', T = 20000, SH = ['▲', '◆', '●', '■'];
 const $ = id => document.getElementById(id), em = t => t.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>'), esc = t => String(t).replace(/[&<>"']/g, c => '&#' + c.charCodeAt(0) + ';');
 const ic = (n, c = '') => `<svg class="ico ${c}"><use href="#i-${n}"/></svg>`, OSN = [['win', 'Windows'], ['linux', 'Linux'], ['cisco', 'Cisco IOS']];
 const dg = (n, m) => {
