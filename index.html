@@ -179,7 +179,7 @@ body:not(.ad) .ao{display:none!important}
 <div id="toast"></div>
 <div id="fo" hidden><div class="brand" style="font-size:44px">TTL=0</div><p id="ft">Para ver mejor, usa pantalla completa.</p><button class="cta" id="fy" onclick="fs();closeFo()">Pantalla completa</button><button class="cta alt" onclick="closeFo()">Continuar así</button></div>
 <script>
-const API = 'https://script.google.com/macros/s/AKfycbxGp5Apre1xflk2-Idv7SApttBvIRzyk1GFwdLDsBxftb3ogo56mawJHvu7M87BLJQ/exec', T = 20000, SH = ['▲', '◆', '●', '■'];
+const API = 'https://script.google.com/macros/s/AKfycbxWuJ97fVBY-8etkdvuPM4kPq16WUTqByWGq5a-BVMwPvnCGjRYzCtFVWH5s3r45w/exec', T = 20000, SH = ['▲', '◆', '●', '■'];
 const $ = id => document.getElementById(id), em = t => t.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>'), esc = t => String(t).replace(/[&<>"']/g, c => '&#' + c.charCodeAt(0) + ';');
 const ic = (n, c = '') => `<svg class="ico ${c}"><use href="#i-${n}"/></svg>`, OSN = [['win', 'Windows'], ['linux', 'Linux'], ['cisco', 'Cisco IOS']];
 const dg = (n, m) => {
@@ -464,14 +464,16 @@ function slide() {
   if (s.hero || s.q) { $('sv').innerHTML = s.hero ? hero(s) : last(s); fit($('sv'), $('sv')); }
   else panel();
 }
-let ADM = 0, CTRL = 0, PIN = '', lastV = '', playOn = 0, HH = '#s0', pt;
+let ADM = 0, CTRL = 0, PIN = '', lastV = '', playOn = 0, HH = '#s0', pt, hb;
+const SID = sessionStorage.sid || (sessionStorage.sid = Math.random().toString(36).slice(2, 12) + Date.now().toString(36));
 const free = () => ADM || !CTRL;
 const navTo = h => { HH = h; history.replaceState(null, '', h); route(); };
 const nav = h => { if (!free() && h !== '#ranking') return; if (ADM) push(h.slice(1)); navTo(h); };
 const go = d => { if (!free()) return; $('sv').style.setProperty('--dx', d < 0 ? '-48px' : '48px'); nav('#s' + Math.max(0, Math.min(SL.length - 1, cur + d))); };
 function push(v) {
+  if (!ADM) return;
   lastV = v; playOn = v === 'play';
-  if (API) fetch(API + '?a=set&k=' + encodeURIComponent(PIN) + '&v=' + v + '&t=' + Date.now(), { mode: 'no-cors', keepalive: true }).catch(() => {});
+  if (API) fetch(API + '?a=set&k=' + encodeURIComponent(PIN) + '&sid=' + SID + '&v=' + v + '&t=' + Date.now(), { mode: 'no-cors', keepalive: true }).catch(() => {});
 }
 function apply(v) {
   v = v || 's0'; if (v === lastV) return; lastV = v; playOn = v === 'play';
@@ -492,14 +494,31 @@ function poll() {
     if (!ADM || !lastV) apply(d.v);
   }).catch(() => { if (!ADM && CTRL) { $('adb').className = 'off'; $('adb').textContent = 'RECONECTANDO'; } });
 }
+// ===== Un solo administrador =====
+const admCall = k => fetch(API + '?a=adm&k=' + encodeURIComponent(k) + '&sid=' + SID + '&_=' + Date.now()).then(r => r.json());
+function demote(msg) {
+  if (!ADM) return;
+  ADM = 0; PIN = ''; lastV = ''; clearInterval(hb);
+  clearInterval(pt); pt = setInterval(poll, 3000);
+  setMode(); poll(); toast(msg);
+}
+function beat() {
+  if (!ADM) return;
+  admCall(PIN).then(d => { if (d && !d.ok) demote(d.r === 'key' ? 'Clave incorrecta: modo espectador' : 'Ya hay otro administrador: modo espectador'); }).catch(() => {});
+}
+addEventListener('pagehide', () => {
+  if (ADM && API) fetch(API + '?a=rel&k=' + encodeURIComponent(PIN) + '&sid=' + SID, { mode: 'no-cors', keepalive: true }).catch(() => {});
+});
 async function boot() {
   if (location.hash === '#salir') { localStorage.removeItem('adm'); history.replaceState(null, '', '#s0'); }
   if (API && (location.hash === '#admin' || localStorage.adm)) {
     const k = localStorage.adm || prompt('Clave de administrador:') || '';
     if (k) {
       try {
-        const d = await (await fetch(API + '?a=chk&k=' + encodeURIComponent(k))).json();
-        if (d && d.ok) { ADM = 1; CTRL = 1; PIN = k; localStorage.adm = k; } else { localStorage.removeItem('adm'); toast('Clave incorrecta'); }
+        const d = await admCall(k);
+        if (d && d.ok) { ADM = 1; CTRL = 1; PIN = k; localStorage.adm = k; hb = setInterval(beat, 5000); }
+        else if (d && d.r === 'busy') toast('Ya hay un administrador activo: entras como espectador');
+        else { localStorage.removeItem('adm'); toast('Clave incorrecta'); }
       } catch (e) {}
     }
     if (location.hash === '#admin') history.replaceState(null, '', '#s0');
