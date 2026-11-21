@@ -1,62 +1,76 @@
 <!doctype html>
-<html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#070b12"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><title>TTL=0 · Juegos de Supervivencia</title>
+<html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><meta name="theme-color" content="#070b12"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><title>TTL=0 · Juegos de Supervivencia</title>
 <style>
 :root{--bg:#070b12;--pn:#0c1522;--ln:#1b2a3d;--fg:#dbe7f3;--mu:#7f93a8;--a:#22d3ee;--g:#4ade80;--w:#3b82f6;--l:#fbbf24;--c:#14b8a6;color-scheme:dark}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;margin:0}
-body{overflow:hidden;overscroll-behavior:none;color:var(--fg);font:16px/1.45 'Segoe UI Variable','Segoe UI',system-ui,sans-serif;background:radial-gradient(900px 500px at 85% -10%,#12324a66,transparent),linear-gradient(#ffffff06 1px,transparent 1px) 0 0/100% 40px,linear-gradient(90deg,#ffffff06 1px,transparent 1px) 0 0/40px 100%,var(--bg)}
+body{overflow:hidden;overscroll-behavior:none;color:var(--fg);font:16px/1.35 'Segoe UI Variable','Segoe UI',system-ui,sans-serif;background:radial-gradient(900px 500px at 85% -10%,#12324a66,transparent),linear-gradient(#ffffff06 1px,transparent 1px) 0 0/100% 40px,linear-gradient(90deg,#ffffff06 1px,transparent 1px) 0 0/40px 100%,var(--bg)}
 code,.mono,.brand,.who,.oct,.rt{font-family:ui-monospace,'Cascadia Mono',Consolas,monospace}
-button{font:inherit;color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
 .ico{width:1.25em;height:1.25em;vertical-align:-.25em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
 [hidden]{display:none!important}
 #app{height:100vh;height:100dvh;display:flex;flex-direction:column;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
-#top{display:flex;align-items:center;gap:12px;padding:8px 14px;border-bottom:1px solid var(--ln);background:#070b12cc;flex:none}
-.brand{font-weight:800;font-size:26px;letter-spacing:-.02em;line-height:1}.brand b{display:inline-block;min-width:.6em;text-align:center}
+#top{display:flex;align-items:center;gap:10px;padding:6px 12px;border-bottom:1px solid var(--ln);background:#070b12cc;flex:none}
+.brand{font-weight:800;font-size:22px;letter-spacing:-.02em;line-height:1}.brand b{display:inline-block;min-width:.6em;text-align:center}
 .tick{animation:tick .5s cubic-bezier(.2,1.5,.4,1)}@keyframes tick{from{transform:scale(.4);opacity:0}}
-#dots{flex:1;display:flex;gap:5px}#dots i{flex:1;height:8px;border-radius:4px;background:var(--ln);transition:background .4s}#dots i.p{background:color-mix(in srgb,var(--c) 45%,var(--ln))}#dots i.on{background:var(--c);box-shadow:0 0 12px var(--c)}
-#fb{display:flex;align-items:center;gap:6px;padding:8px 12px;border:1px solid var(--ln);border-radius:10px;background:var(--pn);cursor:pointer;font-size:14px}
-.v{flex:1;min-height:0;overflow:auto;padding:14px;-webkit-overflow-scrolling:touch}
-#nav{display:flex;align-items:center;gap:10px;padding:8px 14px;border-top:1px solid var(--ln);flex:none}
-#nav button{min-width:56px;height:46px;padding:0 16px;background:var(--pn);border:1px solid var(--ln);border-radius:12px;font-size:18px;cursor:pointer}
-#nav button:disabled{opacity:.3}#nav #pg{flex:1;text-align:center;color:var(--mu)}
-.hd{display:flex;gap:14px;align-items:center;margin-bottom:12px}
-.ic{width:56px;height:56px;border-radius:14px;display:grid;place-items:center;font-size:28px;color:var(--a);background:color-mix(in srgb,var(--a) 14%,transparent);border:1px solid color-mix(in srgb,var(--a) 45%,transparent);flex:none}
-.who{color:var(--a);font-size:14px;display:flex;align-items:center;gap:8px}
-.av{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--a);color:#04101a;font-weight:800;font-size:12px}
-h1{font-size:clamp(24px,5vw,44px);line-height:1.1;letter-spacing:-.02em;font-weight:800;margin:.1em 0 0}
-.cols{display:flex;flex-direction:column;gap:12px}.c1,.c2{display:contents}
-.bs{order:1;display:grid;gap:10px}.gm{order:2}.kd{order:3}.pts{order:3}.os{order:4}
-.bc{padding:10px 14px;background:var(--pn);border:1px solid var(--ln);border-left:4px solid var(--a);border-radius:10px}
-.bc h3{margin:0 0 2px;font-size:12px;color:var(--a);font-weight:700;letter-spacing:.08em;text-transform:uppercase}.bc p{margin:0;font-size:16px}
-.an{padding:10px 14px;border-radius:10px;background:color-mix(in srgb,var(--a) 14%,transparent)}.an b{color:var(--a)}
+#dots{flex:1;display:flex;gap:4px}#dots i{flex:1;height:7px;border-radius:4px;background:var(--ln);transition:background .4s}#dots i.p{background:color-mix(in srgb,var(--c) 45%,var(--ln))}#dots i.on{background:var(--c);box-shadow:0 0 10px var(--c)}
+#top button{height:34px;min-width:38px;padding:0 10px;border:1px solid var(--ln);border-radius:9px;background:var(--pn);font-size:15px;display:flex;align-items:center;justify-content:center;gap:6px}
+#top button:disabled{opacity:.3}#ctl{display:flex;gap:6px}
+.v{flex:1;min-height:0;overflow:hidden;padding:8px 12px}
+#sv,#qv,#rv{display:flex;flex-direction:column}
+.sl{height:100%;display:flex;flex-direction:column;gap:.5em}
+.t2{display:flex;align-items:center;justify-content:space-between;gap:.6em;flex-wrap:wrap}
+.hd{display:flex;gap:.6em;align-items:center}
+.ic{width:2.6em;height:2.6em;border-radius:.7em;display:grid;place-items:center;font-size:1em;color:var(--a);background:color-mix(in srgb,var(--a) 14%,transparent);border:1px solid color-mix(in srgb,var(--a) 45%,transparent);flex:none}
+.who{color:var(--a);font-size:.75em;display:flex;align-items:center;gap:.5em}
+.av{display:grid;place-items:center;width:1.5em;height:1.5em;border-radius:50%;background:var(--a);color:#04101a;font-weight:800;font-size:.9em}
+h1{font-size:1.5em;line-height:1.1;letter-spacing:-.02em;font-weight:800;margin:0}
+.stb{display:flex;gap:.3em}.stb button{padding:.4em .8em;border:1px solid var(--ln);border-radius:.7em;background:var(--pn);font-size:.85em}.stb .on{background:var(--a);color:#04101a;border-color:var(--a);font-weight:800}
+.pn{flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column}
+.cx{display:flex;flex-direction:column;gap:.5em;flex:1;min-height:0}.cx>div{display:grid;gap:.5em;align-content:start}
+.bs{display:grid;gap:.45em}
+.bc{padding:.4em .7em;background:var(--pn);border:1px solid var(--ln);border-left:.3em solid var(--a);border-radius:.6em}
+.bc h3{margin:0;font-size:.65em;color:var(--a);font-weight:700;letter-spacing:.08em;text-transform:uppercase}.bc p{margin:0;font-size:.95em}
+.an{padding:.4em .7em;border-radius:.6em;background:color-mix(in srgb,var(--a) 14%,transparent);font-size:.95em}.an b{color:var(--a)}
 .bc b,.pts b,.hero p b{color:var(--a);font-weight:800;background:color-mix(in srgb,var(--a) 16%,transparent);padding:0 .22em;border-radius:.25em}
-.kd{margin:6px 0 0;font-size:13px;color:var(--mu)}
-.pts{list-style:none;margin:0;padding:0;display:grid;gap:10px}
-.pts li{padding:10px 14px;background:var(--pn);border:1px solid var(--ln);border-left:4px solid var(--a);border-radius:10px;font-size:16px}
-.gm{background:var(--pn);border:1px solid var(--ln);border-radius:12px;padding:8px}
-.os{display:grid;gap:8px}
-.or{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:#050910;border:1px solid var(--ln);cursor:pointer}
-.or code{font-size:13px;color:var(--fg);min-width:0;overflow-wrap:anywhere}.or.w{color:var(--w)}.or.l{color:var(--l)}.or.c{color:var(--c)}
-.hero{text-align:center;padding-top:3vh}
-.hero .big{font:800 clamp(72px,22vw,170px)/1 ui-monospace,Consolas,monospace;letter-spacing:-.05em;background:linear-gradient(90deg,var(--g),#22d3ee);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero h2{font-size:clamp(22px,5vw,40px);margin:.2em 0}.hero .who{justify-content:center}.hero p{margin:.4em 0;font-size:18px}
-.chips{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:14px 0}.chips span{padding:6px 14px;border-radius:99px;border:1px solid currentColor;display:flex;gap:8px;align-items:center}
-.cta{margin-top:16px;padding:14px 28px;font-size:18px;font-weight:800;border:0;border-radius:12px;background:var(--g);color:#04140a;cursor:pointer}.cta.alt{background:var(--pn);color:var(--fg);border:1px solid var(--ln)}
-.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.qn{display:inline-block;padding:4px 14px;border-radius:99px;background:#16324a;color:var(--a);font-size:14px}.sc{float:right;color:var(--g);font-weight:800}
-.qq{font-size:clamp(22px,5.4vw,40px);font-weight:800;line-height:1.15;margin:.5em 0}
-.bar{height:10px;background:var(--ln);border-radius:5px;overflow:hidden}.bar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--g),#fbbf24);animation:t 20s linear forwards}@keyframes t{to{width:0}}
-.g{display:grid;gap:12px;margin-top:16px}
-.o{display:flex;align-items:center;gap:12px;padding:16px;border:0;border-radius:14px;font-size:clamp(16px,4vw,24px);color:#fff;font-weight:700;text-align:left;cursor:pointer}
+.pts{list-style:none;margin:0;padding:0;display:grid;gap:.45em}
+.pts li{padding:.45em .7em;background:var(--pn);border:1px solid var(--ln);border-left:.3em solid var(--a);border-radius:.6em;font-size:.95em}
+.gm{background:var(--pn);border:1px solid var(--ln);border-radius:.7em;padding:.4em}
+.dg{display:block;width:100%;height:auto;max-height:34vh;max-height:34dvh}
+.os{display:grid;gap:.45em}
+.or{display:flex;align-items:center;gap:.6em;padding:.5em .7em;border-radius:.6em;background:#050910;border:1px solid var(--ln)}
+.or code{font-size:.8em;color:var(--fg);min-width:0;overflow-wrap:anywhere}.or.w{color:var(--w)}.or.l{color:var(--l)}.or.c{color:var(--c)}
+.oct{font-size:1.8em!important}.rt .r{font-size:.85em!important}
+.hero{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:.3em}
+.hero .big{font:800 4.5em/1 ui-monospace,Consolas,monospace;letter-spacing:-.05em;background:linear-gradient(90deg,var(--g),#22d3ee);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero h2{font-size:1.5em;margin:0}.hero .who{justify-content:center;font-size:.85em}.hero p{margin:0;font-size:1em}
+.chips{display:flex;gap:.5em;flex-wrap:wrap;justify-content:center}.chips span{padding:.25em .8em;border-radius:99px;border:1px solid currentColor;display:flex;gap:.5em;align-items:center;font-size:.9em}
+.cta{margin-top:.5em;padding:.6em 1.4em;font-size:1em;font-weight:800;border:0;border-radius:.7em;background:var(--g);color:#04140a}.cta.alt{background:var(--pn);color:var(--fg);border:1px solid var(--ln)}
+.row{display:flex;gap:.6em;justify-content:center;flex-wrap:wrap}
+.qw{height:100%;display:flex;flex-direction:column;gap:.5em}
+.qn{display:inline-block;padding:.15em .8em;border-radius:99px;background:#16324a;color:var(--a);font-size:.8em}.sc{float:right;color:var(--g);font-weight:800}
+.qq{font-size:1.5em;font-weight:800;line-height:1.15}
+.bar{height:.6em;background:var(--ln);border-radius:.3em;overflow:hidden;flex:none}.bar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--g),#fbbf24);animation:t 20s linear forwards}@keyframes t{to{width:0}}
+.g{flex:1;min-height:0;display:grid;gap:.5em;grid-auto-rows:1fr}
+.o{display:flex;align-items:center;gap:.6em;padding:.4em .8em;border:0;border-radius:.8em;font-size:1.05em;color:#fff;font-weight:700;text-align:left}
 .o s{text-decoration:none;display:grid;place-items:center;width:1.6em;height:1.6em;border-radius:50%;background:#0003;flex:none}
-.o0{background:#e21b3c}.o1{background:#1368ce}.o2{background:#d89e00}.o3{background:#26890c}.o.dim{opacity:.25}.o.ok{outline:4px solid #fff}.o.no{opacity:.55;outline:4px solid #0008}
-.fin{text-align:center;margin-top:5vh;display:grid;gap:10px;justify-items:center}.fin .e{font-size:72px}.fin p{margin:0}.big2{font:800 56px ui-monospace,Consolas,monospace;color:var(--g)}
-#nm{width:min(360px,100%);padding:14px;font-size:20px;border-radius:12px;border:1px solid var(--ln);background:var(--pn);color:var(--fg);text-align:center}
-.tb{width:100%;border-collapse:collapse;margin:12px 0}.tb th,.tb td{padding:10px 8px;border-bottom:1px solid var(--ln);text-align:left}.tb th{color:var(--mu);font-size:13px}.tb tr.top td{font-weight:800;color:var(--a)}.tb tr.me td{background:#22d3ee14}
-#toast{position:fixed;left:50%;bottom:calc(70px + env(safe-area-inset-bottom));transform:translateX(-50%);padding:10px 16px;background:#16324a;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .3s;max-width:90vw;text-align:center;z-index:9}#toast.on{opacity:1}
-#fo{position:fixed;inset:0;z-index:20;background:#070bf2;background:#070b12f2;display:grid;place-content:center;gap:12px;text-align:center;padding:24px}#fo p{margin:0;color:var(--mu)}
-@media (min-width:700px){.v{padding:20px 28px}.cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}.c1,.c2{display:grid;gap:12px}.c1>*,.c2>*{order:0}.g{grid-template-columns:1fr 1fr}.hd{gap:18px}.ic{width:72px;height:72px;font-size:36px}.bc p,.pts li{font-size:18px}.or code{font-size:15px}}
-@media (orientation:landscape) and (max-height:520px){#top{padding:4px 12px}.brand{font-size:20px}#nav{padding:4px 12px}#nav button{height:38px}.v{padding:8px 14px}.hd{margin-bottom:8px}.ic{width:44px;height:44px;font-size:22px}h1{font-size:22px}.hero .big{font-size:22vh}.fin{margin-top:0}.fin .e{font-size:40px}.big2{font-size:36px}}
+.o0{background:#e21b3c}.o1{background:#1368ce}.o2{background:#d89e00}.o3{background:#26890c}.o.dim{opacity:.25}.o.ok{outline:.2em solid #fff}.o.no{opacity:.55;outline:.2em solid #0008}
+.fin{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:.4em}.fin .e{font-size:3em;line-height:1}.fin p{margin:0}.big2{font:800 2.6em ui-monospace,Consolas,monospace;color:var(--g)}
+#nm{width:min(20em,100%);padding:.6em;font-size:16px;border-radius:.7em;border:1px solid var(--ln);background:var(--pn);color:var(--fg);text-align:center}
+.tb{width:100%;border-collapse:collapse;margin:.4em 0}.tb th,.tb td{padding:.25em .5em;border-bottom:1px solid var(--ln);text-align:left}.tb th{color:var(--mu);font-size:.8em}.tb tr.top td{font-weight:800;color:var(--a)}.tb tr.me td{background:#22d3ee14}
+#rtb{flex:1;min-height:0}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translateX(-50%);padding:10px 16px;background:#16324a;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .3s;max-width:90vw;text-align:center;z-index:9}#toast.on{opacity:1}
+#fo{position:fixed;inset:0;z-index:20;background:#070b12f2;display:grid;place-content:center;gap:12px;text-align:center;padding:24px}#fo p{margin:0;color:var(--mu)}
+#tmh{display:none}
+#tm{display:flex;flex-direction:column;flex:1;min-height:0;background:#050910;border:1px solid var(--ln);border-radius:.8em;overflow:hidden}
+#chr{display:flex;align-items:center;gap:.4em;padding:.3em .6em;background:#0b1320;color:var(--mu);font-size:.7em}#chr i{width:.8em;height:.8em;border-radius:50%;background:#f87171}#chr i:nth-child(2){background:#fbbf24}#chr i:nth-child(3){background:#4ade80}
+#otabs{display:flex;gap:.2em;padding:.3em .4em 0;background:#0b1320}#otabs button{display:flex;gap:.4em;align-items:center;padding:.3em .7em;border:0;border-radius:.5em .5em 0 0;background:none;color:var(--mu);font-size:.8em}#otabs .on{background:#050910}#otabs .tw.on{color:var(--w)}#otabs .tl.on{color:var(--l)}#otabs .tc.on{color:var(--c)}
+#o{flex:1;min-height:0;overflow:auto;padding:.4em .7em;font:.8em/1.3 ui-monospace,'Cascadia Mono',Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}
+#ch{display:flex;gap:.4em;flex-wrap:wrap;padding:.3em .6em;border-top:1px solid var(--ln)}#ch button{padding:.2em .7em;border:1px solid var(--ln);border-radius:99px;background:var(--pn);font:.75em ui-monospace,Consolas,monospace}
+#ipt{display:flex;gap:.5em;padding:.3em .7em;border-top:1px solid var(--ln);font:.85em ui-monospace,Consolas,monospace;align-items:center}#ipt span{color:var(--g)}
+#in{flex:1;min-width:0;background:none;border:0;color:var(--fg);outline:0;font:16px ui-monospace,Consolas,monospace}
+@media (min-aspect-ratio:11/10){.cx{display:grid;grid-template-columns:1.3fr 1fr;gap:.8em;align-items:start}.g{grid-template-columns:1fr 1fr}.pn.p0 .cx{grid-template-columns:1.2fr 1fr}.pn.p0 .cx>div:last-child{align-self:center}}
+@media (max-height:520px){#top{padding:3px 10px}.brand{font-size:18px}#top button{height:28px}.v{padding:4px 10px}}
 @media (prefers-reduced-motion:reduce){.bar i,.tick{animation:none}}
 .dg{width:100%;display:block}
 .dg .lk{stroke:var(--a);stroke-dasharray:4 5;opacity:.55}.dg .nd{fill:var(--pn);stroke:var(--a);stroke-width:1.5}
@@ -69,7 +83,7 @@ h1{font-size:clamp(24px,5vw,44px);line-height:1.1;letter-spacing:-.02em;font-wei
 .net{background:#22d3ee22;color:#22d3ee}.hst{background:#4ade8022;color:var(--g)}.oct em{font-style:normal;color:var(--mu);font-size:.6em}
 .cap{text-align:center;color:var(--mu);font-size:14px;padding-bottom:6px}
 .rt{display:grid;gap:8px;padding:8px 0}.rt .r{display:flex;gap:14px;align-items:center;padding:12px 14px;border-radius:10px;border:1px solid var(--ln);background:#050910;font-size:clamp(13px,1.15vw,18px)}
-.rt .r b{margin-left:auto;font-weight:600;color:var(--mu)}.rt .win{border-color:var(--a)}.rt .win b{color:var(--a)}</style>
+.rt .r b{margin-left:auto;font-weight:600;color:var(--mu)}.rt .win{border-color:var(--a)}.rt .win b{color:var(--a)}</style></style>
 <svg width="0" height="0" style="position:absolute"><defs>
 <symbol id="i-win" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M3 5.5l8-1.1v7H3zM12 4.3l9-1.3v8.4h-9zM3 12.6h8v7l-8-1.1zM12 12.6h9V21l-9-1.3z"/></symbol>
 <symbol id="i-cisco" viewBox="0 0 24 24"><g fill="currentColor" stroke="none"><rect x="2" y="10" width="2.2" height="6" rx="1.1"/><rect x="6" y="6" width="2.2" height="12" rx="1.1"/><rect x="10" y="3" width="2.2" height="18" rx="1.1"/><rect x="14" y="6" width="2.2" height="12" rx="1.1"/><rect x="18" y="10" width="2.2" height="6" rx="1.1"/></g></symbol>
@@ -86,12 +100,12 @@ h1{font-size:clamp(24px,5vw,44px);line-height:1.1;letter-spacing:-.02em;font-wei
 <symbol id="i-srv" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="7" rx="2"/><rect x="4" y="13" width="16" height="7" rx="2"/><path d="M8 6.5h.01M8 16.5h.01"/></symbol>
 <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></symbol>
 <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M7 4l13 8-13 8z"/></symbol>
-<symbol id="i-fs" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol></defs></svg>
+<symbol id="i-fs" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol><symbol id="i-fs" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol></defs></svg>
 <div id="app">
-<div id="top"><div class="brand">TTL=<b id="ttl">7</b></div><div id="dots"></div><button id="fb" onclick="fs()"><svg class="ico"><use href="#i-fs"/></svg><span id="fl">Pantalla completa</span></button></div>
+<div id="top"><div class="brand">TTL=<b id="ttl">7</b></div><div id="dots"></div><div id="ctl"><button id="pb" onclick="go(-1)">◀</button><button id="nb" onclick="go(1)">▶</button></div><button id="fb" onclick="fs()" title="Pantalla completa"><svg class="ico"><use href="#i-fs"/></svg></button></div>
 <div id="sv" class="v"></div><div id="qv" class="v" hidden></div><div id="rv" class="v" hidden></div>
-<div id="nav"><button id="pb" onclick="go(-1)">◀</button><span id="pg" class="mono"></span><button id="nb" onclick="go(1)">▶</button></div>
 </div>
+<div id="tmh"><div id="tm"><div id="chr"><i></i><i></i><i></i><span>&nbsp;ttl0@expo · terminal simulada</span></div><div id="otabs"></div><div id="o"></div><div id="ch"></div><div id="ipt"><span id="pr"></span><input id="in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" placeholder="help"></div></div></div>
 <div id="toast"></div>
 <div id="fo" hidden><div class="brand" style="font-size:44px">TTL=0</div><p id="ft">Para ver mejor, usa pantalla completa.</p><button class="cta" id="fy" onclick="fs();closeFo()">Pantalla completa</button><button class="cta alt" onclick="closeFo()">Continuar así</button></div>
 <script>
@@ -136,15 +150,139 @@ const Q = [
   ['¿Qué diferencia a 0.0.0.0:3000 de 127.0.0.1:3000?', ['Son iguales', '0.0.0.0 acepta de toda la red', '127.0.0.1 acepta celulares', '0.0.0.0 es solo UDP'], 1]
 ];
 
-const hd = s => `<div class="hd"><span class="ic">${ic(s.i)}</span><div><div class="who"><span class="av">${s.w[0]}</span>${s.w}</div><h1>${s.t}</h1></div></div>`;
-const bs = s => s.b ? `<div class="bs">${['¿Qué es?', '¿Cómo funciona?', '¿Por qué ese nombre?'].map((t, i) => `<div class="bc"><h3>${t}</h3><p>${em(s.b[i])}</p></div>`).join('')}<div class="an"><b>Es como…</b> ${s.an}</div></div>` : '';
-const pts = s => `<ul class="pts">${s.p.map(x => `<li>${em(x)}</li>`).join('')}</ul>`;
-const osr = s => `<div class="os">${s.c.map((x, k) => `<div class="or ${'wlc'[k]}" data-c="${esc(x.split(/ · |   \(/)[0])}" onclick="cp(this)">${ic(OSN[k][0])}<code>${x}</code></div>`).join('')}</div>`;
-const hero = s => `<div class="hero"><div class="big">TTL=0</div><h2>${s.t}</h2><p class="who">${s.w}</p><div class="chips">${OSN.map(([i, n], k) => `<span style="color:var(--${'wlc'[k]})">${ic(i)}${n}</span>`).join('')}</div>${s.p.map(x => `<p>${em(x)}</p>`).join('')}<button class="cta" onclick="go(1)">Empezar</button></div>`;
-const card = s => s.hero ? hero(s) : s.q ? hd(s) + pts(s) + '<div class="row"><button class="cta" onclick="nav(\'#quiz\')">Ir al quiz</button></div>' : hd(s) + `<div class="cols"><div class="c1">${s.g ? `<div class="gm">${s.g}</div>` : ''}${s.c ? osr(s) : ''}</div><div class="c2">${bs(s)}<div class="kd">Datos clave</div>${pts(s)}</div></div>`;
 
-let cur = 0, qi = 0, score = 0, hits = 0, tms = 0, nick = localStorage.nm || '', tm, rt, qs = [], t0, lock = 0, tt;
-const show = v => { ['sv', 'qv', 'rv'].forEach(i => $(i).hidden = i !== v[0] + 'v'); $('nav').hidden = v !== 'sv'; $('dots').style.visibility = v === 'sv' ? 'visible' : 'hidden'; clearInterval(rt); clearTimeout(tm); };
+let OS = 'w', busy = 0, first = {}, IPS = ['192.168.1.20', '192.168.1.31', '192.168.1.44'], URLS = 'http://192.168.1.50:3000';
+const P = { w: 'C:\\>', l: 'user@pc:~$', c: 'R1#' };
+const DNS = { 'google.com': '142.250.0.1', 'web.local': '172.16.0.10' }, TTLS = { '192.168.1.1': 255, '10.0.0.2': 254, '172.16.0.10': 126 };
+const path = ip => ip === '172.16.0.10' ? [['192.168.1.1', 1], ['10.0.0.2', 2], [ip, 3]] : [['192.168.1.1', 1], ['10.20.0.1', 8], [null], [ip, 17]];
+const isIp = x => /^\d+(\.\d+){3}$/.test(x), tgt = a => a.filter(x => !x.startsWith('-') && !x.startsWith('@') && !/^\d+$/.test(x)).pop();
+const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1)), sleep = ms => new Promise(r => setTimeout(r, ms));
+const out = (l = '') => { const d = document.createElement('div'); d.textContent = l; $('o').appendChild(d); $('o').scrollTop = 1e9; return d; };
+const emit = async (L, ms = 300) => { for (const l of L) { out(l); await sleep(ms); } };
+const st = r => [Math.min(...r), Math.round(r.reduce((a, b) => a + b) / r.length), Math.max(...r)];
+const me = () => (URLS.match(/\/\/([\d.]+)/) || [])[1] || '192.168.1.50';
+const port = i => 50412 + i * 37;
+const bad = (t, tr) => OS === 'w' ? (tr ? `No se puede resolver el nombre del sistema de destino ${t}.` : `La solicitud de ping no pudo encontrar el host ${t}. Compruebe el nombre e intente de nuevo.`) : OS === 'l' ? `${tr ? 'traceroute' : 'ping'}: ${t}: Temporary failure in name resolution` : '% Unrecognized host or address or protocol not running.';
+
+async function ping(a) {
+  const t = tgt(a);
+  if (!t) return out(OS === 'w' ? 'Uso: ping destino' : OS === 'l' ? 'ping: usage error: Destination address required' : '% Incomplete command.');
+  const ip = isIp(t) ? t : DNS[t];
+  if (!ip) return out(bad(t, 0));
+  const lo = ip === '127.0.0.1', base = lo ? 0 : path(ip).at(-1)[1], ttl = lo ? { w: 128, l: 64, c: 255 }[OS] : TTLS[ip] || 117;
+  if (OS === 'c') {
+    out('Type escape sequence to abort.'); out(`Sending 5, 100-byte ICMP Echos to ${ip}, timeout is 2 seconds:`);
+    const d = out(''), f = !first[ip]; first[ip] = 1;
+    for (let i = 0; i < 5; i++) { await sleep(i ? 300 : 900); d.textContent += f && i === 0 ? '.' : '!'; }
+    const r = [0, 1, 2, 3, 4].map(() => rnd(base, base + 3)), [mn, av, mx] = st(r);
+    return out(`Success rate is ${f ? '80 percent (4/5)' : '100 percent (5/5)'}, round-trip min/avg/max = ${mn}/${av}/${mx} ms`);
+  }
+  const r = [0, 1, 2, 3].map(() => rnd(base, base + 2)), [mn, av, mx] = st(r);
+  if (OS === 'w') {
+    out(`Haciendo ping a ${t}${t !== ip ? ' [' + ip + ']' : ''} con 32 bytes de datos:`);
+    for (const v of r) { await sleep(700); out(`Respuesta desde ${ip}: bytes=32 tiempo${v < 1 ? '<1' : '=' + v}ms TTL=${ttl}`); }
+    return emit(['', `Estadísticas de ping para ${ip}:`, '    Paquetes: enviados = 4, recibidos = 4, perdidos = 0 (0% perdidos),', 'Tiempos aproximados de ida y vuelta en milisegundos:', `    Mínimo = ${mn}ms, Máximo = ${mx}ms, Media = ${av}ms`], 0);
+  }
+  out(`PING ${t} (${ip}) 56(84) bytes of data.`);
+  for (const [i, v] of r.entries()) { await sleep(700); out(`64 bytes from ${ip}: icmp_seq=${i + 1} ttl=${ttl} time=${v}.${rnd(0, 9)} ms`); }
+  return emit(['', `--- ${t} ping statistics ---`, '4 packets transmitted, 4 received, 0% packet loss, time 3004ms', `rtt min/avg/max/mdev = ${mn}.1/${av}.3/${mx}.8/0.4 ms`], 0);
+}
+async function trace(a) {
+  const t = tgt(a);
+  if (!t) return out(OS === 'c' ? '% Incomplete command.' : 'Uso: ' + (OS === 'w' ? 'tracert' : 'traceroute') + ' destino');
+  const ip = isIp(t) ? t : DNS[t];
+  if (!ip) return out(bad(t, 1));
+  if (OS === 'w') emit([`Traza a ${t}${t !== ip ? ' [' + ip + ']' : ''} sobre un máximo de 30 saltos:`, ''], 0);
+  else if (OS === 'l') out(`traceroute to ${t} (${ip}), 30 hops max, 60 byte packets`);
+  else { out('Type escape sequence to abort.'); out(`Tracing the route to ${ip}`); out('VRF info: (vrf in name/id, vrf out name/id)'); }
+  for (const [i, h] of path(ip).entries()) {
+    await sleep(700); const n = i + 1;
+    if (!h[0]) { out(OS === 'w' ? `${String(n).padStart(3)}     *        *        *     Tiempo de espera agotado para esta solicitud.` : OS === 'l' ? ` ${n}  * * *` : ` ${n}   *  *  *`); continue; }
+    const ts = [0, 1, 2].map(() => rnd(h[1], h[1] + 2));
+    out(OS === 'w' ? `${String(n).padStart(3)}  ${ts.map(v => (v < 1 ? '<1 ms' : v + ' ms').padStart(7)).join(' ')}  ${h[0]}` : OS === 'l' ? `${String(n).padStart(2)}  ${h[0]}  ${ts.map(v => v + '.' + rnd(0, 9) + ' ms').join('  ')}` : ` ${n} ${h[0]} ${ts.map(v => v + ' msec').join(' ')}`);
+  }
+  if (OS === 'w') out('\nTraza completa.');
+}
+async function dns(c, a) {
+  const t = tgt(a);
+  if (!t) return out(c === 'dig' ? '; <<>> DiG <<>>' : '>');
+  const ip = DNS[t] || (isIp(t) ? t : null), sv = (a.find(x => x.startsWith('@')) || '@127.0.0.53').slice(1), q = rnd(12, 30);
+  await sleep(400);
+  if (c === 'dig') {
+    if (a.includes('+short')) return out(ip || '');
+    return emit([`;; ->>HEADER<<- opcode: QUERY, status: ${ip ? 'NOERROR' : 'NXDOMAIN'}, id: ${rnd(10000, 60000)}`, `;; flags: qr rd ra; QUERY: 1, ANSWER: ${ip ? 1 : 0}, AUTHORITY: 0, ADDITIONAL: 1`, '', ...(ip ? [';; ANSWER SECTION:', `${t}.  120  IN  A  ${ip}`, ''] : []), `;; Query time: ${q} msec`, `;; SERVER: ${sv}#53(${sv})`], 0);
+  }
+  if (OS === 'w') return emit(['Servidor:  dns.google', 'Address:  8.8.8.8', '', ...(ip ? ['Respuesta no autoritativa:', `Nombre:  ${t}`, `Address:  ${ip}`] : [`*** dns.google no puede encontrar ${t}: Non-existent domain`])], 0);
+  return emit(['Server:  127.0.0.53', 'Address: 127.0.0.53#53', '', ...(ip ? ['Non-authoritative answer:', `Name: ${t}`, `Address: ${ip}`] : [`** server can't find ${t}: NXDOMAIN`])], 0);
+}
+async function sock() {
+  const m = me();
+  if (OS === 'w') return emit(['  Proto  Dirección local      Dirección remota    Estado        PID', '  TCP    0.0.0.0:3000         0.0.0.0:0           LISTENING     8844', ...IPS.map((p, i) => ('  TCP    ' + m + ':3000').padEnd(31) + (p + ':' + port(i)).padEnd(22) + 'ESTABLISHED   8844'), '  UDP    0.0.0.0:5353         *:*                               2204'], 0);
+  if (OS === 'l') return emit(['Netid State  Recv-Q Send-Q Local Address:Port  Peer Address:Port  Process', 'tcp   LISTEN 0      128    0.0.0.0:22          0.0.0.0:*          users:(("sshd",pid=801))', 'tcp   LISTEN 0      511    0.0.0.0:3000        0.0.0.0:*          users:(("node",pid=2210))', ...IPS.map((p, i) => `tcp   ESTAB  0      0      ${m}:3000  ${p}:${port(i)}  users:(("node",pid=2210))`)], 0);
+  return emit(['TCB       Local Address        Foreign Address       (state)', '7FA1B2C4  192.168.1.1.23       192.168.1.10.51022    ESTAB', '(el router solo ve sockets propios, no el tráfico que lo atraviesa)'], 0);
+}
+const ipc = () => emit(OS === 'w' ? ['Adaptador de Ethernet:', '   Dirección IPv4. . . . . . : 192.168.1.10', '   Máscara de subred . . . . : 255.255.255.0', '   Puerta de enlace . . . . : 192.168.1.1'] : OS === 'l' ? ['lo      UNKNOWN  127.0.0.1/8', 'eth0    UP       192.168.1.10/24'] : ['Interface              IP-Address     OK? Method Status                Protocol', 'GigabitEthernet0/0     192.168.1.1    YES manual up                    up', 'GigabitEthernet0/1     10.0.0.1       YES manual up                    up', 'GigabitEthernet0/2     unassigned     YES unset  administratively down down'], 0);
+const rt = () => emit(OS === 'w' ? ['Destino de red   Máscara          Puerta enlace   Interfaz       Métrica', '0.0.0.0          0.0.0.0          192.168.1.1     192.168.1.10   25', '192.168.1.0      255.255.255.0    En vínculo      192.168.1.10   281'] : OS === 'l' ? ['default via 192.168.1.1 dev eth0', '192.168.1.0/24 dev eth0 proto kernel scope link src 192.168.1.10'] : ['Gateway of last resort is not set', 'C 192.168.1.0/24 is directly connected, GigabitEthernet0/0', 'L 192.168.1.1/32 is directly connected, GigabitEthernet0/0', 'C 10.0.0.0/30 is directly connected, GigabitEthernet0/1', 'S 172.16.0.0/24 [1/0] via 10.0.0.2'], 0);
+const HELP = { w: 'ping · tracert · nslookup · netstat -ano · ipconfig · route print · clear', l: 'ping · traceroute · nslookup · dig · ss -tulnp · ip -br a · ip route · clear', c: 'ping · traceroute · show ip route · show ip interface brief · show tcp brief · show hosts · clear' };
+
+async function run(s) {
+  s = s.trim(); if (!s || busy) return;
+  out(P[OS] + ' ' + s);
+  let k = s.toLowerCase();
+  if (OS === 'c') k = k.replace(/^sh /, 'show ').replace(/ int /, ' interface ').replace(/ br$/, ' brief');
+  const [c, ...a] = k.split(/\s+/);
+  if (c === 'clear' || c === 'cls') { $('o').innerHTML = ''; return; }
+  if (c === 'help') return emit([HELP[OS], 'Destinos: 8.8.8.8 · google.com · web.local · 172.16.0.10'], 0);
+  const ok = { w: ['ping', 'tracert', 'nslookup', 'netstat', 'ipconfig', 'route'], l: ['ping', 'traceroute', 'nslookup', 'dig', 'ss', 'ip'], c: ['ping', 'traceroute', 'show'] }[OS];
+  busy = 1;
+  try {
+    if (!ok.includes(c)) {
+      if (OS === 'c') { out(`Translating "${c}"...domain server (255.255.255.255)`); await sleep(1800); out('% Unknown command or computer name, or unable to find computer address'); }
+      else out(OS === 'w' ? `'${c}' no se reconoce como un comando interno o externo.` : `bash: ${c}: command not found`);
+    }
+    else if (c === 'ping') await ping(a);
+    else if (c === 'tracert' || c === 'traceroute') await trace(a);
+    else if (c === 'nslookup' || c === 'dig') await dns(c, a);
+    else if (c === 'netstat' || c === 'ss' || k.startsWith('show tcp')) await sock();
+    else if (c === 'ipconfig' || k.startsWith('ip -br') || k.startsWith('ip a') || k === 'show ip interface brief') await ipc();
+    else if (c === 'route' || k === 'ip route' || k === 'show ip route') await rt();
+    else if (k === 'show hosts') await emit(['Name servers are 8.8.8.8', 'Host   Port Flags      Age Type Address(es)', 'WEB    None (perm, OK) 0   IP   172.16.0.10'], 0);
+    else out(OS === 'c' ? "% Invalid input detected at '^' marker." : 'Comando no incluido en la demo: escribe help');
+  } finally { busy = 0; }
+}
+
+const setP = () => { $('pr').textContent = P[OS]; };
+function otabs() { $('otabs').innerHTML = OSN.map(([i, n], k) => `<button class="t${'wlc'[k]} ${'wlc'[k] === OS ? 'on' : ''}" onclick="setOS('${'wlc'[k]}')">${ic(i)}<span>${n}</span></button>`).join(''); setP(); chips(); }
+function setOS(k) { OS = k; $('o').innerHTML = ''; otabs(); }
+function chips() { const s = SL[cur], k = 'wlc'.indexOf(OS), c = s && s.c ? [s.c[k].split(/ · |   \(/)[0]] : []; $('ch').innerHTML = [...c, 'help', 'clear'].map(x => `<button onclick="run(this.textContent)">${esc(x)}</button>`).join(''); }
+$('in').onkeydown = e => { if (e.key === 'Enter') { run($('in').value); $('in').value = ''; } };
+out('// toca un comando o escribe help');
+
+const hd = s => `<div class="hd"><span class="ic">${ic(s.i)}</span><div><div class="who"><span class="av">${s.w[0]}</span>${s.w}</div><h1>${s.t}</h1></div></div>`;
+const bs = s => `<div class="bs">${['¿Qué es?', '¿Cómo funciona?', '¿Por qué ese nombre?'].map((t, i) => `<div class="bc"><h3>${t}</h3><p>${em(s.b[i])}</p></div>`).join('')}<div class="an"><b>Es como…</b> ${s.an}</div></div>`;
+const pts = s => `<ul class="pts">${s.p.map(x => `<li>${em(x)}</li>`).join('')}</ul>`;
+const osr = s => `<div class="os">${s.c.map((x, k) => `<div class="or ${'wlc'[k]}" onclick="runc(${k})">${ic(OSN[k][0])}<code>${x}</code></div>`).join('')}</div>`;
+const hero = s => `<div class="hero"><div class="big">TTL=0</div><h2>${s.t}</h2><p class="who">${s.w}</p><div class="chips">${OSN.map(([i, n], k) => `<span style="color:var(--${'wlc'[k]})">${ic(i)}${n}</span>`).join('')}</div>${s.p.map(x => `<p>${em(x)}</p>`).join('')}<button class="cta" onclick="go(1)">Empezar</button></div>`;
+const last = s => `<div class="hero">${hd(s)}${pts(s)}<button class="cta" onclick="nav('#quiz')">Ir al quiz</button></div>`;
+
+let cur = 0, tab = 0, qi = 0, score = 0, hits = 0, tms = 0, nick = localStorage.nm || '', tm, rti, qs = [], t0, lock = 0, tt, FR = null, rz;
+const TABS = ['Concepto', 'Datos', 'Consola'];
+function fit(root, box) {
+  FR = [root, box];
+  let f = Math.max(12, Math.min(20, Math.min(innerWidth, innerHeight * 1.5) / 22));
+  root.style.fontSize = f + 'px';
+  while (box.scrollHeight > box.clientHeight + 1 && f > 8) { f -= .5; root.style.fontSize = f + 'px'; }
+}
+const show = v => { ['sv', 'qv', 'rv'].forEach(i => $(i).hidden = i !== v + 'v'); $('ctl').hidden = $('dots').hidden = v !== 's'; $('tmh').appendChild($('tm')); clearInterval(rti); clearTimeout(tm); };
+function panel() {
+  const s = SL[cur];
+  $('tmh').appendChild($('tm'));
+  $('sv').innerHTML = `<div class="sl"><div class="t2">${hd(s)}<div class="stb">${TABS.map((t, i) => `<button class="${i === tab ? 'on' : ''}" onclick="stab(${i})">${t}</button>`).join('')}</div></div><div class="pn p${tab}">${tab === 0 ? `<div class="cx"><div>${bs(s)}</div><div><div class="gm">${s.g}</div></div></div>` : tab === 1 ? `<div class="cx"><div>${pts(s)}</div><div>${osr(s)}</div></div>` : ''}</div></div>`;
+  const pn = $('sv').querySelector('.pn');
+  if (tab === 2) { pn.appendChild($('tm')); otabs(); }
+  fit($('sv').firstChild, pn);
+}
+const stab = i => { tab = i; panel(); };
 function slide() {
   const s = SL[cur], n = SL.length - 1 - cur, e = $('ttl');
   if (e.textContent !== String(n)) { e.textContent = n; e.classList.remove('tick'); void e.offsetWidth; e.classList.add('tick'); }
@@ -152,8 +290,13 @@ function slide() {
   document.documentElement.style.setProperty('--a', s.a);
   const dd = $('dots'); if (!dd.children.length) dd.innerHTML = SL.map(x => `<i style="--c:${x.a}"></i>`).join('');
   [...dd.children].forEach((x, i) => { x.className = i === cur ? 'on' : i < cur ? 'p' : ''; });
-  $('sv').innerHTML = card(s); $('sv').scrollTop = 0;
-  $('pg').textContent = (cur + 1) + ' / ' + SL.length; $('pb').disabled = cur === 0; $('nb').disabled = cur === SL.length - 1;
+  $('pb').disabled = cur === 0; $('nb').disabled = cur === SL.length - 1;
+  if (s.hero || s.q) { $('sv').innerHTML = s.hero ? hero(s) : last(s); fit($('sv'), $('sv')); }
+  else { tab = 0; panel(); }
+}
+async function runc(k) {
+  const o = OS; OS = 'wlc'[k]; if (o !== OS) $('o').innerHTML = '';
+  tab = 2; panel(); await run(SL[cur].c[k].split(/ · |   \(/)[0]);
 }
 const nav = h => { history.replaceState(null, '', h); route(); };
 const go = d => nav('#s' + Math.max(0, Math.min(SL.length - 1, cur + d)));
@@ -162,15 +305,14 @@ function route() {
   if (h === '#ranking') return rank();
   if (h === '#quiz') return quizName();
   const m = h.match(/^#s(\d+)$/); cur = m ? Math.min(+m[1], SL.length - 1) : 0;
-  show('sv'); slide();
+  show('s'); slide();
 }
-function cp(el) { const c = el.dataset.c; navigator.clipboard && navigator.clipboard.writeText(c).then(() => toast('Copiado: ' + c)).catch(() => {}); }
 function toast(t) { const e = $('toast'); e.textContent = t; e.classList.add('on'); clearTimeout(tt); tt = setTimeout(() => e.classList.remove('on'), 2200); }
 
 function quizName() {
-  show('qv'); document.documentElement.style.setProperty('--a', '#4ade80');
+  show('q'); document.documentElement.style.setProperty('--a', '#4ade80');
   $('qv').innerHTML = '<div class="fin"><div class="e">🏁</div><h1>Quiz TTL=0</h1><p>10 preguntas · 20 s cada una</p><input id="nm" maxlength="14" placeholder="Tu nombre" autocomplete="off"><button class="cta" onclick="begin()">Empezar</button><button class="cta alt" onclick="nav(\'#s7\')">Volver a las slides</button></div>';
-  $('nm').value = nick;
+  $('nm').value = nick; fit($('qv'), $('qv'));
 }
 function begin() {
   nick = $('nm').value.trim(); if (!nick) return $('nm').focus(); localStorage.nm = nick;
@@ -180,8 +322,8 @@ function begin() {
 function ask() {
   if (qi >= qs.length) return fin();
   const q = qs[qi]; lock = 0; t0 = Date.now();
-  $('qv').innerHTML = `<span class="qn">Pregunta ${qi + 1} de ${qs.length}</span><span class="sc" id="sc">${score} pts</span><div class="qq">${q.q}</div><div class="bar"><i></i></div><div class="g">${q.o.map((x, k) => `<button class="o o${k}" onclick="pick(${k})"><s>${SH[k]}</s>${x}</button>`).join('')}</div>`;
-  $('qv').scrollTop = 0; tm = setTimeout(() => pick(-1), T);
+  $('qv').innerHTML = `<div class="qw"><div><span class="qn">Pregunta ${qi + 1} de ${qs.length}</span><span class="sc" id="sc">${score} pts</span></div><div class="qq">${q.q}</div><div class="bar"><i></i></div><div class="g">${q.o.map((x, k) => `<button class="o o${k}" onclick="pick(${k})"><s>${SH[k]}</s>${x}</button>`).join('')}</div></div>`;
+  fit($('qv'), $('qv')); tm = setTimeout(() => pick(-1), T);
 }
 function pick(k) {
   if (lock) return; lock = 1; clearTimeout(tm);
@@ -193,7 +335,7 @@ function pick(k) {
 }
 function fin() {
   $('qv').innerHTML = `<div class="fin"><div class="e">🏁</div><h1>¡Listo, ${esc(nick)}!</h1><p class="big2">${score} pts</p><p>${hits} de ${qs.length} correctas · ${Math.round(tms / 1000)} s</p><p id="ss" class="mono"></p><div class="row"><button class="cta" onclick="nav('#ranking')">Ver clasificación</button><button class="cta alt" onclick="quizName()">Repetir</button></div></div>`;
-  send();
+  fit($('qv'), $('qv')); send();
 }
 function send() {
   const e = $('ss'); if (!e) return;
@@ -204,15 +346,16 @@ function send() {
     .catch(() => { if ($('ss')) $('ss').innerHTML = 'No se pudo enviar. <a href="#" onclick="send();return false">Reintentar</a>'; });
 }
 function rank() {
-  show('rv'); document.documentElement.style.setProperty('--a', '#22d3ee');
+  show('r'); document.documentElement.style.setProperty('--a', '#22d3ee');
   $('rv').innerHTML = '<h1>Clasificación</h1><div id="rtb">Cargando…</div><div class="row"><button class="cta alt" onclick="load()">Actualizar</button><button class="cta alt" onclick="nav(\'#quiz\')">Quiz</button></div>';
-  load(); rt = setInterval(load, 10000);
+  fit($('rv'), $('rv')); load(); rti = setInterval(load, 10000);
 }
 function load() {
   const e = $('rtb'); if (!e) return;
   if (!API) { e.textContent = 'Sin conexión configurada (API vacía).'; return; }
   fetch(API).then(r => r.json()).then(d => {
-    e.innerHTML = `<table class="tb"><tr><th>#</th><th>Nombre</th><th>Pts</th><th>OK</th><th>Seg</th></tr>${d.slice(0, 30).map((r, i) => `<tr class="${i < 3 ? 'top' : ''} ${r.n === nick ? 'me' : ''}"><td>${['🥇', '🥈', '🥉'][i] || i + 1}</td><td>${esc(r.n)}</td><td>${r.s}</td><td>${r.c}</td><td>${r.t}</td></tr>`).join('')}</table>`;
+    e.innerHTML = `<table class="tb"><tr><th>#</th><th>Nombre</th><th>Pts</th><th>OK</th><th>Seg</th></tr>${d.slice(0, 10).map((r, i) => `<tr class="${i < 3 ? 'top' : ''} ${r.n === nick ? 'me' : ''}"><td>${['🥇', '🥈', '🥉'][i] || i + 1}</td><td>${esc(r.n)}</td><td>${r.s}</td><td>${r.c}</td><td>${r.t}</td></tr>`).join('')}</table>`;
+    fit($('rv'), $('rv'));
   }).catch(() => { e.textContent = 'No se pudo cargar la clasificación.'; });
 }
 
@@ -222,8 +365,6 @@ function fs() {
   if (!rf) return toast('En iPhone: Compartir → Añadir a pantalla de inicio');
   const p = rf.call(FE, { navigationUI: 'hide' }); if (p && p.catch) p.catch(() => {});
 }
-const fsu = () => { $('fl').textContent = isFs() ? 'Salir' : 'Pantalla completa'; };
-document.addEventListener('fullscreenchange', fsu); document.addEventListener('webkitfullscreenchange', fsu);
 function closeFo() { $('fo').hidden = true; sessionStorage.fo = 1; }
 if (matchMedia('(pointer:coarse)').matches && !sessionStorage.fo) {
   $('fo').hidden = false;
@@ -231,8 +372,9 @@ if (matchMedia('(pointer:coarse)').matches && !sessionStorage.fo) {
 }
 let sx = 0, sy = 0;
 $('sv').addEventListener('touchstart', e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
-$('sv').addEventListener('touchend', e => { const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy; if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) go(dx < 0 ? 1 : -1); }, { passive: true });
-document.addEventListener('keydown', e => { if (e.target.tagName === 'INPUT' || $('sv').hidden) return; if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(1); } else if (e.key === 'ArrowLeft') go(-1); });
+$('sv').addEventListener('touchend', e => { if (e.target.closest('#tm')) return; const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy; if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) go(dx < 0 ? 1 : -1); }, { passive: true });
+document.addEventListener('keydown', e => { if (e.target.tagName === 'INPUT' || $('sv').hidden) return; if (e.key === 'ArrowRight') go(1); else if (e.key === 'ArrowLeft') go(-1); });
+addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if (FR && FR[0].isConnected && !(tab === 2 && !$('sv').hidden)) fit(FR[0], FR[1]); }, 150); });
 addEventListener('hashchange', route);
 route();
 </script>
