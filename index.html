@@ -12,13 +12,8 @@ button{font:inherit}
 #top{display:flex;align-items:center;gap:20px;padding:10px 28px;border-bottom:1px solid var(--ln);background:#070b12cc}
 #dots{display:flex;gap:6px}#dots i{width:26px;height:6px;border-radius:3px;background:var(--ln)}#dots i.on{background:var(--a)}#dots i.p{background:#2f4a66}
 #ct{margin-left:auto;color:var(--mu)}
-#qrb{text-align:center;font-size:12px;color:var(--mu)}
-#qr{width:84px;background:#fff;border-radius:8px;padding:5px;display:block;margin:0 auto 2px}
-body.big #qrb{position:fixed;right:5vw;top:20vh;font-size:22px;z-index:5;color:var(--fg)}
-body.big #qr{width:min(40vh,28vw);padding:14px;border-radius:18px;box-shadow:0 0 60px #22d3ee55}
 #main{flex:1;display:grid;grid-template-columns:1.5fr 1fr;gap:20px;padding:16px 28px;min-height:0}
 #main.solo{grid-template-columns:1fr}#main.solo #lc,#main.solo #rc{display:none}#main:not(.solo) #sl{display:none}#sl{grid-column:1/-1}#lc{display:flex;flex-direction:column;gap:12px;min-height:0}
-body.big #sl{max-width:56vw}
 #sl{overflow:auto;min-height:0;animation:in .35s}
 @keyframes in{from{opacity:0;transform:translateY(8px)}}
 #rc{display:flex;flex-direction:column;gap:12px;min-height:0;overflow:auto}
@@ -109,19 +104,15 @@ h1{font-size:clamp(26px,3vw,46px);line-height:1.1;letter-spacing:-.02em;font-wei
 /* ===== Resaltado de lo importante (host y celular) ===== */
 .bc b,.pts b,.hero p b{color:var(--a);font-weight:800;background:color-mix(in srgb,var(--a) 16%,transparent);padding:0 .22em;border-radius:.25em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 
-/* ===== Barra superior fija + QR solo en la primera ===== */
+/* ===== Barra superior fija ===== */
 #top{height:76px;padding:0 28px;gap:28px;flex:none}
 #top .brand{font-size:44px;line-height:1}
-#ct{font-size:22px}
+#ct{font-size:22px}#url{color:var(--mu);font-size:clamp(14px,1.2vw,22px)}
 #dots{flex:1;gap:8px}
 #dots i{flex:1;width:auto;height:14px;border-radius:7px;transition:background .5s,box-shadow .5s}
 #dots i.p{background:color-mix(in srgb,var(--c) 45%,var(--ln))}
 #dots i.on{background:var(--c);box-shadow:0 0 18px var(--c)}
 .ttl.tick{animation:tick .6s cubic-bezier(.2,1.5,.4,1)}@keyframes tick{from{transform:scale(.35);opacity:0}}
-#qrb{position:fixed;right:5vw;top:20vh;z-index:5;font-size:clamp(18px,1.6vw,30px);font-weight:700;color:var(--fg);opacity:0;transform:translateY(24px) scale(.92);pointer-events:none;transition:opacity .5s,transform .5s}
-body.big #qrb{opacity:1;transform:none}
-body.big #url{font-size:clamp(16px,1.6vw,30px)}
-#qr{width:min(40vh,28vw);padding:14px;border-radius:18px;box-shadow:0 0 60px #22d3ee55}
 
 /* ===== Texto grande para proyectar (solo host) ===== */
 #main{grid-template-columns:1.1fr 1fr;view-transition-name:sl}
@@ -191,7 +182,7 @@ body.big #url{font-size:clamp(16px,1.6vw,30px)}
 
 <div id="hv" hidden>
   <div id="top"><div class="brand">TTL=<b class="ttl">7</b></div><div id="dots"></div><span id="ct" class="mono">0 conectados</span>
-    <div id="qrb"><img id="qr" src="/qr.svg" onerror="this.remove()" alt="QR"><code id="url"></code></div></div>
+    <code id="url"></code></div>
   <div id="main"><section id="sl"></section>
     <section id="lc"><div id="gp"></div><section id="tm"><div id="chr"><i></i><i></i><i></i><span>&nbsp;ttl0@expo · terminal simulada</span></div><div id="tabs"></div><div id="o"></div>
       <div id="ipt"><span id="pr"></span><input id="in" autocomplete="off" spellcheck="false" placeholder="help"></div></section><div id="osr"></div></section>
@@ -270,7 +261,6 @@ function paint() {
   document.documentElement.style.setProperty('--a', s.a);
   const body = () => mode === 's' ? (s.hero ? hero(s) : card(s)) : mode === 'e' ? ev() : qv();
   if (H) {
-    document.body.classList.toggle('big', mode === 's' && cur === 0);
     $('main').classList.toggle('solo', full);
     $('st').style.display = mode === 's' && s.q ? '' : 'none';
     const dd = $('dots'); if (!dd.children.length) dd.innerHTML = SL.map(x => `<i style="--c:${x.a}"></i>`).join('');

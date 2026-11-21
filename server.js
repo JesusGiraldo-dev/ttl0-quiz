@@ -3,8 +3,6 @@ const PORT = process.env.PORT || 3000, KEY = process.env.HOST_KEY || '', T = 200
 const lan = () => { for (const l of Object.values(os.networkInterfaces())) for (const a of l) if (a.family === 'IPv4' && !a.internal) return a.address; return 'localhost'; };
 const URL_ = process.env.PUBLIC_URL || process.env.RENDER_EXTERNAL_URL || `http://${lan()}:${PORT}`;
 const HTML = fs.readFileSync(__dirname + '/index.html');
-let qr = null;
-try { require('qrcode').toString(URL_, { type: 'svg', margin: 1 }, (e, s) => { if (!e) qr = s; }); } catch {}
 
 const Q = [
   [0, 'Tu PC muestra 169.254.x.x. ¿Qué pasó?', ['No hubo DHCP (APIPA)', 'Es tu IP pública', 'Es el loopback', 'Falló el switch'], 0],
@@ -120,7 +118,6 @@ function on(s, m) {
 
 const srv = http.createServer((q, r) => {
   const u = new URL(q.url, 'http://x');
-  if (u.pathname === '/qr.svg' && qr) { r.writeHead(200, { 'Content-Type': 'image/svg+xml' }); return r.end(qr); }
   if (u.pathname === '/' || u.pathname === '/host') {
     if (u.pathname === '/host' && KEY && u.searchParams.get('key') !== KEY) { r.writeHead(403); return r.end(); }
     r.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' }); return r.end(HTML);
@@ -137,4 +134,4 @@ srv.on('upgrade', (q, s) => {
   s.on('error', () => {});
 });
 setInterval(() => { for (const s of C) if (!s.destroyed) s.write(Buffer.from([137, 0])); }, 25000);
-srv.listen(PORT, '0.0.0.0', () => console.log(`Host:  http://localhost:${PORT}/host${KEY ? '?key=' + KEY : ''}\nJugadores:  ${URL_}${qr ? '' : '\n(sin QR: ejecuta npm i qrcode una vez)'}`));
+srv.listen(PORT, '0.0.0.0', () => console.log(`Host:  http://localhost:${PORT}/host${KEY ? '?key=' + KEY : ''}\nJugadores:  ${URL_}`));
