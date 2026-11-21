@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><meta name="theme-color" content="#070b12"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><title>TTL=0 · Diagnóstico de redes</title>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><meta name="theme-color" content="#070b12"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><title>TTL=0 · Diagnóstico de redes</title>
 <style>
 :root{--bg:#070b12;--pn:#0c1522;--ln:#1b2a3d;--fg:#dbe7f3;--mu:#7f93a8;--a:#22d3ee;--g:#4ade80;--w:#3b82f6;--l:#fbbf24;--c:#14b8a6;color-scheme:dark}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -153,7 +153,7 @@ body.lk .adm,body.lk #ctl{display:none!important}
 body:not(.ad) .ao{display:none!important}
 .wt{display:none;color:var(--mu)}body.lk .wt{display:block}
 .cta:disabled{opacity:.5;animation:none;cursor:default;transform:none;filter:none}
-</style></style>
+</style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
 <symbol id="i-win" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M3 5.5l8-1.1v7H3zM12 4.3l9-1.3v8.4h-9zM3 12.6h8v7l-8-1.1zM12 12.6h9V21l-9-1.3z"/></symbol>
 <symbol id="i-cisco" viewBox="0 0 24 24"><g fill="currentColor" stroke="none"><rect x="2" y="10" width="2.2" height="6" rx="1.1"/><rect x="6" y="6" width="2.2" height="12" rx="1.1"/><rect x="10" y="3" width="2.2" height="18" rx="1.1"/><rect x="14" y="6" width="2.2" height="12" rx="1.1"/><rect x="18" y="10" width="2.2" height="6" rx="1.1"/></g></symbol>
@@ -170,12 +170,12 @@ body:not(.ad) .ao{display:none!important}
 <symbol id="i-srv" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="7" rx="2"/><rect x="4" y="13" width="16" height="7" rx="2"/><path d="M8 6.5h.01M8 16.5h.01"/></symbol>
 <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></symbol>
 <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M7 4l13 8-13 8z"/></symbol>
-<symbol id="i-fs" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol><symbol id="i-fs" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol></defs></svg>
+<symbol id="i-fs" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol><symbol id="i-arp" viewBox="0 0 24 24"><path d="M4 8h14M14 4l4 4-4 4M20 16H6M10 12l-4 4 4 4"/></symbol><symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="2"/><path d="M7 7V4M12 7V4M17 7V4M7 17v3M12 17v3M17 17v3"/></symbol><symbol id="i-port" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="8" rx="1"/><path d="M7 8v4M11 8v4M15 8v4"/></symbol><symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol></defs></svg>
 <div id="app">
 <div id="top"><div class="brand">TTL=<b id="ttl">7</b></div><span id="adb"></span><div id="dots"></div><div id="ctl"><button id="pb" onclick="go(-1)">◀</button><button id="nb" onclick="go(1)">▶</button></div><button id="fb" onclick="fs()" title="Pantalla completa"><svg class="ico"><use href="#i-fs"/></svg></button></div>
 <div id="sv" class="v"></div><div id="qv" class="v" hidden></div><div id="rv" class="v" hidden></div>
 </div>
-<div id="tmh"><div id="tm"><div id="chr"><i></i><i></i><i></i><span>&nbsp;ttl0@redes · terminal simulada</span></div><div id="otabs"></div><div id="o"></div><div id="ch"></div><div id="ipt"><span id="pr"></span><input id="in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" placeholder="help"></div></div></div>
+<div id="tmh"><div id="tm"><div id="chr"><i></i><i></i><i></i><span id="ct">&nbsp;ttl0@redes · terminal simulada</span></div><div id="otabs"></div><div id="o"></div><div id="ch"></div><div id="ipt"><span id="pr"></span><input id="in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" placeholder="help"></div></div></div>
 <div id="toast"></div>
 <div id="fo" hidden><div class="brand" style="font-size:44px">TTL=0</div><p id="ft">Para ver mejor, usa pantalla completa.</p><button class="cta" id="fy" onclick="fs();closeFo()">Pantalla completa</button><button class="cta alt" onclick="closeFo()">Continuar así</button></div>
 <script>
@@ -198,12 +198,17 @@ const SL = [
  {i:'bolt',a:'#4ade80',hero:1,t:'Diagnóstico de redes',w:'Redes de Computadores · Grupo 3',p:['Avanza con **▶** o **desliza**','Al final: **quiz de repaso de 10 preguntas**']},
  {i:'ip',a:'#22d3ee',t:'IP y direccionamiento',w:'Meléndez',b:['Es la **dirección lógica** de un equipo en la red (**capa 3**). La **MAC** es su identidad física dentro de la LAN.','La **máscara** separa **red** y **host**: si el destino es de tu red usas **ARP** y envías directo; si no, lo mandas al **gateway**.','**IP = Internet Protocol**, «protocolo entre redes»: las reglas para direccionar paquetes de una red a otra.'],an:'IP es la dirección de la casa, la MAC el nombre de quien vive y la máscara el código postal.',p:['**IP** (capa 3) identifica en la red; **MAC** (capa 2, 48 bits) solo dentro de la LAN','Privadas: **10/8** · **172.16/12** · **192.168/16** · Loopback **127.0.0.1** · APIPA **169.254.x.x**','**/24** = 254 equipos · **/26** = 62 · **/30** = 2','**DHCP = DORA** (UDP 67/68) · **ARP** pregunta: ¿quién tiene esta IP?'],c:['ipconfig /all · arp -a','ip -br a · ip neigh','show ip interface brief · show ip arp'],
   g:'<div class="oct"><span class="net">192</span>.<span class="net">168</span>.<span class="net">1</span>.<span class="hst">10</span><em>/24</em></div><div class="cap"><span class="net">red</span> 255.255.255.0 <span class="hst">host</span></div>'},
+ {i:'card',a:'#60a5fa',t:'ipconfig, ifconfig e ip',w:'Meléndez',b:['La herramienta que **muestra la configuración IP** de tus tarjetas de red: dirección, máscara, puerta de enlace y DNS.','Lee lo que dejó **DHCP**. Con **/all** añade **MAC, DNS y concesión**; **/release** y **/renew** piden otra IP y **requieren administrador**.','**ip**config = «IP configuration». **ifconfig** viene de Unix («interface config»); hoy Linux usa el comando **ip**.'],an:'La cédula de tu equipo en la red: dice quién eres, a qué red perteneces y por dónde salir.',c:['ipconfig /all','ip -br a','show ip interface brief'],g:'<div class="rt"><div class="r"><code>IPv4</code><span>192.168.1.10</span><b>tu dirección</b></div><div class="r"><code>Máscara</code><span>255.255.255.0</span><b>/24</b></div><div class="r win"><code>Gateway</code><span>192.168.1.1</span><b>la salida</b></div></div>'},
+ {i:'arp',a:'#f472b6',t:'ARP, MAC y hostname',w:'Isaac',b:['**ARP** guarda la tabla que une cada **IP** de tu red con su **MAC**. **getmac** y **hostname** identifican a tu equipo.','Si el destino es de tu red, el PC pregunta por **broadcast**: «¿quién tiene esta IP?». El dueño responde con su MAC y queda en la **tabla ARP**.','**ARP = Address Resolution Protocol**, «resolución de direcciones»: traduce IP a MAC. **hostname** es el nombre del equipo.'],an:'Gritar en el salón «¿quién tiene la IP .20?» y anotar quién levanta la mano.',c:['arp -a','ip neigh','show ip arp'],x:[['getmac /v','hostname'],['hostname'],['show interfaces']],g:dg([['Tu PC','pc','192.168.1.10'],['Router','rt','192.168.1.1'],['Vecino','pc','192.168.1.20']],'flow')},
  {i:'ping',a:'#4ade80',t:'Ping e ICMP',w:'Meléndez',b:['Una prueba que dice si un destino **responde**, cuánto tarda (**RTT**) y cuántos paquetes se **pierden**.','Envía un **ICMP Echo Request (8)** y espera el **Echo Reply (0)**. Cada router en el camino resta **1 al TTL**.','Su autor, Mike Muuss, lo nombró por el **sonar**: se lanza un pulso y se espera el eco.'],an:'Gritar «¡HOLA!» en una cueva y medir cuánto tarda el eco.',p:['**ICMP** Echo Request (8) / Echo Reply (0): capa 3, **sin puertos**','Mide **RTT**, **pérdida** y **TTL** (cada router resta 1)','TTL inicial: Windows **128** · Linux **64** · Cisco **255**','Escalera: 127.0.0.1 → tu IP → gateway → 8.8.8.8 → dominio'],c:['ping -n 4 8.8.8.8','ping -c 4 8.8.8.8','ping 8.8.8.8   (. ! U N &)'],g:dg([['Tu PC','pc'],['Router','rt'],['8.8.8.8','srv']],'ping')},
  {i:'route',a:'#f59e0b',t:'Rutas y enrutamiento',w:'Isaac',b:['La decisión de **por dónde enviar** cada paquete, tomada con la **tabla de enrutamiento** de cada equipo o router.','El router mira solo la **IP destino** y elige la ruta de **máscara más larga** (longest prefix match); si ninguna coincide, usa la **ruta por defecto**.','Ruta viene de «route», camino. Enrutar es **elegir el camino entre redes**.'],an:'Los letreros de una glorieta: «para ir a Santa Marta, por esta calle».',p:['La tabla guarda **red destino**, **siguiente salto**, interfaz y **métrica**','**Longest prefix match**: gana la máscara más larga (**0.0.0.0/0** = por defecto)','**Distancia administrativa**: Conectada **0** · Estática **1** · EIGRP **90** · OSPF **110** · RIP **120**','**Ida y vuelta** necesitan ruta (ruta asimétrica)'],c:['route print','ip route','show ip route'],
   g:'<div class="rt"><div class="r win"><code>172.16.0.0/24</code><span>→ 10.0.0.2</span><b>/24 gana</b></div><div class="r"><code>0.0.0.0/0</code><span>→ 192.168.1.254</span><b>por defecto</b></div></div>'},
  {i:'trace',a:'#fb7185',t:'Traceroute',w:'Isaac',b:['Una herramienta que muestra **cada router (salto)** que cruza un paquete hasta su destino, con su tiempo.','Manda sondas con **TTL 1, 2, 3…**; donde el TTL llega a **0**, ese router responde **ICMP Time Exceeded** y así se descubre el camino.','Trace route = «rastrear la ruta»: dibuja el **mapa salto a salto**.'],an:'Enviar cartas que caducan tras 1, 2, 3 saltos y anotar dónde caduca cada una.',p:['Sondas con **TTL 1, 2, 3…**: el router que lo lleva a 0 responde **ICMP Time Exceeded (11)**','Windows usa ICMP Echo · Linux y Cisco usan UDP a puertos altos','* * * = ese router **no responde** · IPs repetidas = **bucle** · varias IPs = **balanceo**','Último salto: Echo Reply (Windows) / Port Unreachable (Linux)'],c:['tracert -d 8.8.8.8','traceroute -n 8.8.8.8','traceroute 172.16.0.10'],g:dg([['PC','pc'],['R1','rt'],['R2','rt'],['Destino','srv']],'trace')},
  {i:'dns',a:'#a78bfa',t:'DNS',w:'Jesús',b:['El sistema que **traduce nombres** como google.com a **direcciones IP**.','El equipo mira su **caché** y el archivo **hosts**; si no, pregunta al **resolvedor** (**UDP 53**), que consulta **Raíz → TLD → Autoritativo** y guarda la respuesta según su TTL.','**DNS = Domain Name System**, «sistema de nombres de dominio».'],an:'La guía telefónica de internet: buscas el nombre y te da el número.',p:['**Orden:** caché → hosts → resolvedor → Raíz → TLD → Autoritativo','Registros A · AAAA · CNAME · MX · NS · PTR · UDP 53 (TCP 53 si es grande)','TTL del DNS = **segundos** en caché ≠ TTL de IP = **saltos**','ping usa el **resolvedor del SO**; nslookup y dig van **directo al servidor**'],c:['nslookup google.com','dig google.com','show hosts · no ip domain-lookup'],g:dg([['Tu PC','pc'],['Resolvedor','dns','UDP 53'],['Raíz','ip','.'],['TLD','ip','.com'],['Autoritativo','srv','google.com']],'flow')},
  {i:'sock',a:'#38bdf8',t:'Sockets y puertos',w:'Jesús',b:['El punto exacto donde un programa envía o recibe datos: **IP + puerto + protocolo**.','Un programa escucha (**LISTEN**) en un puerto; al llegar un cliente pasa a **ESTABLISHED**, y al cerrar queda un rato en **TIME_WAIT**.','Socket significa **«enchufe»**: el punto donde un programa se conecta a la red.'],an:'Edificio + apartamento + tipo de entrega: la IP es el edificio y el puerto el apartamento.',p:['**Socket = IP + puerto + protocolo** · TCP: tupla de 5','**0.0.0.0**:3000 = toda la red · **127.0.0.1**:3000 = solo local','Estados: LISTEN → SYN → ESTABLISHED → TIME_WAIT','ss usa netlink, netstat lee /proc · Cisco solo ve sus propios sockets','Prueba en vivo: netstat/ss muestra los celulares conectados ahora'],c:['netstat -ano','ss -tulnp','show tcp brief'],g:dg([['Celular','phone',':50412'],['Servidor del quiz','srv','0.0.0.0:3000']],'flow')},
+ {i:'port',a:'#2dd4bf',t:'pathping y Test-NetConnection',w:'Jesús',b:['**pathping** une ping y tracert: mide la **pérdida por salto**. **Test-NetConnection** prueba conexión y **puertos TCP** desde PowerShell.','pathping recorre la ruta y luego envía muchas sondas a cada salto. Test-NetConnection abre una conexión **TCP**: si responde, el **servicio** está arriba.','**Ping + Path**; **Test** + **Net**work **Connection**. En Linux, **mtr** hace lo mismo que pathping.'],an:'pathping revisa cada tramo de la carretera; Test-NetConnection toca el timbre de una puerta concreta.',c:['pathping -n 8.8.8.8','mtr -rn 8.8.8.8','traceroute 8.8.8.8'],x:[['powershell'],[],[]],g:'<div class="rt"><div class="r win"><code>pathping</code><span>pérdida por salto</span><b>ruta</b></div><div class="r"><code>Test-NetConnection -Port 443</code><span>TcpTestSucceeded</span><b>puerto</b></div></div>'},
+ {i:'list',a:'#fbbf24',t:'Diagnóstico: PC sin Internet',w:'Todos',sc:1,h:['Objetivo','El orden','Cómo leerlo'],b:['Ir de **lo más cercano a lo más lejano** para ubicar dónde se rompe la comunicación.','**1** ipconfig → **2** ping al gateway → **3** ping a 8.8.8.8 → **4** nslookup → **5** tracert.','Sin **IP válida** = DHCP · IP responde pero el nombre no = **DNS** · gateway sí y 8.8.8.8 no = **salida a Internet** · se corta en un salto = **ruta**.'],an:'Un médico: primero signos vitales y luego exámenes. Prueba las fallas con los botones fallo dhcp · gw · dns.',c:['ipconfig','ip -br a','show ip interface brief'],g:dg([['1 ipconfig','pc'],['2 ping GW','rt'],['3 ping IP','srv'],['4 nslookup','dns'],['5 tracert','ip']],'flow')},
+ {i:'shield',a:'#a3e635',t:'Buenas prácticas',w:'Todos',h:['Antes','Durante','Después'],b:['**Consulta antes de cambiar**: ipconfig, ping, arp -a y route print no modifican nada.','**Anota resultados y hora** y compara varias pruebas: una sola no confirma la causa. Algunos comandos piden **administrador**.','**No publiques** IP internas ni nombres de equipos. Si el ping falla, revisa si el **firewall** lo bloquea antes de culpar a la red.'],an:'Un mecánico: revisa y anota antes de desarmar nada.',g:'<div class="rt"><div class="r win"><code>Consultar</code><span>ipconfig · ping · arp -a</span><b>primero</b></div><div class="r"><code>Modificar</code><span>/release · /renew · route add</span><b>después</b></div></div>'},
  {i:'bolt',a:'#4ade80',t:'Quiz de repaso',w:'Todos',p:['**10** preguntas · **20 s** cada una','Más rápido = **más puntos**','**Top 3** al final'],q:1}
 ];
 
@@ -217,14 +222,29 @@ const Q = [
   ['¿Qué responde el router cuando el TTL llega a 0?', ['Echo Reply', 'ICMP Time Exceeded', 'Port Unreachable', 'SYN-ACK'], 1],
   ['Un salto muestra * * * pero el destino responde. ¿Hay falla?', ['Sí, ruta cortada', 'No, ese router no responde sondas', 'Hay un bucle', 'Falla el DNS'], 1],
   ['Escribes mal un comando en Cisco y se congela. ¿Por qué?', ['Intenta resolverlo por DNS', 'Pierde el ARP', 'Venció el DHCP', 'La interfaz cayó'], 0],
-  ['¿Qué diferencia a 0.0.0.0:3000 de 127.0.0.1:3000?', ['Son iguales', '0.0.0.0 acepta de toda la red', '127.0.0.1 acepta celulares', '0.0.0.0 es solo UDP'], 1]
+  ['¿Qué diferencia a 0.0.0.0:3000 de 127.0.0.1:3000?', ['Son iguales', '0.0.0.0 acepta de toda la red', '127.0.0.1 acepta celulares', '0.0.0.0 es solo UDP'], 1],
+  ['ipconfig /all muestra algo que ipconfig solo no. ¿Qué?', ['MAC, DNS y DHCP', 'La tabla de rutas', 'Los puertos abiertos', 'El TTL'], 0],
+  ['¿Qué comando de Linux reemplaza a ifconfig?', ['ip addr', 'ipconfig', 'getmac', 'netstat'], 0],
+  ['¿Qué relaciona la tabla ARP?', ['IP con MAC', 'Nombre con IP', 'Puerto con proceso', 'Ruta con métrica'], 0],
+  ['pathping se diferencia de tracert porque…', ['Mide la pérdida por salto', 'Solo funciona en Linux', 'Usa DNS', 'Muestra la MAC'], 0],
+  ['Test-NetConnection -Port 443 sirve para…', ['Probar si un puerto TCP responde', 'Ver la tabla ARP', 'Liberar la IP', 'Cambiar el DNS'], 0],
+  ['ping a 8.8.8.8 funciona, pero a google.com no. ¿Qué sospechas?', ['Problema de DNS', 'Cable roto', 'Sin gateway', 'IP duplicada'], 0],
+  ['Primer paso para diagnosticar un PC sin Internet:', ['ipconfig', 'tracert', 'netstat', 'Cambiar el DNS'], 0],
+  ['El ping falla pero el sitio abre en el navegador. ¿Por qué?', ['El host bloquea ICMP', 'DNS caído', 'Sin gateway', 'IP APIPA'], 0],
+  ['Ves «TTL expirado en tránsito». ¿Qué pasó?', ['El TTL llegó a 0 en un router', 'No hay DHCP', 'El puerto está cerrado', 'La MAC cambió'], 0]
 ];
 
 
-let OS = 'w', busy = 0, first = {}, IPS = ['192.168.1.20', '192.168.1.31', '192.168.1.44'], URLS = 'http://192.168.1.50:3000';
-const P = { w: 'C:\\>', l: 'user@pc:~$', c: 'R1#' };
-const DNS = { 'google.com': '142.250.0.1', 'web.local': '172.16.0.10' }, TTLS = { '192.168.1.1': 255, '10.0.0.2': 254, '172.16.0.10': 126 };
-const path = ip => ip === '172.16.0.10' ? [['192.168.1.1', 1], ['10.0.0.2', 2], [ip, 3]] : [['192.168.1.1', 1], ['10.20.0.1', 8], [null], [ip, 17]];
+let OS = 'w', busy = 0, first = {}, IPS = ['192.168.1.20', '192.168.1.31', '192.168.1.44'], URLS = 'http://192.168.1.50:3000', SC = 'ok', AD = 0, PS = 0;
+const SCN = { ok: 'red normal', dhcp: 'sin DHCP', gw: 'sin Internet', dns: 'falla DNS' }, MACS = ['5c:e9:1e:aa:bb:01', '5c:e9:1e:aa:bb:02', '5c:e9:1e:aa:bb:03'], GM = 'a4:2b:b0:11:22:33', MM = '3c:52:82:a1:5b:9e', RM = '00:50:79:66:68:00', HN = { w: 'PC-LAB-03', l: 'ttl0-lab' };
+const P = { l: 'user@pc:~$', c: 'R1#' }, pr = () => OS === 'w' ? (PS ? 'PS C:\\>' : AD ? 'C:\\WINDOWS\\system32>' : 'C:\\>') : P[OS];
+const DNS = { 'google.com': '142.250.0.1', 'web.local': '172.16.0.10', 'fw.local': '172.16.0.20', 'caido.local': '192.168.1.99' }, TTLS = { '192.168.1.1': 255, '10.0.0.2': 254, '172.16.0.10': 126 };
+const HOSTS = { '192.168.1.99': 'un', '10.255.255.1': 'to', '172.16.0.20': 'to' }, OPEN = { '142.250.0.1': [80, 443], '172.16.0.10': [80, 443, 3389], '172.16.0.20': [443], '8.8.8.8': [53, 443] };
+const IP0 = () => SC === 'dhcp' ? '169.254.23.87' : '192.168.1.10', lan = ip => /^192\.168\.1\./.test(ip), names = t => SC === 'ok' ? DNS[t] : null;
+const NB = () => SC === 'dhcp' ? [] : [['192.168.1.1', GM], ...IPS.map((p, i) => [p, MACS[i]])], mw = m => m.replace(/:/g, '-'), mc = m => m.replace(/:/g, '').replace(/(.{4})(?=.)/g, '$1.');
+const path = ip => lan(ip) ? [[ip, 1]] : ip === '172.16.0.10' ? [['192.168.1.1', 1], ['10.0.0.2', 2], [ip, 3]] : [['192.168.1.1', 1], ['10.20.0.1', 8], [null], [ip, 17]];
+const reach = ip => ip === '127.0.0.1' || ip === IP0() ? 'ok' : SC === 'dhcp' ? 'fail' : HOSTS[ip] || (SC === 'gw' && ip !== '192.168.1.1' && !IPS.includes(ip) ? 'to' : 'ok');
+const hops = ip => { const r = reach(ip); return r === 'ok' ? path(ip) : r === 'fail' ? null : [['192.168.1.1', 1], [null], [null], [null]]; };
 const isIp = x => /^\d+(\.\d+){3}$/.test(x), tgt = a => a.filter(x => !x.startsWith('-') && !x.startsWith('@') && !/^\d+$/.test(x)).pop();
 const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1)), sleep = ms => new Promise(r => setTimeout(r, ms));
 const out = (l = '') => { const d = document.createElement('div'); d.className = 'ln'; d.addEventListener('animationend', () => d.classList.remove('ln'), { once: true }); d.textContent = l; $('o').appendChild(d); $('o').scrollTop = 1e9; return d; };
@@ -233,51 +253,88 @@ const st = r => [Math.min(...r), Math.round(r.reduce((a, b) => a + b) / r.length
 const me = () => (URLS.match(/\/\/([\d.]+)/) || [])[1] || '192.168.1.50';
 const port = i => 50412 + i * 37;
 const bad = (t, tr) => OS === 'w' ? (tr ? `No se puede resolver el nombre del sistema de destino ${t}.` : `La solicitud de ping no pudo encontrar el host ${t}. Compruebe el nombre e intente de nuevo.`) : OS === 'l' ? `${tr ? 'traceroute' : 'ping'}: ${t}: Temporary failure in name resolution` : '% Unrecognized host or address or protocol not running.';
+function setSc(v) { SC = v; $('ct').textContent = '\u00a0ttl0@redes · terminal simulada' + (v === 'ok' ? '' : ' · ' + SCN[v]); }
 
 async function ping(a) {
   const t = tgt(a);
   if (!t) return out(OS === 'w' ? 'Uso: ping destino' : OS === 'l' ? 'ping: usage error: Destination address required' : '% Incomplete command.');
-  const ip = isIp(t) ? t : DNS[t];
+  const ip = isIp(t) ? t : names(t);
   if (!ip) return out(bad(t, 0));
-  const lo = ip === '127.0.0.1', base = lo ? 0 : path(ip).at(-1)[1], ttl = lo ? { w: 128, l: 64, c: 255 }[OS] : TTLS[ip] || 117;
+  const lo = ip === '127.0.0.1' || ip === IP0(), pa = path(ip), base = lo ? 0 : pa.at(-1)[1], ttl = lo ? { w: 128, l: 64, c: 255 }[OS] : TTLS[ip] || (lan(ip) ? 64 : 117), lm = IP0();
+  const xi = a.indexOf(OS === 'w' ? '-i' : '-t'), tl = OS === 'c' || xi < 0 ? 0 : +a[xi + 1], hop = tl && !lo && tl < pa.length ? pa[tl - 1] : null, s = hop ? (hop[0] ? 'tx' : 'to') : reach(ip);
   if (OS === 'c') {
     out('Type escape sequence to abort.'); out(`Sending 5, 100-byte ICMP Echos to ${ip}, timeout is 2 seconds:`);
     const d = out(''), f = !first[ip]; first[ip] = 1;
-    for (let i = 0; i < 5; i++) { await sleep(i ? 300 : 900); d.textContent += f && i === 0 ? '.' : '!'; }
+    for (let i = 0; i < 5; i++) { await sleep(s === 'ok' ? (i ? 300 : 900) : 600); d.textContent += s === 'ok' ? (f && i === 0 ? '.' : '!') : s === 'un' ? (i % 2 ? '.' : 'U') : '.'; }
+    if (s !== 'ok') return out('Success rate is 0 percent (0/5)');
     const r = [0, 1, 2, 3, 4].map(() => rnd(base, base + 3)), [mn, av, mx] = st(r);
     return out(`Success rate is ${f ? '80 percent (4/5)' : '100 percent (5/5)'}, round-trip min/avg/max = ${mn}/${av}/${mx} ms`);
   }
-  const r = [0, 1, 2, 3].map(() => rnd(base, base + 2)), [mn, av, mx] = st(r);
+  const r = [0, 1, 2, 3].map(() => rnd(base, base + 2)), [mn, av, mx] = st(r), ok = s === 'ok', rc = ok || s === 'un' || s === 'tx' ? 4 : 0;
   if (OS === 'w') {
+    const L = { ok: v => `Respuesta desde ${ip}: bytes=32 tiempo${v < 1 ? '<1' : '=' + v}ms TTL=${ttl}`, to: () => 'Tiempo de espera agotado para esta solicitud.', un: () => `Respuesta desde ${lm}: Host de destino inaccesible.`, tx: () => `Respuesta desde ${hop[0]}: TTL expirado en tránsito.`, fail: () => 'PING: error en la transmisión. Error general.' };
     out(`Haciendo ping a ${t}${t !== ip ? ' [' + ip + ']' : ''} con 32 bytes de datos:`);
-    for (const v of r) { await sleep(700); out(`Respuesta desde ${ip}: bytes=32 tiempo${v < 1 ? '<1' : '=' + v}ms TTL=${ttl}`); }
-    return emit(['', `Estadísticas de ping para ${ip}:`, '    Paquetes: enviados = 4, recibidos = 4, perdidos = 0 (0% perdidos),', 'Tiempos aproximados de ida y vuelta en milisegundos:', `    Mínimo = ${mn}ms, Máximo = ${mx}ms, Media = ${av}ms`], 0);
+    for (const v of r) { await sleep(s === 'to' ? 1000 : 700); out(L[s](v)); }
+    return emit(['', `Estadísticas de ping para ${ip}:`, `    Paquetes: enviados = 4, recibidos = ${rc}, perdidos = ${4 - rc} (${(4 - rc) * 25}% perdidos),`, ...(ok ? ['Tiempos aproximados de ida y vuelta en milisegundos:', `    Mínimo = ${mn}ms, Máximo = ${mx}ms, Media = ${av}ms`] : [])], 0);
   }
+  if (s === 'fail') return out('ping: connect: Network is unreachable');
+  const L = { ok: (v, i) => `64 bytes from ${ip}: icmp_seq=${i + 1} ttl=${ttl} time=${v}.${rnd(0, 9)} ms`, un: (v, i) => `From ${lm} icmp_seq=${i + 1} Destination Host Unreachable`, tx: (v, i) => `From ${hop[0]} icmp_seq=${i + 1} Time to live exceeded` };
   out(`PING ${t} (${ip}) 56(84) bytes of data.`);
-  for (const [i, v] of r.entries()) { await sleep(700); out(`64 bytes from ${ip}: icmp_seq=${i + 1} ttl=${ttl} time=${v}.${rnd(0, 9)} ms`); }
-  return emit(['', `--- ${t} ping statistics ---`, '4 packets transmitted, 4 received, 0% packet loss, time 3004ms', `rtt min/avg/max/mdev = ${mn}.1/${av}.3/${mx}.8/0.4 ms`], 0);
+  for (const [i, v] of r.entries()) { await sleep(s === 'to' ? 1000 : 700); if (L[s]) out(L[s](v, i)); }
+  return emit(['', `--- ${t} ping statistics ---`, `4 packets transmitted, ${ok ? 4 : 0} received,${s === 'un' || s === 'tx' ? ' +4 errors,' : ''} ${ok ? 0 : 100}% packet loss, time ${ok ? 3004 : 3072}ms`, ...(ok ? [`rtt min/avg/max/mdev = ${mn}.1/${av}.3/${mx}.8/0.4 ms`] : [])], 0);
 }
 async function trace(a) {
   const t = tgt(a);
   if (!t) return out(OS === 'c' ? '% Incomplete command.' : 'Uso: ' + (OS === 'w' ? 'tracert' : 'traceroute') + ' destino');
-  const ip = isIp(t) ? t : DNS[t];
+  const ip = isIp(t) ? t : names(t);
   if (!ip) return out(bad(t, 1));
+  const H = hops(ip);
+  if (!H) return out(OS === 'w' ? 'Error general.' : OS === 'l' ? 'connect: Network is unreachable' : '% No valid source address for destination');
   if (OS === 'w') emit([`Traza a ${t}${t !== ip ? ' [' + ip + ']' : ''} sobre un máximo de 30 saltos:`, ''], 0);
   else if (OS === 'l') out(`traceroute to ${t} (${ip}), 30 hops max, 60 byte packets`);
   else { out('Type escape sequence to abort.'); out(`Tracing the route to ${ip}`); out('VRF info: (vrf in name/id, vrf out name/id)'); }
-  for (const [i, h] of path(ip).entries()) {
+  for (const [i, h] of H.entries()) {
     await sleep(700); const n = i + 1;
     if (!h[0]) { out(OS === 'w' ? `${String(n).padStart(3)}     *        *        *     Tiempo de espera agotado para esta solicitud.` : OS === 'l' ? ` ${n}  * * *` : ` ${n}   *  *  *`); continue; }
     const ts = [0, 1, 2].map(() => rnd(h[1], h[1] + 2));
     out(OS === 'w' ? `${String(n).padStart(3)}  ${ts.map(v => (v < 1 ? '<1 ms' : v + ' ms').padStart(7)).join(' ')}  ${h[0]}` : OS === 'l' ? `${String(n).padStart(2)}  ${h[0]}  ${ts.map(v => v + '.' + rnd(0, 9) + ' ms').join('  ')}` : ` ${n} ${h[0]} ${ts.map(v => v + ' msec').join(' ')}`);
   }
-  if (OS === 'w') out('\nTraza completa.');
+  if (reach(ip) !== 'ok') out('^C'); else if (OS === 'w') out('\nTraza completa.');
+}
+async function pp(a) {
+  const t = tgt(a);
+  if (!t) return out(OS === 'w' ? 'Uso: pathping destino' : 'Usage: mtr [options] hostname');
+  const ip = isIp(t) ? t : names(t);
+  if (!ip) return out(OS === 'w' ? `No se puede resolver el nombre del sistema de destino ${t}.` : `mtr: Failed to resolve host: ${t}: Temporary failure in name resolution`);
+  const H = hops(ip);
+  if (!H) return out(OS === 'w' ? 'Error general.' : 'mtr: connect: Network is unreachable');
+  const lossy = reach(ip) === 'ok' && !lan(ip), L = H.map((h, i) => !h[0] ? 100 : lossy && i >= 1 ? 8 : 0);
+  if (OS === 'w') {
+    await emit([`Seguimiento de ruta a ${t}${t !== ip ? ' [' + ip + ']' : ''}`, 'sobre un máximo de 30 saltos:', '', `  0  ${HN.w} [${IP0()}]`, ...H.map((h, i) => `  ${i + 1}  ${h[0] || '*'}`), '', 'Procesamiento de estadísticas durante 75 segundos...'], 250);
+    await sleep(2000);
+    return emit(['', '            Origen hasta aquí', 'Salto  RTT    Perdido/Enviado = Pct  Dirección', ...H.map((h, i) => `${String(i + 1).padStart(3)}  ${h[0] ? String(h[1]).padStart(4) + 'ms' : '  ---'}   ${String(L[i]).padStart(3)}/ 100 =${String(L[i]).padStart(3)}%    ${h[0] || ''}`), '', 'Traza completa.'], 150);
+  }
+  await sleep(1500);
+  return emit([`Start: ${new Date().toISOString().slice(0, 19)}+0000`, `HOST: ${HN.l.padEnd(16)} Loss%   Snt   Last   Avg  Best  Wrst StDev`, ...H.map((h, i) => `${String(i + 1).padStart(3)}.|-- ${(h[0] || '???').padEnd(15)} ${L[i].toFixed(1).padStart(5)}%    10 ${h[0] ? [h[1] + .1, h[1] + .3, h[1], h[1] + .8, .3].map(x => x.toFixed(1).padStart(5)).join(' ') : '  0.0   0.0   0.0   0.0   0.0'}`)], 200);
+}
+async function tnc(a) {
+  const t = a.find(x => !x.startsWith('-') && !/^\d+$/.test(x)), pi = a.indexOf('-port'), pt = pi >= 0 ? +a[pi + 1] : 0;
+  if (!t) return out('Test-NetConnection: indique un destino. Ejemplo: Test-NetConnection google.com -Port 443');
+  const ip = isIp(t) ? t : names(t);
+  await sleep(900);
+  if (!ip) return emit([`ADVERTENCIA: Name resolution of ${t} failed`, '', `ComputerName           : ${t}`, 'RemoteAddress          :', 'PingSucceeded          : False'], 0);
+  const up = (SC === 'ok' || SC === 'dns') && ip !== '192.168.1.99', png = reach(ip) === 'ok', tcp = up && (OPEN[ip] || []).includes(pt), f = (n, v) => n.padEnd(pt ? 17 : 23) + ': ' + v;
+  return emit([...(pt && !tcp ? [`ADVERTENCIA: TCP connect to (${ip} : ${pt}) failed`] : []), ...(!pt && !png ? [`ADVERTENCIA: Ping to ${ip} failed with status: TimedOut`] : []), '', f('ComputerName', t), f('RemoteAddress', ip), ...(pt ? [f('RemotePort', pt), f('InterfaceAlias', 'Wi-Fi'), f('SourceAddress', IP0()), f('TcpTestSucceeded', tcp ? 'True' : 'False')] : [f('InterfaceAlias', 'Wi-Fi'), f('SourceAddress', IP0()), f('PingSucceeded', png ? 'True' : 'False'), ...(png ? [f('PingReplyDetails (RTT)', rnd(4, 20) + ' ms')] : [])])], 0);
 }
 async function dns(c, a) {
   const t = tgt(a);
   if (!t) return out(c === 'dig' ? '; <<>> DiG <<>>' : '>');
   const ip = DNS[t] || (isIp(t) ? t : null), sv = (a.find(x => x.startsWith('@')) || '@127.0.0.53').slice(1), q = rnd(12, 30);
   await sleep(400);
+  if (SC !== 'ok') {
+    await sleep(1500);
+    return emit(c === 'dig' ? [`;; communications error to ${sv}#53: timed out`, ';; no servers could be reached'] : OS === 'w' ? ['DNS request timed out.', '    timeout was 2 seconds.', 'Servidor:  UnKnown', `Address:  ${SC === 'dns' ? '192.168.1.250' : '8.8.8.8'}`, '', 'DNS request timed out.', '    timeout was 2 seconds.', '*** Tiempo de espera agotado de la solicitud a UnKnown'] : [';; connection timed out; no servers could be reached'], 0);
+  }
   if (c === 'dig') {
     if (a.includes('+short')) return out(ip || '');
     return emit([`;; ->>HEADER<<- opcode: QUERY, status: ${ip ? 'NOERROR' : 'NXDOMAIN'}, id: ${rnd(10000, 60000)}`, `;; flags: qr rd ra; QUERY: 1, ANSWER: ${ip ? 1 : 0}, AUTHORITY: 0, ADDITIONAL: 1`, '', ...(ip ? [';; ANSWER SECTION:', `${t}.  120  IN  A  ${ip}`, ''] : []), `;; Query time: ${q} msec`, `;; SERVER: ${sv}#53(${sv})`], 0);
@@ -291,45 +348,88 @@ async function sock() {
   if (OS === 'l') return emit(['Netid State  Recv-Q Send-Q Local Address:Port  Peer Address:Port  Process', 'tcp   LISTEN 0      128    0.0.0.0:22          0.0.0.0:*          users:(("sshd",pid=801))', 'tcp   LISTEN 0      511    0.0.0.0:3000        0.0.0.0:*          users:(("node",pid=2210))', ...IPS.map((p, i) => `tcp   ESTAB  0      0      ${m}:3000  ${p}:${port(i)}  users:(("node",pid=2210))`)], 0);
   return emit(['TCB       Local Address        Foreign Address       (state)', '7FA1B2C4  192.168.1.1.23       192.168.1.10.51022    ESTAB', '(el router solo ve sockets propios, no el tráfico que lo atraviesa)'], 0);
 }
-const ipc = () => emit(OS === 'w' ? ['Adaptador de Ethernet:', '   Dirección IPv4. . . . . . : 192.168.1.10', '   Máscara de subred . . . . : 255.255.255.0', '   Puerta de enlace . . . . : 192.168.1.1'] : OS === 'l' ? ['lo      UNKNOWN  127.0.0.1/8', 'eth0    UP       192.168.1.10/24'] : ['Interface              IP-Address     OK? Method Status                Protocol', 'GigabitEthernet0/0     192.168.1.1    YES manual up                    up', 'GigabitEthernet0/1     10.0.0.1       YES manual up                    up', 'GigabitEthernet0/2     unassigned     YES unset  administratively down down'], 0);
-const rt = () => emit(OS === 'w' ? ['Destino de red   Máscara          Puerta enlace   Interfaz       Métrica', '0.0.0.0          0.0.0.0          192.168.1.1     192.168.1.10   25', '192.168.1.0      255.255.255.0    En vínculo      192.168.1.10   281'] : OS === 'l' ? ['default via 192.168.1.1 dev eth0', '192.168.1.0/24 dev eth0 proto kernel scope link src 192.168.1.10'] : ['Gateway of last resort is not set', 'C 192.168.1.0/24 is directly connected, GigabitEthernet0/0', 'L 192.168.1.1/32 is directly connected, GigabitEthernet0/0', 'C 10.0.0.0/30 is directly connected, GigabitEthernet0/1', 'S 172.16.0.0/24 [1/0] via 10.0.0.2'], 0);
-const HELP = { w: 'ping · tracert · nslookup · netstat -ano · ipconfig · route print · clear', l: 'ping · traceroute · nslookup · dig · ss -tulnp · ip -br a · ip route · clear', c: 'ping · traceroute · show ip route · show ip interface brief · show tcp brief · show hosts · clear' };
+async function ipc(c, a, k) {
+  const ip = IP0(), d = SC === 'dhcp', mk = d ? '255.255.0.0' : '255.255.255.0', pf = d ? 16 : 24, dn = SC === 'dns' ? '192.168.1.250' : '8.8.8.8';
+  if (OS === 'c') return emit(['Interface              IP-Address     OK? Method Status                Protocol', 'GigabitEthernet0/0     192.168.1.1    YES manual up                    up', 'GigabitEthernet0/1     10.0.0.1       YES manual up                    up', 'GigabitEthernet0/2     unassigned     YES unset  administratively down down'], 0);
+  if (OS === 'w') {
+    const o = a[0] || '', B = ['Configuración IP de Windows', '', 'Adaptador de LAN inalámbrica Wi-Fi:', ''], A = [d ? `   Dirección IPv4 de configuración automática: ${ip}` : `   Dirección IPv4. . . . . . . . . . . . . . : ${ip}`, `   Máscara de subred . . . . . . . . . . . . : ${mk}`, `   Puerta de enlace predeterminada . . . . . : ${d ? '' : '192.168.1.1'}`];
+    if (o === '/release' || o === '/renew') {
+      if (!AD) return out('La operación solicitada requiere elevación.');
+      if (o === '/release') return emit([...B, '   Estado de los medios. . . . . . . . . . . : medios desconectados'], 0);
+      await sleep(1500);
+      return d ? out('Ocurrió un error al renovar la interfaz Wi-Fi: no se puede establecer contacto con el servidor DHCP. Se agotó el tiempo de espera de la solicitud.') : emit([...B, ...A], 0);
+    }
+    if (o && o !== '/all') return out(`Error: opción no reconocida ${o}`);
+    return emit(o ? [...B, `   Nombre de host. . . . . . . . . . . . . . : ${HN.w}`, `   Dirección física. . . . . . . . . . . . . : ${mw(MM).toUpperCase()}`, `   DHCP habilitado . . . . . . . . . . . . . : sí`, ...A, `   Servidores DNS. . . . . . . . . . . . . . : ${d ? '' : dn}`] : [...B, ...A], 0);
+  }
+  if (c === 'ifconfig') return emit([`eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500`, `        inet ${ip}  netmask ${mk}  broadcast ${d ? '169.254.255.255' : '192.168.1.255'}`, `        ether ${MM}  txqueuelen 1000  (Ethernet)`, 'lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536', '        inet 127.0.0.1  netmask 255.0.0.0'], 0);
+  if (k.startsWith('ip -br')) return emit(['lo      UNKNOWN  127.0.0.1/8', `eth0    UP       ${ip}/${pf}`], 0);
+  if (k.startsWith('ip link')) return emit(['1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT', '    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00', '2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT', `    link/ether ${MM} brd ff:ff:ff:ff:ff:ff`], 0);
+  return emit(['1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN', '    inet 127.0.0.1/8 scope host lo', '2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP', `    link/ether ${MM} brd ff:ff:ff:ff:ff:ff`, `    inet ${ip}/${pf} brd ${d ? '169.254.255.255' : '192.168.1.255'} scope ${d ? 'link' : 'global dynamic'} eth0`], 0);
+}
+async function arp(a, k) {
+  const nb = NB();
+  if (OS === 'c') return emit(['Protocol  Address          Age (min)  Hardware Addr   Type   Interface', ...[['192.168.1.1', '-', RM], ['192.168.1.10', 2, MM], ...IPS.map((p, i) => [p, i + 3, MACS[i]])].map(([p, g, m]) => `Internet  ${p.padEnd(15)}  ${String(g).padStart(5)}  ${mc(m)}  ARPA   GigabitEthernet0/0`)], 0);
+  if (OS === 'w') {
+    if (!a.includes('-a')) return emit(['Muestra y modifica las tablas de traducción de direcciones IP a físicas.', '', 'ARP -a [dir_inet] [-N dir_if] [-v]', '', '  -a   Muestra las entradas actuales de ARP.'], 0);
+    return emit(['', `Interfaz: ${IP0()} --- 0xb`, '  Dirección de Internet  Dirección física       Tipo', ...nb.map(([p, m]) => `  ${p.padEnd(21)} ${mw(m).padEnd(21)} dinámico`), ...(nb.length ? [`  ${'192.168.1.255'.padEnd(21)} ${'ff-ff-ff-ff-ff-ff'.padEnd(21)} estático`] : []), `  ${'224.0.0.22'.padEnd(21)} ${'01-00-5e-00-00-16'.padEnd(21)} estático`], 0);
+  }
+  if (k === 'ip neigh') return emit(nb.map(([p, m]) => `${p} dev eth0 lladdr ${m} REACHABLE`), 0);
+  if (a.includes('-a')) return emit(nb.map(([p, m]) => `? (${p}) at ${m} [ether] on eth0`), 0);
+  return emit(['Address                  HWtype  HWaddress           Flags Mask            Iface', ...nb.map(([p, m]) => `${p.padEnd(24)} ether   ${m}   C                     eth0`)], 0);
+}
+async function mac(a) {
+  if (OS === 'c') return emit(['GigabitEthernet0/0 is up, line protocol is up', `  Hardware is CN Gigabit Ethernet, address is ${mc(RM)} (bia ${mc(RM)})`, '  Internet address is 192.168.1.1/24'], 0);
+  const m = mw(MM).toUpperCase(), tr = '\\Device\\Tcpip_{4F2A91C8-1D3B-4E7A-9B52-6C0A8E3D7F14}';
+  return emit(a.includes('/v') ? ['Nombre de conexión Nombre de adaptador   Dirección física  Nombre de transporte', '================== ================== ================= ====================', `Wi-Fi              Intel(R) Wi-Fi 6   ${m} ${tr}`] : ['Dirección física    Nombre de transporte', '=================== ====================', `${m}   ${tr}`], 0);
+}
+const rt = () => emit(OS === 'w' ? ['Destino de red   Máscara          Puerta enlace   Interfaz       Métrica', ...(SC === 'dhcp' ? ['169.254.0.0      255.255.0.0      En vínculo      169.254.23.87  281'] : ['0.0.0.0          0.0.0.0          192.168.1.1     192.168.1.10   25', '192.168.1.0      255.255.255.0    En vínculo      192.168.1.10   281'])] : OS === 'l' ? (SC === 'dhcp' ? ['169.254.0.0/16 dev eth0 scope link metric 1000'] : ['default via 192.168.1.1 dev eth0', '192.168.1.0/24 dev eth0 proto kernel scope link src 192.168.1.10']) : ['Gateway of last resort is not set', 'C 192.168.1.0/24 is directly connected, GigabitEthernet0/0', 'L 192.168.1.1/32 is directly connected, GigabitEthernet0/0', 'C 10.0.0.0/30 is directly connected, GigabitEthernet0/1', 'S 172.16.0.0/24 [1/0] via 10.0.0.2'], 0);
+const HELP = { w: 'ping · tracert · pathping · nslookup · netstat -ano · ipconfig · arp -a · getmac · hostname · route print · powershell · admin · clear', l: 'ping · traceroute · mtr · nslookup · dig · ss -tulnp · ip a · ifconfig · ip neigh · hostname · ip route · clear', c: 'ping · traceroute · show ip route · show ip interface brief · show ip arp · show interfaces · show tcp brief · show hosts · clear' };
 
 async function run(s) {
   s = s.trim(); if (!s || busy) return;
-  out(P[OS] + ' ' + s);
+  out(pr() + ' ' + s);
   let k = s.toLowerCase();
   if (OS === 'c') k = k.replace(/^sh /, 'show ').replace(/ int /, ' interface ').replace(/ br$/, ' brief');
-  const [c, ...a] = k.split(/\s+/);
+  const [c, ...a] = k.split(/\s+/), c0 = s.split(/\s+/)[0];
   if (c === 'clear' || c === 'cls') { $('o').innerHTML = ''; return; }
-  if (c === 'help') return emit([HELP[OS], 'Destinos: 8.8.8.8 · google.com · web.local · 172.16.0.10'], 0);
-  const ok = { w: ['ping', 'tracert', 'nslookup', 'netstat', 'ipconfig', 'route'], l: ['ping', 'traceroute', 'nslookup', 'dig', 'ss', 'ip'], c: ['ping', 'traceroute', 'show'] }[OS];
+  if (c === 'help') return emit([HELP[OS], 'Destinos: 8.8.8.8 · google.com · web.local · fw.local · caido.local · 172.16.0.10', 'Escenarios de falla: fallo dhcp | gw | dns | ok'], 0);
+  if (c === 'fallo') { if (!SCN[a[0]]) return out('Uso: fallo ok | dhcp | gw | dns'); setSc(a[0]); return out('Escenario: ' + SCN[a[0]]); }
+  const ok = { w: ['ping', 'tracert', 'pathping', 'nslookup', 'netstat', 'ipconfig', 'route', 'arp', 'getmac', 'hostname', 'admin', 'powershell', 'exit', ...(PS ? ['test-netconnection'] : [])], l: ['ping', 'traceroute', 'mtr', 'nslookup', 'dig', 'ss', 'ip', 'ifconfig', 'arp', 'hostname'], c: ['ping', 'traceroute', 'show'] }[OS];
   busy = 1;
   try {
     if (!ok.includes(c)) {
-      if (OS === 'c') { out(`Translating "${c}"...domain server (255.255.255.255)`); await sleep(1800); out('% Unknown command or computer name, or unable to find computer address'); }
-      else out(OS === 'w' ? `'${c}' no se reconoce como un comando interno o externo.` : `bash: ${c}: command not found`);
+      if (OS === 'c') { out(`Translating "${c0}"...domain server (255.255.255.255)`); await sleep(1800); out('% Unknown command or computer name, or unable to find computer address'); }
+      else out(OS === 'w' ? `'${c0}' no se reconoce como un comando interno o externo, programa o archivo por lotes ejecutable.` : `bash: ${c0}: command not found`);
     }
     else if (c === 'ping') await ping(a);
     else if (c === 'tracert' || c === 'traceroute') await trace(a);
+    else if (c === 'pathping' || c === 'mtr') await pp(a);
+    else if (c === 'test-netconnection') await tnc(a);
     else if (c === 'nslookup' || c === 'dig') await dns(c, a);
     else if (c === 'netstat' || c === 'ss' || k.startsWith('show tcp')) await sock();
-    else if (c === 'ipconfig' || k.startsWith('ip -br') || k.startsWith('ip a') || k === 'show ip interface brief') await ipc();
+    else if (c === 'arp' || k === 'ip neigh' || k === 'show ip arp') await arp(a, k);
+    else if (c === 'getmac' || /^show interfaces?/.test(k)) await mac(a);
+    else if (c === 'hostname') out(HN[OS]);
+    else if (c === 'ipconfig' || c === 'ifconfig' || /^ip (-br|a|link)/.test(k) || k === 'show ip interface brief') await ipc(c, a, k);
     else if (c === 'route' || k === 'ip route' || k === 'show ip route') await rt();
     else if (k === 'show hosts') await emit(['Name servers are 8.8.8.8', 'Host   Port Flags      Age Type Address(es)', 'WEB    None (perm, OK) 0   IP   172.16.0.10'], 0);
+    else if (c === 'admin') { AD = 1; out('Símbolo del sistema (Administrador)'); setP(); }
+    else if (c === 'powershell') { PS = 1; out('Windows PowerShell'); setP(); chips(); }
+    else if (c === 'exit') { if (PS) PS = 0; else AD = 0; setP(); chips(); }
     else out(OS === 'c' ? "% Invalid input detected at '^' marker." : 'Comando no incluido en la demo: escribe help');
   } finally { busy = 0; }
 }
 
-const setP = () => { $('pr').textContent = P[OS]; };
+const setP = () => { $('pr').textContent = pr(); };
 function otabs() { $('otabs').innerHTML = OSN.map(([i, n], k) => `<button class="t${'wlc'[k]} ${'wlc'[k] === OS ? 'on' : ''}" onclick="setOS('${'wlc'[k]}')">${ic(i)}<span>${n}</span></button>`).join(''); setP(); chips(); }
 function setOS(k) { OS = k; $('o').innerHTML = ''; otabs(); }
-function chips() { const s = SL[cur], k = 'wlc'.indexOf(OS), c = s && s.c ? [s.c[k].split(/ · |   \(/)[0]] : []; $('ch').innerHTML = [...c, 'help', 'clear'].map(x => `<button onclick="run(this.textContent)">${esc(x)}</button>`).join(''); }
+function chips() { const s = SL[cur], k = 'wlc'.indexOf(OS), c = s && s.c ? [s.c[k].split(/ · |   \(/)[0]] : [], x = s && s.x ? (PS && OS === 'w' ? ['Test-NetConnection google.com -Port 443', 'Test-NetConnection fw.local -Port 443'] : s.x[k]) : [], f = s && s.sc ? ['fallo dhcp', 'fallo gw', 'fallo dns', 'fallo ok'] : []; $('ch').innerHTML = [...c, ...x, ...f, 'help', 'clear'].map(x => `<button onclick="run(this.textContent)">${esc(x)}</button>`).join(''); }
 $('in').onkeydown = e => { if (e.key === 'Enter') { run($('in').value); $('in').value = ''; } };
 out('// toca un comando o escribe help');
 
 const hd = s => `<div class="hd"><span class="ic">${ic(s.i)}</span><div><div class="who"><span class="av">${s.w[0]}</span>${s.w}</div><h1>${s.t}</h1></div></div>`;
-const bs = s => `<div class="bs">${['¿Qué es?', '¿Cómo funciona?', '¿Por qué ese nombre?'].map((t, i) => `<div class="bc"><h3>${t}</h3><p>${em(s.b[i])}</p></div>`).join('')}<div class="an"><b>Es como…</b> ${s.an}</div></div>`;
+const bs = s => `<div class="bs">${(s.h || ['¿Qué es?', '¿Cómo funciona?', '¿Por qué ese nombre?']).map((t, i) => `<div class="bc"><h3>${t}</h3><p>${em(s.b[i])}</p></div>`).join('')}<div class="an"><b>Es como…</b> ${s.an}</div></div>`;
 const pts = s => `<ul class="pts">${s.p.map(x => `<li>${em(x)}</li>`).join('')}</ul>`;
 const hero = s => `<div class="hero"><div class="big">TTL=0</div><h2>${s.t}</h2><p class="who">${s.w}</p><div class="chips">${OSN.map(([i, n], k) => `<span style="color:var(--${'wlc'[k]})">${ic(i)}${n}</span>`).join('')}</div>${s.p.map(x => `<p>${em(x)}</p>`).join('')}<button class="cta adm" onclick="go(1)">Empezar</button><p class="wt">Esperando al presentador…</p></div>`;
 const last = s => `<div class="hero">${hd(s)}${pts(s)}<button class="cta adm" onclick="nav('#quiz')">Ir al quiz</button><p class="wt">Esperando al presentador…</p></div>`;
@@ -345,6 +445,7 @@ function fit(root, box) {
 const show = v => { ['sv', 'qv', 'rv'].forEach(i => $(i).hidden = i !== v + 'v'); $('ctl').hidden = $('dots').hidden = v !== 's'; $('tmh').appendChild($('tm')); clearInterval(rti); clearTimeout(tm); };
 function panel() {
   const s = SL[cur];
+  if (!s.sc && SC !== 'ok') setSc('ok');
   $('tmh').appendChild($('tm'));
   $('sv').innerHTML = `<div class="sl"><div class="t2">${hd(s)}</div><div class="pn"><div class="cx two"><div class="rc">${bs(s)}<div class="gm">${s.g}</div></div></div></div></div>`;
   const pn = $('sv').querySelector('.pn');
@@ -418,7 +519,7 @@ function toast(t) { const e = $('toast'); e.textContent = t; e.classList.add('on
 function quizName() {
   show('q'); document.documentElement.style.setProperty('--a', '#4ade80');
   const w = !ADM && CTRL && !playOn;
-  $('qv').innerHTML = `<div class="fin"><div class="e">📝</div><h1>Quiz de repaso</h1><p>10 preguntas · 20 s cada una</p><input id="nm" maxlength="14" placeholder="Tu nombre" autocomplete="off"><button id="go" class="cta" onclick="begin()"${w ? ' disabled' : ''}>${w ? 'Esperando al presentador…' : 'Empezar'}</button><button class="cta ao" onclick="startAll()">Iniciar para todos</button><button class="cta alt ao" onclick="nav('#ranking')">Ver clasificación</button><button class="cta alt adm" onclick="nav('#s7')">Volver a las slides</button></div>`;
+  $('qv').innerHTML = `<div class="fin"><div class="e">📝</div><h1>Quiz de repaso</h1><p>10 preguntas · 20 s cada una</p><input id="nm" maxlength="14" placeholder="Tu nombre" autocomplete="off"><button id="go" class="cta" onclick="begin()"${w ? ' disabled' : ''}>${w ? 'Esperando al presentador…' : 'Empezar'}</button><button class="cta ao" onclick="startAll()">Iniciar para todos</button><button class="cta alt ao" onclick="nav('#ranking')">Ver clasificación</button><button class="cta alt adm" onclick="nav('#s${SL.length - 1}')">Volver a las slides</button></div>`;
   $('nm').value = nick; fit($('qv'), $('qv'));
 }
 function startAll() { push('play'); toast('Quiz iniciado para todos'); }
@@ -428,7 +529,7 @@ function unlock() {
 }
 function begin() {
   nick = $('nm').value.trim(); if (!nick) return $('nm').focus(); localStorage.nm = nick;
-  qs = Q.map(([q, o, c]) => { const x = o.map((t, k) => [t, k === c]).sort(() => Math.random() - .5); return { q, o: x.map(v => v[0]), c: x.findIndex(v => v[1]) }; }).sort(() => Math.random() - .5);
+  qs = Q.map(([q, o, c]) => { const x = o.map((t, k) => [t, k === c]).sort(() => Math.random() - .5); return { q, o: x.map(v => v[0]), c: x.findIndex(v => v[1]) }; }).sort(() => Math.random() - .5).slice(0, 10);
   qi = 0; score = hits = tms = 0; ask();
 }
 function ask() {
@@ -497,3 +598,4 @@ addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if 
 addEventListener('hashchange', () => { if (free()) route(); else if (location.hash !== HH) history.replaceState(null, '', HH); });
 boot();
 </script>
+</body></html>

@@ -9,7 +9,9 @@ function ok() { return ContentService.createTextOutput('ok'); }
 function doPost(e) {
   const l = LockService.getScriptLock(); l.waitLock(10000);
   try {
-    const d = JSON.parse(e.postData.contents), n = String(d.n).slice(0, 14), p = [n, Number(d.s) || 0, Number(d.c) || 0, Number(d.t) || 0, new Date()], s = sh(), v = s.getDataRange().getValues();
+    const d = JSON.parse(e.postData.contents), n = String(d.n).replace(/^[=+\-@\s]+/, '').slice(0, 14), k = (x, m) => Math.min(m, Math.max(0, Number(x) || 0)), p = [n, k(d.s, 10000), k(d.c, 10), k(d.t, 300), new Date()];
+    if (!n) return ok();
+    const s = sh(), v = s.getDataRange().getValues();
     for (let i = 1; i < v.length; i++) if (v[i][0] === n) { if (p[1] > v[i][1]) s.getRange(i + 1, 1, 1, 5).setValues([p]); return ok(); }
     s.appendRow(p); return ok();
   } finally { l.releaseLock(); }
