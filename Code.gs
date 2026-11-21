@@ -29,14 +29,17 @@ function ctl() {
   return s;
 }
 
-function clave() { return PropertiesService.getScriptProperties().getProperty('CLAVE'); }
+function clave() {
+  return PropertiesService.getScriptProperties().getProperty('CLAVE') || 'admin';
+}
+
 function json(o) { return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
 
 // ---- Puesto único de administrador ----
 // El admin renueva su puesto solo (latido automático desde la página cada 5 s),
 // así que explicar sin tocar nada NO lo expulsa. El puesto solo se libera si la
 // página del admin deja de dar señales de vida durante LEASE ms (pestaña cerrada,
-// equipo dormido, sin red) o si el admin sale con "bye".
+// equipo dormido, sin red) o si el admin sale con "bye" o "rel".
 const LEASE = 90000, SIDOK = /^[a-z0-9]{8,40}$/;
 
 // Toma o renueva el puesto. true = es tuyo; false = otro admin lo tiene vivo.
@@ -77,10 +80,14 @@ function fijar(v, t) {
 }
 
 function doGet(e) {
-  const p = (e && e.parameter) || {}, k = clave(), s = String(p.s || ''), auth = !!k && p.k === k && SIDOK.test(s);
+  const p = (e && e.parameter) || {}, k = clave(), s = String(p.sid || p.s || ''), auth = !!k && p.k === k && SIDOK.test(s);
   if (p.a === 'get') return json({ v: estado() });
-  if (p.a === 'adm') return auth ? json({ ok: true, admin: tomar(s) }) : json({ ok: false });
-  if (p.a === 'bye') { if (auth) soltar(s); return json({ ok: true }); }
+  if (p.a === 'adm') {
+    if (!auth) return json({ ok: false, r: 'key' });
+    const mine = tomar(s);
+    return mine ? json({ ok: true, admin: true }) : json({ ok: false, r: 'busy', admin: false });
+  }
+  if (p.a === 'bye' || p.a === 'rel') { if (auth) soltar(s); return json({ ok: true }); }
   if (p.a === 'set') {
     const v = String(p.v || '');
     if (!auth || !/^(s\d{1,2}|quiz|play|ranking)$/.test(v) || !tomar(s)) return json({ ok: false });

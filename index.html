@@ -146,7 +146,8 @@ button:active{transform:scale(.94)}
 #rv>h1{animation:rise .4s backwards}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 
-#adb{font:700 11px ui-monospace,Consolas,monospace;letter-spacing:.08em;padding:3px 8px;border-radius:99px;border:1px solid var(--ln);color:var(--mu);flex:none;white-space:nowrap}
+#adb{font:700 11px ui-monospace,Consolas,monospace;letter-spacing:.08em;padding:3px 8px;border-radius:99px;border:1px solid var(--ln);color:var(--mu);flex:none;white-space:nowrap;cursor:pointer;user-select:none;transition:filter .15s,border-color .2s}
+#adb:hover{filter:brightness(1.2)}
 #adb:empty{display:none}#adb.ad{color:#facc15;border-color:#facc1566}#adb.lv{color:var(--g);border-color:#4ade8055}#adb.lv::before{content:"●";margin-right:.4em;animation:bl 1.6s ease-in-out infinite}#adb.off{color:#f87171;border-color:#f8717155}
 @keyframes bl{50%{opacity:.25}}
 body.lk .adm,body.lk #ctl{display:none!important}
@@ -414,7 +415,7 @@ async function run(s) {
     else if (c === 'ipconfig' || c === 'ifconfig' || /^ip (-br|a|link)/.test(k) || k === 'show ip interface brief') await ipc(c, a, k);
     else if (c === 'route' || k === 'ip route' || k === 'show ip route') await rt();
     else if (k === 'show hosts') await emit(['Name servers are 8.8.8.8', 'Host   Port Flags      Age Type Address(es)', 'WEB    None (perm, OK) 0   IP   172.16.0.10'], 0);
-    else if (c === 'admin') { AD = 1; out('Símbolo del sistema (Administrador)'); setP(); }
+    else if (c === 'admin') { AD = 1; out('Símbolo del sistema (Administrador)'); out('// Tip: Para controlar las diapositivas pulsa Alt+A o navega a #admin'); setP(); }
     else if (c === 'powershell') { PS = 1; out('Windows PowerShell'); setP(); chips(); }
     else if (c === 'exit') { if (PS) PS = 0; else AD = 0; setP(); chips(); }
     else out(OS === 'c' ? "% Invalid input detected at '^' marker." : 'Comando no incluido en la demo: escribe help');
@@ -473,7 +474,7 @@ const go = d => { if (!free()) return; $('sv').style.setProperty('--dx', d < 0 ?
 function push(v) {
   if (!ADM) return;
   lastV = v; playOn = v === 'play';
-  if (API) fetch(API + '?a=set&k=' + encodeURIComponent(PIN) + '&sid=' + SID + '&v=' + v + '&t=' + Date.now(), { mode: 'no-cors', keepalive: true }).catch(() => {});
+  if (API) fetch(API + '?a=set&k=' + encodeURIComponent(PIN) + '&sid=' + SID + '&s=' + SID + '&v=' + v + '&t=' + Date.now(), { mode: 'no-cors', keepalive: true }).catch(() => {});
 }
 function apply(v) {
   v = v || 's0'; if (v === lastV) return; lastV = v; playOn = v === 'play';
@@ -483,7 +484,10 @@ function apply(v) {
 }
 function setMode() {
   document.body.classList.toggle('lk', !!CTRL && !ADM); document.body.classList.toggle('ad', !!ADM);
-  const b = $('adb'); b.className = ADM ? 'ad' : CTRL ? 'lv' : ''; b.textContent = ADM ? 'ADMIN' : CTRL ? 'EN VIVO' : '';
+  const b = $('adb');
+  b.className = ADM ? 'ad' : CTRL ? 'lv' : '';
+  b.textContent = ADM ? 'ADMIN' : CTRL ? 'EN VIVO' : '';
+  b.title = ADM ? 'Administrador activo (clic para salir)' : (CTRL ? 'Transmitiendo en vivo (clic para admin)' : 'Clic para admin');
 }
 function poll() {
   if (!API) return;
@@ -495,33 +499,75 @@ function poll() {
   }).catch(() => { if (!ADM && CTRL) { $('adb').className = 'off'; $('adb').textContent = 'RECONECTANDO'; } });
 }
 // ===== Un solo administrador =====
-const admCall = k => fetch(API + '?a=adm&k=' + encodeURIComponent(k) + '&sid=' + SID + '&_=' + Date.now()).then(r => r.json());
+const admCall = (k, extra = '') => fetch(API + '?a=adm&k=' + encodeURIComponent(k) + '&sid=' + SID + '&s=' + SID + extra + '&_=' + Date.now()).then(r => r.json());
 function demote(msg) {
   if (!ADM) return;
-  ADM = 0; PIN = ''; lastV = ''; clearInterval(hb);
-  clearInterval(pt); pt = setInterval(poll, 3000);
+  ADM = 0; PIN = ''; lastV = '';
+  if (hb) clearInterval(hb);
+  if (pt) clearInterval(pt);
+  pt = setInterval(poll, 3000);
   setMode(); poll(); toast(msg);
 }
 function beat() {
   if (!ADM) return;
-  admCall(PIN).then(d => { if (d && !d.ok) demote(d.r === 'key' ? 'Clave incorrecta: modo espectador' : 'Ya hay otro administrador: modo espectador'); }).catch(() => {});
+  admCall(PIN).then(d => {
+    if (d && (!d.ok || d.admin === false || d.r === 'busy')) {
+      demote(d.r === 'key' ? 'Clave incorrecta: modo espectador' : 'Ya hay otro administrador: modo espectador');
+    }
+  }).catch(() => {});
+}
+function adminLogout() {
+  if (ADM && API) {
+    fetch(API + '?a=bye&k=' + encodeURIComponent(PIN) + '&sid=' + SID + '&s=' + SID, { mode: 'no-cors', keepalive: true }).catch(() => {});
+    fetch(API + '?a=rel&k=' + encodeURIComponent(PIN) + '&sid=' + SID + '&s=' + SID, { mode: 'no-cors', keepalive: true }).catch(() => {});
+  }
+  localStorage.removeItem('adm');
+  ADM = 0; PIN = ''; lastV = '';
+  if (hb) clearInterval(hb);
+  if (pt) clearInterval(pt);
+  pt = setInterval(poll, 3000);
+  setMode();
+  toast('Sesión de administrador cerrada');
+}
+async function adminLogin(forcePrompt = false) {
+  if (!API) return toast('No hay API configurada');
+  const k = (!forcePrompt && localStorage.adm) ? localStorage.adm : prompt('Clave de administrador:');
+  if (!k) return;
+  const pin = k.trim();
+  try {
+    const d = await admCall(pin);
+    if (d && d.ok && d.admin !== false && d.r !== 'busy') {
+      ADM = 1; CTRL = 1; PIN = pin; localStorage.adm = pin;
+      if (hb) clearInterval(hb);
+      hb = setInterval(beat, 5000);
+      if (pt) clearInterval(pt);
+      setMode();
+      toast('Modo administrador activado');
+    } else if (d && (d.r === 'busy' || d.admin === false)) {
+      toast('Ya hay un administrador activo: entras como espectador');
+    } else {
+      localStorage.removeItem('adm');
+      toast('Clave incorrecta');
+    }
+  } catch (e) {
+    toast('Error de red al verificar clave');
+  }
 }
 addEventListener('pagehide', () => {
-  if (ADM && API) fetch(API + '?a=rel&k=' + encodeURIComponent(PIN) + '&sid=' + SID, { mode: 'no-cors', keepalive: true }).catch(() => {});
+  if (ADM && API) {
+    fetch(API + '?a=bye&k=' + encodeURIComponent(PIN) + '&sid=' + SID + '&s=' + SID, { mode: 'no-cors', keepalive: true }).catch(() => {});
+    fetch(API + '?a=rel&k=' + encodeURIComponent(PIN) + '&sid=' + SID + '&s=' + SID, { mode: 'no-cors', keepalive: true }).catch(() => {});
+  }
 });
 async function boot() {
-  if (location.hash === '#salir') { localStorage.removeItem('adm'); history.replaceState(null, '', '#s0'); }
-  if (API && (location.hash === '#admin' || localStorage.adm)) {
-    const k = localStorage.adm || prompt('Clave de administrador:') || '';
-    if (k) {
-      try {
-        const d = await admCall(k);
-        if (d && d.ok) { ADM = 1; CTRL = 1; PIN = k; localStorage.adm = k; hb = setInterval(beat, 5000); }
-        else if (d && d.r === 'busy') toast('Ya hay un administrador activo: entras como espectador');
-        else { localStorage.removeItem('adm'); toast('Clave incorrecta'); }
-      } catch (e) {}
-    }
-    if (location.hash === '#admin') history.replaceState(null, '', '#s0');
+  if (location.hash === '#salir') {
+    localStorage.removeItem('adm');
+    history.replaceState(null, '', '#s0');
+  } else if (location.hash === '#admin') {
+    history.replaceState(null, '', '#s0');
+    await adminLogin(true);
+  } else if (API && localStorage.adm) {
+    await adminLogin(false);
   }
   setMode(); route(); poll();
   if (!ADM) pt = setInterval(poll, 3000);
@@ -592,7 +638,7 @@ function rank() {
 function load() {
   const e = $('rtb'); if (!e) return;
   if (!API) { e.textContent = 'Sin conexión configurada (API vacía).'; return; }
-  fetch(API).then(r => r.json()).then(d => {
+  fetch(API + (API.includes('?') ? '&' : '?') + '_=' + Date.now()).then(r => r.json()).then(d => {
     e.innerHTML = `<table class="tb${rkd ? '' : ' in'}"><tr><th>#</th><th>Nombre</th><th>Pts</th><th>OK</th><th>Seg</th></tr>${d.slice(0, 10).map((r, i) => `<tr style="--i:${i}" class="${i < 3 ? 'top' : ''} ${r.n === nick ? 'me' : ''}"><td>${['🥇', '🥈', '🥉'][i] || i + 1}</td><td>${esc(r.n)}</td><td>${r.s}</td><td>${r.c}</td><td>${r.t}</td></tr>`).join('')}</table>`;
     rkd = 1; fit($('rv'), $('rv'));
   }).catch(() => { e.textContent = 'No se pudo cargar la clasificación.'; });
@@ -612,9 +658,47 @@ if (matchMedia('(pointer:coarse)').matches && !sessionStorage.fo) {
 let sx = 0, sy = 0;
 $('sv').addEventListener('touchstart', e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
 $('sv').addEventListener('touchend', e => { if (e.target.closest('#tm')) return; const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy; if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) go(dx < 0 ? 1 : -1); }, { passive: true });
-document.addEventListener('keydown', e => { if (e.target.tagName === 'INPUT' || $('sv').hidden) return; if (e.key === 'ArrowRight') go(1); else if (e.key === 'ArrowLeft') go(-1); });
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT') return;
+  if ((e.key === 'a' || e.key === 'A') && (e.ctrlKey || e.altKey)) {
+    e.preventDefault();
+    if (ADM) { if (confirm('¿Deseas salir del modo administrador?')) adminLogout(); }
+    else adminLogin(true);
+    return;
+  }
+  if ($('sv').hidden) return;
+  if (e.key === 'ArrowRight') go(1);
+  else if (e.key === 'ArrowLeft') go(-1);
+});
 addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if (FR && FR[0].isConnected && document.activeElement !== $('in')) fit(FR[0], FR[1]); }, 150); });
-addEventListener('hashchange', () => { if (free()) route(); else if (location.hash !== HH) history.replaceState(null, '', HH); });
+addEventListener('hashchange', () => {
+  const h = location.hash;
+  if (h === '#admin') {
+    history.replaceState(null, '', HH || '#s0');
+    adminLogin(true);
+    return;
+  }
+  if (h === '#salir') {
+    history.replaceState(null, '', '#s0');
+    adminLogout();
+    return;
+  }
+  if (free()) route();
+  else if (location.hash !== HH) history.replaceState(null, '', HH);
+});
+$('adb').onclick = () => {
+  if (ADM) {
+    if (confirm('¿Deseas salir del modo administrador?')) adminLogout();
+  } else {
+    adminLogin(true);
+  }
+};
+const brandEl = document.querySelector('.brand');
+if (brandEl) {
+  brandEl.style.cursor = 'pointer';
+  brandEl.title = 'TTL=0 (Doble clic para modo admin)';
+  brandEl.ondblclick = () => { if (!ADM) adminLogin(true); };
+}
 boot();
 </script>
 </body></html>
