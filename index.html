@@ -167,6 +167,8 @@ body.big #url{font-size:clamp(16px,1.6vw,30px)}
 @keyframes up{from{opacity:0;transform:translateY(24px)}}
 #hv .hd,#hv #gp>*,#hv .bc,#hv .an,#hv .pts li{animation:up .6s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(var(--i,0)*100ms + 150ms)}
 @media (prefers-reduced-motion:reduce){#hv .hd,#hv #gp>*,#hv .bc,#hv .an,#hv .pts li{animation:none}}
+.pw{display:flex;flex-direction:column;gap:12px}.pw .pr{order:-1}
+@media(min-width:900px){#pc{max-width:1500px;margin:0 auto;padding:20px 32px}.pw{display:grid;grid-template-columns:1.1fr 1fr;gap:24px;align-items:start}.pw .pr{order:0}#pv h1{font-size:clamp(30px,3vw,52px)}#pv .ic{width:72px;height:72px;font-size:36px}#pv .pts li{font-size:clamp(17px,1.5vw,26px)}#pv .bc p,#pv .an{font-size:clamp(16px,1.35vw,24px)}#pv .or code{font-size:14px}#mo{height:36vh;font-size:14px}#mty{font-size:14px}}
 </style>
 
 <svg width="0" height="0" style="position:absolute"><defs>
@@ -240,7 +242,8 @@ const hd = s => `<div class="hd"><span class="ic">${ic(s.i)}</span><div><div cla
 const bs = s => s.b ? `<div class="bs">${['¿Qué es?', '¿Cómo funciona?', '¿Por qué ese nombre?'].map((t, i) => `<div class="bc" style="--i:${i + 1}"><h3>${t}</h3><p>${em(s.b[i])}</p></div>`).join('')}<div class="an" style="--i:4"><b>Es como…</b> ${s.an}</div></div>` : '';
 const osr = (s, click) => `<div class="os">${s.c.map((x, k) => `<div class="or ${'wlc'[k]}"${click ? ` onclick="runc(${k})"` : ''}>${ic(OSN[k][0])}<code>${x}</code>${click ? ic('play', 'pl') : ''}</div>`).join('')}</div>`;
 const MT = '<div class="mt"><div id="mtab"></div><div id="mo"></div><div id="mty"></div></div><p class="gt">Consola en vivo: lo que el expositor escribe aparece aquí. Gira el celular para ver más ancho.</p>';
-const card = s => hd(s) + (s.c && !H ? MT + (s.g ? `<div class="gm">${s.g}</div>` : '') : '') + bs(s) + (s.b ? '<div class="kd">Datos clave</div>' : '') + `<ul class="pts">${s.p.map((x, i) => `<li style="--i:${i + 1}">${em(x)}</li>`).join('')}</ul>` + (s.c ? osr(s, 0) : '');
+const pts = s => `<ul class="pts">${s.p.map((x, i) => `<li style="--i:${i + 1}">${em(x)}</li>`).join('')}</ul>`, kd = s => s.b ? '<div class="kd">Datos clave</div>' : '';
+const card = s => H || !s.c ? hd(s) + bs(s) + kd(s) + pts(s) + (s.c ? osr(s, 0) : '') : hd(s) + `<div class="pw"><div class="pl">${MT}${s.g ? `<div class="gm">${s.g}</div>` : ''}${osr(s, 0)}</div><div class="pr">${bs(s)}${kd(s)}${pts(s)}</div></div>`;
 function runc(k) { const o = OS; OS = 'wlc'[k]; if (o !== OS) $('o').innerHTML = ''; tabs(); run(SL[cur].c[k].split(/ · |   \(/)[0]); }
 const hero = s => `<div class="hero"><div class="big">TTL=0</div><h2>${s.t}</h2><p class="who">${s.w}</p><div class="chips">${OSN.map(([i, n], k) => `<span style="color:var(--${'wlc'[k]})">${ic(i)}${n}</span>`).join('')}</div>` +
   (H ? `${s.p.map(x => `<p>${em(x)}</p>`).join('')}<div class="people">${NAMES.map(n => `<span class="pp">${n}</span>`).join('')}</div>` : `<p>${nick ? '¡Estás dentro, ' + nick + '!' : ''}</p><p class="mono">Solo lectura: el expositor controla las diapositivas.</p>`) + '</div>';
