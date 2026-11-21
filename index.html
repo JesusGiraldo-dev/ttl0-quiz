@@ -154,6 +154,20 @@ body.lk .adm,body.lk #ctl{display:none!important}
 body:not(.ad) .ao{display:none!important}
 .wt{display:none;color:var(--mu)}body.lk .wt{display:block}
 .cta:disabled{opacity:.5;animation:none;cursor:default;transform:none;filter:none}
+#hub{position:fixed;inset:0;z-index:100;background:#070b12f0;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;padding:16px}
+#hub[hidden]{display:none!important}
+.hub-card{background:var(--pn);border:1px solid var(--ln);border-radius:20px;max-width:400px;width:100%;padding:28px 24px;text-align:center;box-shadow:0 20px 60px #00000099;position:relative}
+.hub-close{position:absolute;top:12px;right:14px;background:none;border:0;color:var(--mu);font-size:22px;line-height:1;padding:6px;cursor:pointer}
+.hub-close:hover{color:var(--fg)}
+.hub-brand{font-size:38px;margin-bottom:4px}
+.hub-sub{font-size:0.9em;color:var(--mu);margin:0 0 16px}
+.hub-tabs{display:flex;gap:6px;background:#050910;padding:4px;border-radius:12px;border:1px solid var(--ln);margin-bottom:16px}
+.hub-tabs button{flex:1;padding:9px 12px;border:0;border-radius:9px;background:none;color:var(--mu);font-size:13px;font-weight:700}
+.hub-tabs button.on{background:var(--pn);color:var(--fg);box-shadow:0 2px 10px #00000066}
+.hub-tabs button#ht-adm.on{color:#facc15}
+.hub-form input{width:100%;padding:11px 14px;font-size:15px;border-radius:10px;border:1px solid var(--ln);background:#050910;color:var(--fg);text-align:center;outline:none}
+.hub-form input:focus{border-color:var(--a);box-shadow:0 0 0 2px color-mix(in srgb,var(--a) 25%,transparent)}
+.hub-form p{font-size:0.85em;color:var(--mu);margin:0 0 10px;line-height:1.4}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
 <symbol id="i-win" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M3 5.5l8-1.1v7H3zM12 4.3l9-1.3v8.4h-9zM3 12.6h8v7l-8-1.1zM12 12.6h9V21l-9-1.3z"/></symbol>
@@ -179,6 +193,28 @@ body:not(.ad) .ao{display:none!important}
 <div id="tmh"><div id="tm"><div id="chr"><i></i><i></i><i></i><span id="ct">&nbsp;ttl0@redes · terminal simulada</span></div><div id="otabs"></div><div id="o"></div><div id="ch"></div><div id="ipt"><span id="pr"></span><input id="in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" placeholder="help"></div></div></div>
 <div id="toast"></div>
 <div id="fo" hidden><div class="brand" style="font-size:44px">TTL=0</div><p id="ft">Para ver mejor, usa pantalla completa.</p><button class="cta" id="fy" onclick="fs();closeFo()">Pantalla completa</button><button class="cta alt" onclick="closeFo()">Continuar así</button></div>
+<div id="hub" hidden>
+  <div class="hub-card">
+    <button class="hub-close" onclick="closeHub()" title="Cerrar">&times;</button>
+    <div class="brand hub-brand">TTL=<b style="color:var(--g)">0</b></div>
+    <h2 style="margin:0 0 4px;font-size:1.35em">Diagnóstico de redes</h2>
+    <p class="hub-sub">¿Cómo deseas ingresar a la sesión?</p>
+    <div class="hub-tabs">
+      <button id="ht-user" class="on" onclick="setHubTab('user')">Participante</button>
+      <button id="ht-adm" onclick="setHubTab('adm')">Presentador (Admin)</button>
+    </div>
+    <div id="hf-user" class="hub-form">
+      <p>Ingresa tu nombre o apodo para identificarte en el quiz y clasificar en el ranking:</p>
+      <input id="hub-nm" maxlength="14" placeholder="Tu nombre" autocomplete="off" onkeydown="if(event.key==='Enter')enterAsUser()">
+      <button class="cta" style="width:100%;margin-top:12px" onclick="enterAsUser()">Entrar a la presentación</button>
+    </div>
+    <div id="hf-adm" class="hub-form" hidden>
+      <p>Ingresa la contraseña de administrador para controlar las diapositivas y el quiz:</p>
+      <input id="hub-pwd" type="password" placeholder="Contraseña de admin" autocomplete="off" onkeydown="if(event.key==='Enter')enterAsAdmin()">
+      <button class="cta" style="width:100%;margin-top:12px;background:#facc15;color:#04140a" onclick="enterAsAdmin()">Iniciar como Administrador</button>
+    </div>
+  </div>
+</div>
 <script>
 const API = 'https://script.google.com/macros/s/AKfycbzLz23QG9w5eNHbrk_VwLlWevd6fNQf4FhEy5b4DWpm8DtXswXHoBuqxFhb2h9IBcc/exec', T = 20000, SH = ['▲', '◆', '●', '■'];
 const $ = id => document.getElementById(id), em = t => t.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>'), esc = t => String(t).replace(/[&<>"']/g, c => '&#' + c.charCodeAt(0) + ';');
@@ -529,29 +565,75 @@ function adminLogout() {
   setMode();
   toast('Sesión de administrador cerrada');
 }
-async function adminLogin(forcePrompt = false) {
-  if (!API) return toast('No hay API configurada');
-  const k = (!forcePrompt && localStorage.adm) ? localStorage.adm : prompt('Clave de administrador:');
-  if (!k) return;
-  const pin = k.trim();
+function openHub(tab = 'user') {
+  $('hub').hidden = false;
+  $('hub-nm').value = nick || localStorage.nm || '';
+  $('hub-pwd').value = '';
+  setHubTab(tab);
+}
+function closeHub() {
+  $('hub').hidden = true;
+  sessionStorage.hubDone = '1';
+}
+function setHubTab(tab) {
+  const isUser = tab === 'user';
+  $('ht-user').classList.toggle('on', isUser);
+  $('ht-adm').classList.toggle('on', !isUser);
+  $('hf-user').hidden = !isUser;
+  $('hf-adm').hidden = isUser;
+  setTimeout(() => { if (isUser) $('hub-nm').focus(); else $('hub-pwd').focus(); }, 50);
+}
+function enterAsUser() {
+  const val = $('hub-nm').value.trim();
+  if (val) {
+    nick = val;
+    localStorage.nm = nick;
+  }
+  closeHub();
+  toast(nick ? `¡Bienvenido, ${nick}!` : 'Modo participante activado');
+}
+async function enterAsAdmin() {
+  const pwd = $('hub-pwd').value.trim();
+  if (!pwd) return $('hub-pwd').focus();
+  const btn = document.querySelector('#hf-adm .cta');
+  if (btn) btn.disabled = true;
   try {
-    const d = await admCall(pin);
+    const d = await admCall(pwd);
     if (d && d.ok && d.admin !== false && d.r !== 'busy') {
-      ADM = 1; CTRL = 1; PIN = pin; localStorage.adm = pin;
+      ADM = 1; CTRL = 1; PIN = pwd; localStorage.adm = pwd;
       if (hb) clearInterval(hb);
       hb = setInterval(beat, 5000);
       if (pt) clearInterval(pt);
       setMode();
+      closeHub();
       toast('Modo administrador activado');
     } else if (d && (d.r === 'busy' || d.admin === false)) {
       toast('Ya hay un administrador activo: entras como espectador');
     } else {
       localStorage.removeItem('adm');
       toast('Clave incorrecta');
+      $('hub-pwd').select();
     }
   } catch (e) {
     toast('Error de red al verificar clave');
+  } finally {
+    if (btn) btn.disabled = false;
   }
+}
+async function adminLogin(forcePrompt = false) {
+  if (forcePrompt || !localStorage.adm) return openHub('adm');
+  try {
+    const d = await admCall(localStorage.adm);
+    if (d && d.ok && d.admin !== false && d.r !== 'busy') {
+      ADM = 1; CTRL = 1; PIN = localStorage.adm;
+      if (hb) clearInterval(hb);
+      hb = setInterval(beat, 5000);
+      if (pt) clearInterval(pt);
+      setMode();
+    } else {
+      localStorage.removeItem('adm');
+    }
+  } catch (e) {}
 }
 addEventListener('pagehide', () => {
   if (ADM && API) {
@@ -565,12 +647,15 @@ async function boot() {
     history.replaceState(null, '', '#s0');
   } else if (location.hash === '#admin') {
     history.replaceState(null, '', '#s0');
-    await adminLogin(true);
+    openHub('adm');
   } else if (API && localStorage.adm) {
     await adminLogin(false);
   }
   setMode(); route(); poll();
   if (!ADM) pt = setInterval(poll, 3000);
+  if (!ADM && !sessionStorage.hubDone && location.hash !== '#admin') {
+    openHub('user');
+  }
 }
 function route() {
   const h = location.hash;
@@ -663,7 +748,7 @@ document.addEventListener('keydown', e => {
   if ((e.key === 'a' || e.key === 'A') && (e.ctrlKey || e.altKey)) {
     e.preventDefault();
     if (ADM) { if (confirm('¿Deseas salir del modo administrador?')) adminLogout(); }
-    else adminLogin(true);
+    else openHub('adm');
     return;
   }
   if ($('sv').hidden) return;
@@ -675,7 +760,7 @@ addEventListener('hashchange', () => {
   const h = location.hash;
   if (h === '#admin') {
     history.replaceState(null, '', HH || '#s0');
-    adminLogin(true);
+    openHub('adm');
     return;
   }
   if (h === '#salir') {
@@ -690,14 +775,14 @@ $('adb').onclick = () => {
   if (ADM) {
     if (confirm('¿Deseas salir del modo administrador?')) adminLogout();
   } else {
-    adminLogin(true);
+    openHub('adm');
   }
 };
 const brandEl = document.querySelector('.brand');
 if (brandEl) {
   brandEl.style.cursor = 'pointer';
-  brandEl.title = 'TTL=0 (Doble clic para modo admin)';
-  brandEl.ondblclick = () => { if (!ADM) adminLogin(true); };
+  brandEl.title = 'TTL=0 (Clic para cambiar rol / entrar admin)';
+  brandEl.onclick = () => openHub(ADM ? 'user' : 'adm');
 }
 boot();
 </script>
