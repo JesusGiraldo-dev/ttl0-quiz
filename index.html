@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><meta name="theme-color" content="#070b12"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><title>TTL=0 · Juegos de Supervivencia</title>
+<html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><meta name="theme-color" content="#070b12"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><title>TTL=0 · Diagnóstico de redes</title>
 <style>
 :root{--bg:#070b12;--pn:#0c1522;--ln:#1b2a3d;--fg:#dbe7f3;--mu:#7f93a8;--a:#22d3ee;--g:#4ade80;--w:#3b82f6;--l:#fbbf24;--c:#14b8a6;color-scheme:dark}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -90,6 +90,61 @@ h1{font-size:1.5em;line-height:1.1;letter-spacing:-.02em;font-weight:800;margin:
 .cx.two .gm{margin-top:auto}
 .cx.two .dg{max-height:none}
 @media (max-aspect-ratio:11/10){.cx.two{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) minmax(0,1fr)}.cx.two>#tm{border-radius:.8em .8em 0 0;border-right:1px solid var(--ln);border-bottom:0}.cx.two>.rc{padding:.8em 0 0}}
+
+@keyframes slin{from{opacity:0;transform:translateX(var(--dx,48px))}}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}}
+@keyframes pop{from{opacity:0;transform:scale(.6)}60%{transform:scale(1.08)}}
+@keyframes shine{to{background-position:-200% 0}}
+@keyframes flow{to{stroke-dashoffset:-9}}
+@keyframes fl{50%{transform:translateY(-6px)}}
+@keyframes ln{from{opacity:0;transform:translateX(-6px)}}
+@keyframes shake{20%{transform:translateX(-9px)}40%{transform:translateX(9px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+@keyframes okp{40%{transform:scale(1.04)}}
+@keyframes bump{40%{transform:scale(1.45)}}
+@keyframes drift{to{transform:translate(5%,-4%) scale(1.12)}}
+@keyframes cta{0%,100%{box-shadow:0 0 0 0 #4ade8066}50%{box-shadow:0 0 0 .7em #4ade8000}}
+@keyframes chip{0%,100%{box-shadow:0 0 0 0 #4ade8055}50%{box-shadow:0 0 0 .45em #4ade8000}}
+@keyframes win{0%,100%{box-shadow:0 0 0 0 transparent}50%{box-shadow:0 0 1.2em 0 color-mix(in srgb,var(--a) 45%,transparent)}}
+@keyframes hst{0%,100%{box-shadow:0 0 0 0 transparent}50%{box-shadow:0 0 1em 0 #4ade8066}}
+body::before{content:"";position:fixed;inset:-10%;z-index:-1;pointer-events:none;background:radial-gradient(40vw 30vw at 20% 25%,#22d3ee1c,transparent 70%),radial-gradient(35vw 30vw at 80% 75%,#4ade8018,transparent 70%);animation:drift 20s ease-in-out infinite alternate}
+.nofx,.nofx *{transform:none!important}
+button{transition:transform .15s,filter .15s,background .2s}
+button:active{transform:scale(.94)}
+.cta:hover,.o:hover{filter:brightness(1.12);transform:translateY(-2px)}
+.bc,.an,.gm{transition:transform .2s,box-shadow .2s}.bc:hover,.an:hover{transform:translateX(4px)}.gm:hover{box-shadow:0 0 1.4em color-mix(in srgb,var(--a) 22%,transparent)}
+#top{animation:rise .5s backwards}
+.sl,.hero{animation:slin .45s cubic-bezier(.2,.8,.2,1)}
+.t2 .ic{animation:pop .6s .1s backwards}
+.t2 .who{animation:rise .5s .1s backwards}.t2 h1{animation:rise .5s .18s backwards}
+.bs>*{animation:rise .5s cubic-bezier(.2,.8,.2,1) backwards}
+.bs>:nth-child(1){animation-delay:.2s}.bs>:nth-child(2){animation-delay:.3s}.bs>:nth-child(3){animation-delay:.4s}.bs>:nth-child(4){animation-delay:.5s}
+.cx.two .gm{animation:rise .55s .6s cubic-bezier(.2,.8,.2,1) backwards}
+.cx.two>#tm{animation:rise .5s .15s backwards}
+.ln{animation:ln .25s backwards}
+#ch button:first-child{animation:chip 2.4s ease-in-out infinite}
+#ipt{transition:box-shadow .2s}#ipt:focus-within{box-shadow:inset 0 0 0 1px var(--g)}
+.dg .lk{animation:flow 1s linear infinite}
+.dg .nd{transform-box:fill-box;transform-origin:center;animation:pop .6s backwards}
+.dg .nd:nth-of-type(1){animation-delay:.7s}.dg .nd:nth-of-type(2){animation-delay:.85s}.dg .nd:nth-of-type(3){animation-delay:1s}.dg .nd:nth-of-type(4){animation-delay:1.15s}.dg .nd:nth-of-type(5){animation-delay:1.3s}
+.dg text,.dg use{animation:rise .5s 1s backwards}
+.oct span{animation:pop .55s backwards}.oct span:nth-of-type(1){animation-delay:.7s}.oct span:nth-of-type(2){animation-delay:.82s}.oct span:nth-of-type(3){animation-delay:.94s}.oct span:nth-of-type(4){animation-delay:1.06s}
+.oct .hst{animation:pop .55s 1.06s backwards,hst 2.4s 1.8s ease-in-out infinite}
+.cap span{animation:rise .5s 1.3s backwards}
+.rt .r{animation:slin .55s backwards;--dx:40px}.rt .r:nth-child(1){animation-delay:.7s}.rt .r:nth-child(2){animation-delay:.9s}
+.rt .win{animation:slin .55s .7s backwards,win 2.4s 1.5s ease-in-out infinite}
+.hero>*{animation:rise .6s cubic-bezier(.2,.8,.2,1) backwards}
+.hero>:nth-child(2){animation-delay:.1s}.hero>:nth-child(3){animation-delay:.2s}.hero>:nth-child(4){animation-delay:.3s}.hero>:nth-child(5){animation-delay:.4s}.hero>:nth-child(6){animation-delay:.5s}.hero>:nth-child(7){animation-delay:.6s}
+.hero .big{background:linear-gradient(90deg,var(--g),#22d3ee,var(--g)) 0 0/200% 100%;-webkit-background-clip:text;background-clip:text;animation:pop .8s backwards,shine 5s linear infinite}
+.chips span{animation:fl 3s ease-in-out infinite}.chips span:nth-child(2){animation-delay:.4s}.chips span:nth-child(3){animation-delay:.8s}
+.cta:not(.alt){animation:rise .6s .5s backwards,cta 2.2s 1.2s ease-in-out infinite}
+.qw{animation:rise .35s backwards}
+.o{animation:pop .45s backwards}.o0{animation-delay:.05s}.o1{animation-delay:.15s}.o2{animation-delay:.25s}.o3{animation-delay:.35s}
+.o.ok{animation:okp .6s}.o.no{animation:shake .45s}
+.sc{display:inline-block}.sc.bump{animation:bump .5s}
+.fin{animation:rise .45s backwards}.fin .e{animation:pop .8s .1s backwards}
+.tb.in tr{animation:rise .4s backwards;animation-delay:calc(var(--i,0)*60ms)}
+#rv>h1{animation:rise .4s backwards}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style></style>
 <svg width="0" height="0" style="position:absolute"><defs>
 <symbol id="i-win" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M3 5.5l8-1.1v7H3zM12 4.3l9-1.3v8.4h-9zM3 12.6h8v7l-8-1.1zM12 12.6h9V21l-9-1.3z"/></symbol>
@@ -112,7 +167,7 @@ h1{font-size:1.5em;line-height:1.1;letter-spacing:-.02em;font-weight:800;margin:
 <div id="top"><div class="brand">TTL=<b id="ttl">7</b></div><div id="dots"></div><div id="ctl"><button id="pb" onclick="go(-1)">◀</button><button id="nb" onclick="go(1)">▶</button></div><button id="fb" onclick="fs()" title="Pantalla completa"><svg class="ico"><use href="#i-fs"/></svg></button></div>
 <div id="sv" class="v"></div><div id="qv" class="v" hidden></div><div id="rv" class="v" hidden></div>
 </div>
-<div id="tmh"><div id="tm"><div id="chr"><i></i><i></i><i></i><span>&nbsp;ttl0@expo · terminal simulada</span></div><div id="otabs"></div><div id="o"></div><div id="ch"></div><div id="ipt"><span id="pr"></span><input id="in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" placeholder="help"></div></div></div>
+<div id="tmh"><div id="tm"><div id="chr"><i></i><i></i><i></i><span>&nbsp;ttl0@redes · terminal simulada</span></div><div id="otabs"></div><div id="o"></div><div id="ch"></div><div id="ipt"><span id="pr"></span><input id="in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" placeholder="help"></div></div></div>
 <div id="toast"></div>
 <div id="fo" hidden><div class="brand" style="font-size:44px">TTL=0</div><p id="ft">Para ver mejor, usa pantalla completa.</p><button class="cta" id="fy" onclick="fs();closeFo()">Pantalla completa</button><button class="cta alt" onclick="closeFo()">Continuar así</button></div>
 <script>
@@ -132,16 +187,16 @@ const dg = (n, m) => {
 };
 
 const SL = [
- {i:'bolt',a:'#4ade80',hero:1,t:'Juegos de Supervivencia',w:'Redes de Computadores · Grupo 3',p:['Avanza con **▶** o **desliza**','Al final: **quiz de 10 preguntas**']},
+ {i:'bolt',a:'#4ade80',hero:1,t:'Diagnóstico de redes',w:'Redes de Computadores · Grupo 3',p:['Avanza con **▶** o **desliza**','Al final: **quiz de repaso de 10 preguntas**']},
  {i:'ip',a:'#22d3ee',t:'IP y direccionamiento',w:'Meléndez',b:['Es la **dirección lógica** de un equipo en la red (**capa 3**). La **MAC** es su identidad física dentro de la LAN.','La **máscara** separa **red** y **host**: si el destino es de tu red usas **ARP** y envías directo; si no, lo mandas al **gateway**.','**IP = Internet Protocol**, «protocolo entre redes»: las reglas para direccionar paquetes de una red a otra.'],an:'IP es la dirección de la casa, la MAC el nombre de quien vive y la máscara el código postal.',p:['**IP** (capa 3) identifica en la red; **MAC** (capa 2, 48 bits) solo dentro de la LAN','Privadas: **10/8** · **172.16/12** · **192.168/16** · Loopback **127.0.0.1** · APIPA **169.254.x.x**','**/24** = 254 equipos · **/26** = 62 · **/30** = 2','**DHCP = DORA** (UDP 67/68) · **ARP** pregunta: ¿quién tiene esta IP?'],c:['ipconfig /all · arp -a','ip -br a · ip neigh','show ip interface brief · show ip arp'],
   g:'<div class="oct"><span class="net">192</span>.<span class="net">168</span>.<span class="net">1</span>.<span class="hst">10</span><em>/24</em></div><div class="cap"><span class="net">red</span> 255.255.255.0 <span class="hst">host</span></div>'},
  {i:'ping',a:'#4ade80',t:'Ping e ICMP',w:'Meléndez',b:['Una prueba que dice si un destino **responde**, cuánto tarda (**RTT**) y cuántos paquetes se **pierden**.','Envía un **ICMP Echo Request (8)** y espera el **Echo Reply (0)**. Cada router en el camino resta **1 al TTL**.','Su autor, Mike Muuss, lo nombró por el **sonar**: se lanza un pulso y se espera el eco.'],an:'Gritar «¡HOLA!» en una cueva y medir cuánto tarda el eco.',p:['**ICMP** Echo Request (8) / Echo Reply (0): capa 3, **sin puertos**','Mide **RTT**, **pérdida** y **TTL** (cada router resta 1)','TTL inicial: Windows **128** · Linux **64** · Cisco **255**','Escalera: 127.0.0.1 → tu IP → gateway → 8.8.8.8 → dominio'],c:['ping -n 4 8.8.8.8','ping -c 4 8.8.8.8','ping 8.8.8.8   (. ! U N &)'],g:dg([['Tu PC','pc'],['Router','rt'],['8.8.8.8','srv']],'ping')},
  {i:'route',a:'#f59e0b',t:'Rutas y enrutamiento',w:'Isaac',b:['La decisión de **por dónde enviar** cada paquete, tomada con la **tabla de enrutamiento** de cada equipo o router.','El router mira solo la **IP destino** y elige la ruta de **máscara más larga** (longest prefix match); si ninguna coincide, usa la **ruta por defecto**.','Ruta viene de «route», camino. Enrutar es **elegir el camino entre redes**.'],an:'Los letreros de una glorieta: «para ir a Santa Marta, por esta calle».',p:['La tabla guarda **red destino**, **siguiente salto**, interfaz y **métrica**','**Longest prefix match**: gana la máscara más larga (**0.0.0.0/0** = por defecto)','**Distancia administrativa**: Conectada **0** · Estática **1** · EIGRP **90** · OSPF **110** · RIP **120**','**Ida y vuelta** necesitan ruta (ruta asimétrica)'],c:['route print','ip route','show ip route'],
   g:'<div class="rt"><div class="r win"><code>172.16.0.0/24</code><span>→ 10.0.0.2</span><b>/24 gana</b></div><div class="r"><code>0.0.0.0/0</code><span>→ 192.168.1.254</span><b>por defecto</b></div></div>'},
- {i:'trace',a:'#fb7185',t:'Traceroute',w:'Isaac',b:['Una herramienta que muestra **cada router (salto)** que cruza un paquete hasta su destino, con su tiempo.','Manda sondas con **TTL 1, 2, 3…**; donde el TTL llega a **0**, ese router responde **ICMP Time Exceeded** y así se descubre el camino.','Trace route = «rastrear la ruta»: dibuja el **mapa salto a salto**.'],an:'Mandar cartas con 1, 2, 3 vidas y anotar dónde muere cada una.',p:['Sondas con **TTL 1, 2, 3…**: el router que lo lleva a 0 responde **ICMP Time Exceeded (11)**','Windows usa ICMP Echo · Linux y Cisco usan UDP a puertos altos','* * * = ese router **no responde** · IPs repetidas = **bucle** · varias IPs = **balanceo**','Último salto: Echo Reply (Windows) / Port Unreachable (Linux)'],c:['tracert -d 8.8.8.8','traceroute -n 8.8.8.8','traceroute 172.16.0.10'],g:dg([['PC','pc'],['R1','rt'],['R2','rt'],['Destino','srv']],'trace')},
+ {i:'trace',a:'#fb7185',t:'Traceroute',w:'Isaac',b:['Una herramienta que muestra **cada router (salto)** que cruza un paquete hasta su destino, con su tiempo.','Manda sondas con **TTL 1, 2, 3…**; donde el TTL llega a **0**, ese router responde **ICMP Time Exceeded** y así se descubre el camino.','Trace route = «rastrear la ruta»: dibuja el **mapa salto a salto**.'],an:'Enviar cartas que caducan tras 1, 2, 3 saltos y anotar dónde caduca cada una.',p:['Sondas con **TTL 1, 2, 3…**: el router que lo lleva a 0 responde **ICMP Time Exceeded (11)**','Windows usa ICMP Echo · Linux y Cisco usan UDP a puertos altos','* * * = ese router **no responde** · IPs repetidas = **bucle** · varias IPs = **balanceo**','Último salto: Echo Reply (Windows) / Port Unreachable (Linux)'],c:['tracert -d 8.8.8.8','traceroute -n 8.8.8.8','traceroute 172.16.0.10'],g:dg([['PC','pc'],['R1','rt'],['R2','rt'],['Destino','srv']],'trace')},
  {i:'dns',a:'#a78bfa',t:'DNS',w:'Jesús',b:['El sistema que **traduce nombres** como google.com a **direcciones IP**.','El equipo mira su **caché** y el archivo **hosts**; si no, pregunta al **resolvedor** (**UDP 53**), que consulta **Raíz → TLD → Autoritativo** y guarda la respuesta según su TTL.','**DNS = Domain Name System**, «sistema de nombres de dominio».'],an:'La guía telefónica de internet: buscas el nombre y te da el número.',p:['**Orden:** caché → hosts → resolvedor → Raíz → TLD → Autoritativo','Registros A · AAAA · CNAME · MX · NS · PTR · UDP 53 (TCP 53 si es grande)','TTL del DNS = **segundos** en caché ≠ TTL de IP = **saltos**','ping usa el **resolvedor del SO**; nslookup y dig van **directo al servidor**'],c:['nslookup google.com','dig google.com','show hosts · no ip domain-lookup'],g:dg([['Tu PC','pc'],['Resolvedor','dns','UDP 53'],['Raíz','ip','.'],['TLD','ip','.com'],['Autoritativo','srv','google.com']],'flow')},
  {i:'sock',a:'#38bdf8',t:'Sockets y puertos',w:'Jesús',b:['El punto exacto donde un programa envía o recibe datos: **IP + puerto + protocolo**.','Un programa escucha (**LISTEN**) en un puerto; al llegar un cliente pasa a **ESTABLISHED**, y al cerrar queda un rato en **TIME_WAIT**.','Socket significa **«enchufe»**: el punto donde un programa se conecta a la red.'],an:'Edificio + apartamento + tipo de entrega: la IP es el edificio y el puerto el apartamento.',p:['**Socket = IP + puerto + protocolo** · TCP: tupla de 5','**0.0.0.0**:3000 = toda la red · **127.0.0.1**:3000 = solo local','Estados: LISTEN → SYN → ESTABLISHED → TIME_WAIT','ss usa netlink, netstat lee /proc · Cisco solo ve sus propios sockets','Prueba en vivo: netstat/ss muestra los celulares conectados ahora'],c:['netstat -ano','ss -tulnp','show tcp brief'],g:dg([['Celular','phone',':50412'],['Servidor del quiz','srv','0.0.0.0:3000']],'flow')},
- {i:'bolt',a:'#4ade80',t:'Quiz TTL=0',w:'Todos',p:['**6** preguntas · **20 s** cada una','Más rápido = **más puntos**','**Top 3** al final'],q:1}
+ {i:'bolt',a:'#4ade80',t:'Quiz de repaso',w:'Todos',p:['**10** preguntas · **20 s** cada una','Más rápido = **más puntos**','**Top 3** al final'],q:1}
 ];
 
 const Q = [
@@ -164,7 +219,7 @@ const DNS = { 'google.com': '142.250.0.1', 'web.local': '172.16.0.10' }, TTLS = 
 const path = ip => ip === '172.16.0.10' ? [['192.168.1.1', 1], ['10.0.0.2', 2], [ip, 3]] : [['192.168.1.1', 1], ['10.20.0.1', 8], [null], [ip, 17]];
 const isIp = x => /^\d+(\.\d+){3}$/.test(x), tgt = a => a.filter(x => !x.startsWith('-') && !x.startsWith('@') && !/^\d+$/.test(x)).pop();
 const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1)), sleep = ms => new Promise(r => setTimeout(r, ms));
-const out = (l = '') => { const d = document.createElement('div'); d.textContent = l; $('o').appendChild(d); $('o').scrollTop = 1e9; return d; };
+const out = (l = '') => { const d = document.createElement('div'); d.className = 'ln'; d.addEventListener('animationend', () => d.classList.remove('ln'), { once: true }); d.textContent = l; $('o').appendChild(d); $('o').scrollTop = 1e9; return d; };
 const emit = async (L, ms = 300) => { for (const l of L) { out(l); await sleep(ms); } };
 const st = r => [Math.min(...r), Math.round(r.reduce((a, b) => a + b) / r.length), Math.max(...r)];
 const me = () => (URLS.match(/\/\/([\d.]+)/) || [])[1] || '192.168.1.50';
@@ -273,10 +328,11 @@ const last = s => `<div class="hero">${hd(s)}${pts(s)}<button class="cta" onclic
 
 let cur = 0, qi = 0, score = 0, hits = 0, tms = 0, nick = localStorage.nm || '', tm, rti, qs = [], t0, lock = 0, tt, FR = null, rz;
 function fit(root, box) {
-  FR = [root, box];
+  FR = [root, box]; root.classList.add('nofx');
   let f = Math.max(13, Math.min(34, innerWidth / 50, innerHeight / 24));
   root.style.fontSize = f + 'px';
   while (box.scrollHeight > box.clientHeight + 1 && f > 8) { f -= .5; root.style.fontSize = f + 'px'; }
+  root.classList.remove('nofx');
 }
 const show = v => { ['sv', 'qv', 'rv'].forEach(i => $(i).hidden = i !== v + 'v'); $('ctl').hidden = $('dots').hidden = v !== 's'; $('tmh').appendChild($('tm')); clearInterval(rti); clearTimeout(tm); };
 function panel() {
@@ -300,7 +356,7 @@ function slide() {
   else panel();
 }
 const nav = h => { history.replaceState(null, '', h); route(); };
-const go = d => nav('#s' + Math.max(0, Math.min(SL.length - 1, cur + d)));
+const go = d => { $('sv').style.setProperty('--dx', d < 0 ? '-48px' : '48px'); nav('#s' + Math.max(0, Math.min(SL.length - 1, cur + d))); };
 function route() {
   const h = location.hash;
   if (h === '#ranking') return rank();
@@ -312,7 +368,7 @@ function toast(t) { const e = $('toast'); e.textContent = t; e.classList.add('on
 
 function quizName() {
   show('q'); document.documentElement.style.setProperty('--a', '#4ade80');
-  $('qv').innerHTML = '<div class="fin"><div class="e">🏁</div><h1>Quiz TTL=0</h1><p>10 preguntas · 20 s cada una</p><input id="nm" maxlength="14" placeholder="Tu nombre" autocomplete="off"><button class="cta" onclick="begin()">Empezar</button><button class="cta alt" onclick="nav(\'#s7\')">Volver a las slides</button></div>';
+  $('qv').innerHTML = '<div class="fin"><div class="e">📝</div><h1>Quiz de repaso</h1><p>10 preguntas · 20 s cada una</p><input id="nm" maxlength="14" placeholder="Tu nombre" autocomplete="off"><button class="cta" onclick="begin()">Empezar</button><button class="cta alt" onclick="nav(\'#s7\')">Volver a las slides</button></div>';
   $('nm').value = nick; fit($('qv'), $('qv'));
 }
 function begin() {
@@ -332,11 +388,17 @@ function pick(k) {
   if (k === q.c) { hits++; score += Math.max(500, Math.round(1000 - 500 * ms / T)); }
   document.querySelectorAll('#qv .o').forEach((b, i) => b.classList.add(i === q.c ? 'ok' : i === k ? 'no' : 'dim'));
   $('qv').querySelector('.bar i').style.animationPlayState = 'paused'; $('sc').textContent = score + ' pts';
+  if (k === q.c) { $('sc').classList.remove('bump'); void $('sc').offsetWidth; $('sc').classList.add('bump'); }
   tm = setTimeout(() => { qi++; ask(); }, 1400);
 }
 function fin() {
-  $('qv').innerHTML = `<div class="fin"><div class="e">🏁</div><h1>¡Listo, ${esc(nick)}!</h1><p class="big2">${score} pts</p><p>${hits} de ${qs.length} correctas · ${Math.round(tms / 1000)} s</p><p id="ss" class="mono"></p><div class="row"><button class="cta" onclick="nav('#ranking')">Ver clasificación</button><button class="cta alt" onclick="quizName()">Repetir</button></div></div>`;
-  fit($('qv'), $('qv')); send();
+  $('qv').innerHTML = `<div class="fin"><div class="e">✅</div><h1>¡Listo, ${esc(nick)}!</h1><p class="big2">${score} pts</p><p>${hits} de ${qs.length} correctas · ${Math.round(tms / 1000)} s</p><p id="ss" class="mono"></p><div class="row"><button class="cta" onclick="nav('#ranking')">Ver clasificación</button><button class="cta alt" onclick="quizName()">Repetir</button></div></div>`;
+  fit($('qv'), $('qv')); send(); count(document.querySelector('.big2'), score);
+}
+function count(el, to) {
+  if (!el || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  const t0 = performance.now(), step = t => { const k = Math.min(1, (t - t0) / 900); el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))) + ' pts'; if (k < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
 }
 function send() {
   const e = $('ss'); if (!e) return;
@@ -346,8 +408,9 @@ function send() {
     .then(() => { if ($('ss')) $('ss').textContent = 'Resultado enviado ✓'; })
     .catch(() => { if ($('ss')) $('ss').innerHTML = 'No se pudo enviar. <a href="#" onclick="send();return false">Reintentar</a>'; });
 }
+let rkd = 0;
 function rank() {
-  show('r'); document.documentElement.style.setProperty('--a', '#22d3ee');
+  rkd = 0; show('r'); document.documentElement.style.setProperty('--a', '#22d3ee');
   $('rv').innerHTML = '<h1>Clasificación</h1><div id="rtb">Cargando…</div><div class="row"><button class="cta alt" onclick="load()">Actualizar</button><button class="cta alt" onclick="nav(\'#quiz\')">Quiz</button></div>';
   fit($('rv'), $('rv')); load(); rti = setInterval(load, 10000);
 }
@@ -355,8 +418,8 @@ function load() {
   const e = $('rtb'); if (!e) return;
   if (!API) { e.textContent = 'Sin conexión configurada (API vacía).'; return; }
   fetch(API).then(r => r.json()).then(d => {
-    e.innerHTML = `<table class="tb"><tr><th>#</th><th>Nombre</th><th>Pts</th><th>OK</th><th>Seg</th></tr>${d.slice(0, 10).map((r, i) => `<tr class="${i < 3 ? 'top' : ''} ${r.n === nick ? 'me' : ''}"><td>${['🥇', '🥈', '🥉'][i] || i + 1}</td><td>${esc(r.n)}</td><td>${r.s}</td><td>${r.c}</td><td>${r.t}</td></tr>`).join('')}</table>`;
-    fit($('rv'), $('rv'));
+    e.innerHTML = `<table class="tb${rkd ? '' : ' in'}"><tr><th>#</th><th>Nombre</th><th>Pts</th><th>OK</th><th>Seg</th></tr>${d.slice(0, 10).map((r, i) => `<tr style="--i:${i}" class="${i < 3 ? 'top' : ''} ${r.n === nick ? 'me' : ''}"><td>${['🥇', '🥈', '🥉'][i] || i + 1}</td><td>${esc(r.n)}</td><td>${r.s}</td><td>${r.c}</td><td>${r.t}</td></tr>`).join('')}</table>`;
+    rkd = 1; fit($('rv'), $('rv'));
   }).catch(() => { e.textContent = 'No se pudo cargar la clasificación.'; });
 }
 
