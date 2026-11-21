@@ -66,7 +66,7 @@ h1{font-size:clamp(26px,3vw,46px);line-height:1.1;letter-spacing:-.02em;font-wei
 .qn{display:inline-block;padding:4px 14px;border-radius:99px;background:#16324a;color:var(--a);font-size:15px}
 .qq{font-size:clamp(28px,3.4vw,54px);font-weight:800;line-height:1.15;margin:.4em 0 .5em}
 .bar{height:12px;background:var(--ln);border-radius:6px;overflow:hidden}
-.bar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--g),#fbbf24);animation:t 15s linear forwards}@keyframes t{to{width:0}}
+.bar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--g),#fbbf24);animation:t 20s linear forwards}@keyframes t{to{width:0}}
 .g{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
 .o{display:flex;align-items:center;gap:14px;padding:22px 24px;border-radius:14px;font-size:clamp(18px,2vw,30px);color:#fff;font-weight:700}
 .o s{text-decoration:none;display:grid;place-items:center;width:1.6em;height:1.6em;border-radius:50%;background:#0003;flex:none}
@@ -120,6 +120,7 @@ h1{font-size:clamp(26px,3vw,46px);line-height:1.1;letter-spacing:-.02em;font-wei
 .ttl.tick{animation:tick .6s cubic-bezier(.2,1.5,.4,1)}@keyframes tick{from{transform:scale(.35);opacity:0}}
 #qrb{position:fixed;right:5vw;top:20vh;z-index:5;font-size:clamp(18px,1.6vw,30px);font-weight:700;color:var(--fg);opacity:0;transform:translateY(24px) scale(.92);pointer-events:none;transition:opacity .5s,transform .5s}
 body.big #qrb{opacity:1;transform:none}
+body.big #url{font-size:clamp(16px,1.6vw,30px)}
 #qr{width:min(40vh,28vw);padding:14px;border-radius:18px;box-shadow:0 0 60px #22d3ee55}
 
 /* ===== Texto grande para proyectar (solo host) ===== */
@@ -205,8 +206,8 @@ body.big #qrb{opacity:1;transform:none}
 </div>
 
 <script>
-const H = location.pathname === '/host', $ = id => document.getElementById(id), SH = ['▲', '◆', '●', '■'];
-let cur = 0, mode = 's', Q = null, R = null, pod = [], IPS = [], NAMES = [], URLS = '', nick = localStorage.nm || '', sent = -1, busy = 0, OS = 'w', first = {}, ws, TERM = null;
+const H = location.pathname === '/host', KEY = new URLSearchParams(location.search).get('key') || '', $ = id => document.getElementById(id), SH = ['▲', '◆', '●', '■'];
+let cur = 0, mode = 's', Q = null, R = null, pod = [], IPS = [], NAMES = [], URLS = '', nick = sessionStorage.nm || '', sent = -1, busy = 0, OS = 'w', first = {}, ws, TERM = null;
 const em = t => t.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
 const ic = (n, c = '') => `<svg class="ico ${c}"><use href="#i-${n}"/></svg>`, OSN = [['win', 'Windows'], ['linux', 'Linux'], ['cisco', 'Cisco IOS']];
 
@@ -223,7 +224,7 @@ const dg = (n, m) => {
 };
 
 const SL = [
- {i:'bolt',a:'#4ade80',hero:1,t:'Juegos de Supervivencia',w:'Redes de Computadores · Grupo 3',p:['Escanea el **QR** y entra con tu **nombre**','Al final: **quiz en vivo**, cada segundo cuenta']},
+ {i:'bolt',a:'#4ade80',hero:1,t:'Juegos de Supervivencia',w:'Redes de Computadores · Grupo 3',p:['Entra con el **link** y tu **nombre**','Al final: **quiz en vivo**, cada segundo cuenta']},
  {i:'ip',a:'#22d3ee',t:'IP y direccionamiento',w:'Meléndez',b:['Es la **dirección lógica** de un equipo en la red (**capa 3**). La **MAC** es su identidad física dentro de la LAN.','La **máscara** separa **red** y **host**: si el destino es de tu red usas **ARP** y envías directo; si no, lo mandas al **gateway**.','**IP = Internet Protocol**, «protocolo entre redes»: las reglas para direccionar paquetes de una red a otra.'],an:'IP es la dirección de la casa, la MAC el nombre de quien vive y la máscara el código postal.',p:['**IP** (capa 3) identifica en la red; **MAC** (capa 2, 48 bits) solo dentro de la LAN','Privadas: **10/8** · **172.16/12** · **192.168/16** · Loopback **127.0.0.1** · APIPA **169.254.x.x**','**/24** = 254 equipos · **/26** = 62 · **/30** = 2','**DHCP = DORA** (UDP 67/68) · **ARP** pregunta: ¿quién tiene esta IP?'],c:['ipconfig /all · arp -a','ip -br a · ip neigh','show ip interface brief · show ip arp'],
   g:'<div class="oct"><span class="net">192</span>.<span class="net">168</span>.<span class="net">1</span>.<span class="hst">10</span><em>/24</em></div><div class="cap"><span class="net">red</span> 255.255.255.0 <span class="hst">host</span></div>'},
  {i:'ping',a:'#4ade80',t:'Ping e ICMP',w:'Meléndez',b:['Una prueba que dice si un destino **responde**, cuánto tarda (**RTT**) y cuántos paquetes se **pierden**.','Envía un **ICMP Echo Request (8)** y espera el **Echo Reply (0)**. Cada router en el camino resta **1 al TTL**.','Su autor, Mike Muuss, lo nombró por el **sonar**: se lanza un pulso y se espera el eco.'],an:'Gritar «¡HOLA!» en una cueva y medir cuánto tarda el eco.',p:['**ICMP** Echo Request (8) / Echo Reply (0): capa 3, **sin puertos**','Mide **RTT**, **pérdida** y **TTL** (cada router resta 1)','TTL inicial: Windows **128** · Linux **64** · Cisco **255**','Escalera: 127.0.0.1 → tu IP → gateway → 8.8.8.8 → dominio'],c:['ping -n 4 8.8.8.8','ping -c 4 8.8.8.8','ping 8.8.8.8   (. ! U N &)'],g:dg([['Tu PC','pc'],['Router','rt'],['8.8.8.8','srv']],'ping')},
@@ -232,7 +233,7 @@ const SL = [
  {i:'trace',a:'#fb7185',t:'Traceroute',w:'Isaac',b:['Una herramienta que muestra **cada router (salto)** que cruza un paquete hasta su destino, con su tiempo.','Manda sondas con **TTL 1, 2, 3…**; donde el TTL llega a **0**, ese router responde **ICMP Time Exceeded** y así se descubre el camino.','Trace route = «rastrear la ruta»: dibuja el **mapa salto a salto**.'],an:'Mandar cartas con 1, 2, 3 vidas y anotar dónde muere cada una.',p:['Sondas con **TTL 1, 2, 3…**: el router que lo lleva a 0 responde **ICMP Time Exceeded (11)**','Windows usa ICMP Echo · Linux y Cisco usan UDP a puertos altos','* * * = ese router **no responde** · IPs repetidas = **bucle** · varias IPs = **balanceo**','Último salto: Echo Reply (Windows) / Port Unreachable (Linux)'],c:['tracert -d 8.8.8.8','traceroute -n 8.8.8.8','traceroute 172.16.0.10'],g:dg([['PC','pc'],['R1','rt'],['R2','rt'],['Destino','srv']],'trace')},
  {i:'dns',a:'#a78bfa',t:'DNS',w:'Jesús',b:['El sistema que **traduce nombres** como google.com a **direcciones IP**.','El equipo mira su **caché** y el archivo **hosts**; si no, pregunta al **resolvedor** (**UDP 53**), que consulta **Raíz → TLD → Autoritativo** y guarda la respuesta según su TTL.','**DNS = Domain Name System**, «sistema de nombres de dominio».'],an:'La guía telefónica de internet: buscas el nombre y te da el número.',p:['**Orden:** caché → hosts → resolvedor → Raíz → TLD → Autoritativo','Registros A · AAAA · CNAME · MX · NS · PTR · UDP 53 (TCP 53 si es grande)','TTL del DNS = **segundos** en caché ≠ TTL de IP = **saltos**','ping usa el **resolvedor del SO**; nslookup y dig van **directo al servidor**'],c:['nslookup google.com','dig google.com','show hosts · no ip domain-lookup'],g:dg([['Tu PC','pc'],['Resolvedor','dns','UDP 53'],['Raíz','ip','.'],['TLD','ip','.com'],['Autoritativo','srv','google.com']],'flow')},
  {i:'sock',a:'#38bdf8',t:'Sockets y puertos',w:'Jesús',b:['El punto exacto donde un programa envía o recibe datos: **IP + puerto + protocolo**.','Un programa escucha (**LISTEN**) en un puerto; al llegar un cliente pasa a **ESTABLISHED**, y al cerrar queda un rato en **TIME_WAIT**.','Socket significa **«enchufe»**: el punto donde un programa se conecta a la red.'],an:'Edificio + apartamento + tipo de entrega: la IP es el edificio y el puerto el apartamento.',p:['**Socket = IP + puerto + protocolo** · TCP: tupla de 5','**0.0.0.0**:3000 = toda la red · **127.0.0.1**:3000 = solo local','Estados: LISTEN → SYN → ESTABLISHED → TIME_WAIT','ss usa netlink, netstat lee /proc · Cisco solo ve sus propios sockets','Prueba en vivo: netstat/ss muestra los celulares conectados ahora'],c:['netstat -ano','ss -tulnp','show tcp brief'],g:dg([['Celular','phone',':50412'],['Servidor del quiz','srv','0.0.0.0:3000']],'flow')},
- {i:'bolt',a:'#4ade80',t:'Quiz TTL=0',w:'Todos',p:['**6** preguntas · **15 s** cada una','Más rápido = **más puntos**','**Top 3** al final'],q:1}
+ {i:'bolt',a:'#4ade80',t:'Quiz TTL=0',w:'Todos',p:['**6** preguntas · **20 s** cada una','Más rápido = **más puntos**','**Top 3** al final'],q:1}
 ];
 
 const hd = s => `<div class="hd"><span class="ic">${ic(s.i)}</span><div><div class="who"><span class="av">${s.w[0]}</span>${s.w}</div><h1>${s.t}</h1></div></div>`;
@@ -242,13 +243,13 @@ const MT = '<div class="mt"><div id="mtab"></div><div id="mo"></div><div id="mty
 const card = s => hd(s) + (s.c && !H ? MT + (s.g ? `<div class="gm">${s.g}</div>` : '') : '') + bs(s) + (s.b ? '<div class="kd">Datos clave</div>' : '') + `<ul class="pts">${s.p.map((x, i) => `<li style="--i:${i + 1}">${em(x)}</li>`).join('')}</ul>` + (s.c ? osr(s, 0) : '');
 function runc(k) { const o = OS; OS = 'wlc'[k]; if (o !== OS) $('o').innerHTML = ''; tabs(); run(SL[cur].c[k].split(/ · |   \(/)[0]); }
 const hero = s => `<div class="hero"><div class="big">TTL=0</div><h2>${s.t}</h2><p class="who">${s.w}</p><div class="chips">${OSN.map(([i, n], k) => `<span style="color:var(--${'wlc'[k]})">${ic(i)}${n}</span>`).join('')}</div>` +
-  (H ? `${s.p.map(x => `<p>${em(x)}</p>`).join('')}<div class="people">${NAMES.map(n => `<span class="pp">${n}</span>`).join('')}</div>` : `<p>${nick ? '¡Estás dentro, ' + nick + '!' : ''}</p><p class="mono">Mira la pantalla: el profe controla las diapositivas.</p>`) + '</div>';
+  (H ? `${s.p.map(x => `<p>${em(x)}</p>`).join('')}<div class="people">${NAMES.map(n => `<span class="pp">${n}</span>`).join('')}</div>` : `<p>${nick ? '¡Estás dentro, ' + nick + '!' : ''}</p><p class="mono">Solo lectura: el expositor controla las diapositivas.</p>`) + '</div>';
 
 function qv() {
   const r = mode === 'r';
-  if (H) return `<span class="qn">Pregunta ${Q.i + 1} de ${Q.n}</span><div class="qq">${Q.q}</div>${r ? '' : '<div class="bar"><i></i></div>'}<div class="g">${Q.o.map((x, k) => `<div class="o o${k} ${r && k !== R.cor ? 'dim' : ''}"><s>${SH[k]}</s>${x}${r ? `<em>${R.cnt[k]}</em>` : ''}</div>`).join('')}</div>${r ? '' : '<p id="ac" class="mono"></p>'}`;
+  if (H) return `<span class="qn">Pregunta ${Q.i + 1} de ${Q.n}</span><div class="qq">${Q.q}</div>${r ? '' : '<div class="bar"><i style="animation-duration:' + Q.sec + 's"></i></div>'}<div class="g">${Q.o.map((x, k) => `<div class="o o${k} ${r && k !== R.cor ? 'dim' : ''}"><s>${SH[k]}</s>${x}${r ? `<em>${R.cnt[k]}</em>` : ''}</div>`).join('')}</div>${r ? '' : '<p id="ac" class="mono"></p>'}`;
   if (r) return `<div class="fin"><div class="e">${R.ok === true ? '✅' : R.ok === false ? '❌' : '⏱️'}</div><h1>${R.ok === true ? '¡Correcto!' : R.ok === false ? 'Fallaste' : 'Sin respuesta'}</h1><p class="who" style="justify-content:center">Puntaje ${R.score}</p></div>`;
-  return sent === Q.i ? '<div class="fin"><div class="e">📡</div><h1>Enviada</h1><p>Espera el resultado…</p></div>' : `<span class="qn">Pregunta ${Q.i + 1} de ${Q.n}</span><div class="bar" style="margin-top:12px"><i></i></div><div class="pg">${Q.o.map((x, k) => `<button class="pb o${k}" onclick="ans(${k})">${SH[k]}</button>`).join('')}</div>`;
+  return sent === Q.i ? '<div class="fin"><div class="e">📡</div><h1>Enviada</h1><p>Espera el resultado…</p></div>' : `<span class="qn">Pregunta ${Q.i + 1} de ${Q.n}</span><div class="bar" style="margin-top:12px"><i style="animation-duration:${Q.sec}s"></i></div><div class="pg">${Q.o.map((x, k) => `<button class="pb o${k}" onclick="ans(${k})">${SH[k]}</button>`).join('')}</div>`;
 }
 const ev = () => H ? `<h1 style="text-align:center">Podio final</h1><div class="podium">${[1, 0, 2].filter(i => pod[i]).map(i => `<div class="pd p${i}"><b>${['🥇', '🥈', '🥉'][i]}</b><span>${pod[i][0]}</span><em>${pod[i][1]}</em></div>`).join('')}</div>`
   : `<div class="fin"><div class="e">🏁</div><h1>Fin del juego</h1><p class="who" style="justify-content:center">Tu puntaje: ${R ? R.score : 0}</p><p>${pod[0] ? 'Ganó ' + pod[0][0] : ''}</p></div>`;
@@ -284,7 +285,7 @@ function paintTerm() {
   $('mty').textContent = P[t.os] + ' ' + t.v;
 }
 function msg(m) {
-  if (m.t === 'info') { IPS = m.ips; NAMES = m.names; URLS = m.url; if (H) { $('ct').textContent = m.n + ' conectados'; $('url').textContent = m.url.replace('http://', ''); if (mode === 's' && cur === 0) draw(); } }
+  if (m.t === 'info') { IPS = m.ips; NAMES = m.names; URLS = m.url; if (H) { $('ct').textContent = m.n + ' conectados'; $('url').textContent = m.url.replace(/^https?:\/\//, ''); if (mode === 's' && cur === 0) draw(); } }
   else if (m.t === 'slide') { dir = m.i >= cur ? 1 : -1; cur = m.i; mode = 's'; draw(); }
   else if (m.t === 'q') { Q = m; mode = 'q'; draw(); }
   else if (m.t === 'ac') { if ($('ac')) $('ac').textContent = m.n + ' respuestas'; }
@@ -293,8 +294,8 @@ function msg(m) {
   else if (m.t === 'end') { pod = m.top; mode = 'e'; draw(); }
 }
 const send = o => ws && ws.readyState === 1 && ws.send(JSON.stringify(o));
-function conn() { ws = new WebSocket('ws://' + location.host); ws.onopen = () => { if (H) send({ t: 'host' }); else if (nick) join(); }; ws.onmessage = e => msg(JSON.parse(e.data)); ws.onclose = () => setTimeout(conn, 1000); }
-function join() { nick = ($('nm').value || nick).trim(); if (!nick) return; localStorage.nm = nick; send({ t: 'join', name: nick }); $('join').hidden = true; $('pc').hidden = false; $('pn').textContent = nick; draw(); }
+function conn() { ws = new WebSocket((location.protocol === 'https:' ? 'wss://' : 'ws://') + location.host); ws.onopen = () => { if (H) send({ t: 'host', key: KEY }); else if (nick) join(); }; ws.onmessage = e => msg(JSON.parse(e.data)); ws.onclose = () => setTimeout(conn, 1000); }
+function join() { nick = ($('nm').value || nick).trim(); if (!nick) return; sessionStorage.nm = nick; send({ t: 'join', name: nick }); $('join').hidden = true; $('pc').hidden = false; $('pn').textContent = nick; draw(); }
 function ans(k) { if (sent === Q.i) return; sent = Q.i; send({ t: 'a', k }); draw(); }
 const go = d => send({ t: 'slide', i: Math.max(0, Math.min(SL.length - 1, cur + d)) });
 const start = () => send({ t: 'start' });

@@ -1,13 +1,11 @@
-// TTL=0 · servidor local. Sin dependencias obligatorias: node server.js
-// Opcional (QR): npm i qrcode
 const http = require('http'), fs = require('fs'), os = require('os'), crypto = require('crypto');
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000, KEY = process.env.HOST_KEY || '', T = 20000;
 const lan = () => { for (const l of Object.values(os.networkInterfaces())) for (const a of l) if (a.family === 'IPv4' && !a.internal) return a.address; return 'localhost'; };
-const URL_ = `http://${lan()}:${PORT}`;
+const URL_ = process.env.PUBLIC_URL || process.env.RENDER_EXTERNAL_URL || `http://${lan()}:${PORT}`;
+const HTML = fs.readFileSync(__dirname + '/index.html');
 let qr = null;
 try { require('qrcode').toString(URL_, { type: 'svg', margin: 1 }, (e, s) => { if (!e) qr = s; }); } catch {}
 
-// [tema, pregunta, opciones, índice correcto] · temas: 0 IP, 1 Ping, 2 Rutas, 3 Traceroute, 4 DNS, 5 Sockets
 const Q = [
   [0, 'Tu PC muestra 169.254.x.x. ¿Qué pasó?', ['No hubo DHCP (APIPA)', 'Es tu IP pública', 'Es el loopback', 'Falló el switch'], 0],
   [0, 'Cambias de Wi-Fi. ¿Qué cambia?', ['La MAC', 'La IP', 'Ambas', 'Ninguna'], 1],
@@ -23,7 +21,7 @@ const Q = [
   [5, 'Tras cerrar muchas conexiones TCP aparece mucho…', ['LISTEN', 'SYN_SENT', 'TIME_WAIT', 'ESTABLISHED'], 2],
 ];
 
-const S = { slide: 0, players: new Map(), host: null, quiz: null };
+const S = { slide: 0, players: new Map(), sc: new Map(), host: null, quiz: null };
 const C = new Set();
 
 function send(s, o) {
@@ -62,7 +60,7 @@ function start() {
   if (S.quiz) { clearTimeout(S.quiz.tm); clearTimeout(S.quiz.nx); }
   const qs = [0, 1, 2, 3, 4, 5].map(t => { const c = Q.filter(q => q[0] === t); return c[Math.random() * c.length | 0]; });
   S.quiz = { qs, i: -1, open: false };
-  for (const p of S.players.values()) p.score = 0;
+  S.sc.clear(); for (const p of S.players.values()) S.sc.set(p.name, 0);
   next();
 }
 function next() {
@@ -71,42 +69,49 @@ function next() {
   const [, q, o, c] = z.qs[z.i];
   const opts = o.map((x, k) => [x, k === c]).sort(() => Math.random() - 0.5);
   z.ans = new Map(); z.open = true; z.t0 = Date.now(); z.cor = opts.findIndex(x => x[1]);
-  bc({ t: 'q', i: z.i, n: z.qs.length, q, o: opts.map(x => x[0]), sec: 15 });
-  z.tm = setTimeout(reveal, 15000);
+  z.qm = { t: 'q', i: z.i, n: z.qs.length, q, o: opts.map(x => x[0]), sec: T / 1000 };
+  bc(z.qm);
+  z.tm = setTimeout(reveal, T);
 }
 function reveal() {
   const z = S.quiz;
   if (!z || !z.open) return;
   z.open = false; clearTimeout(z.tm);
   const cnt = [0, 0, 0, 0];
-  for (const [s, a] of z.ans) {
+  for (const [n, a] of z.ans) {
     cnt[a.k]++;
-    if (a.k === z.cor && S.players.has(s)) S.players.get(s).score += Math.max(500, Math.round(1000 - 500 * a.ms / 15000));
+    if (a.k === z.cor) S.sc.set(n, (S.sc.get(n) || 0) + Math.max(500, Math.round(1000 - 500 * a.ms / T)));
   }
   for (const s of C) {
     const p = S.players.get(s);
-    send(s, { t: 'r', cor: z.cor, cnt, score: p ? p.score : 0, ok: p && z.ans.has(s) ? z.ans.get(s).k === z.cor : null });
+    send(s, { t: 'r', cor: z.cor, cnt, score: p ? S.sc.get(p.name) || 0 : 0, ok: p && z.ans.has(p.name) ? z.ans.get(p.name).k === z.cor : null });
   }
   z.nx = setTimeout(next, 5000);
 }
 function end() {
-  const top = [...S.players.values()].sort((a, b) => b.score - a.score).slice(0, 3).map(p => [p.name, p.score]);
+  const top = [...S.sc].sort((a, b) => b[1] - a[1]).slice(0, 3);
   bc({ t: 'end', top });
 }
 
 function on(s, m) {
-  if (m.t === 'host') { S.host = s; send(s, { t: 'slide', i: S.slide }); send(s, info()); }
+  if (m.t === 'host') { if (KEY && m.key !== KEY) return; S.host = s; send(s, { t: 'slide', i: S.slide }); send(s, info()); }
   else if (m.t === 'join') {
-    S.players.set(s, { name: String(m.name || '?').slice(0, 14), score: 0, ip: String(s.remoteAddress || '').replace('::ffff:', '') });
-    send(s, { t: 'slide', i: S.slide }); if (S.term) send(s, S.term); bc(info());
+    const name = String(m.name || '?').slice(0, 14);
+    for (const [k, p] of S.players) if (p.name === name && k !== s) S.players.delete(k);
+    S.players.set(s, { name, ip: s.ip });
+    if (!S.sc.has(name)) S.sc.set(name, 0);
+    send(s, { t: 'slide', i: S.slide }); if (S.term) send(s, S.term);
+    if (S.quiz && S.quiz.open) send(s, S.quiz.qm);
+    bc(info());
   }
   else if (s === S.host && m.t === 'slide') { S.slide = m.i; bc({ t: 'slide', i: m.i }); }
   else if (s === S.host && m.t === 'start') start();
   else if (s === S.host && m.t === 'term') { S.term = m; for (const c of C) if (c !== s) send(c, m); }
   else if (m.t === 'a') {
     const z = S.quiz;
-    if (z && z.open && S.players.has(s) && !z.ans.has(s) && m.k >= 0 && m.k < 4) {
-      z.ans.set(s, { k: m.k, ms: Date.now() - z.t0 });
+    const p = S.players.get(s);
+    if (z && z.open && p && !z.ans.has(p.name) && m.k >= 0 && m.k < 4) {
+      z.ans.set(p.name, { k: m.k, ms: Date.now() - z.t0 });
       bc({ t: 'ac', n: z.ans.size });
       if (z.ans.size >= S.players.size) reveal();
     }
@@ -114,16 +119,22 @@ function on(s, m) {
 }
 
 const srv = http.createServer((q, r) => {
-  if (q.url === '/qr.svg' && qr) { r.writeHead(200, { 'Content-Type': 'image/svg+xml' }); return r.end(qr); }
-  if (q.url === '/' || q.url === '/host') { r.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' }); return r.end(fs.readFileSync(__dirname + '/index.html')); }
+  const u = new URL(q.url, 'http://x');
+  if (u.pathname === '/qr.svg' && qr) { r.writeHead(200, { 'Content-Type': 'image/svg+xml' }); return r.end(qr); }
+  if (u.pathname === '/' || u.pathname === '/host') {
+    if (u.pathname === '/host' && KEY && u.searchParams.get('key') !== KEY) { r.writeHead(403); return r.end(); }
+    r.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' }); return r.end(HTML);
+  }
   r.writeHead(404); r.end();
 });
 srv.on('upgrade', (q, s) => {
   const key = crypto.createHash('sha1').update(q.headers['sec-websocket-key'] + '258EAFA5-E914-47DA-95CA-C5AB0DC85B11').digest('base64');
   s.write('HTTP/1.1 101 Switching Protocols\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Accept: ' + key + '\r\n\r\n');
+  s.ip = String(q.headers['x-forwarded-for'] || '').split(',')[0].trim() || String(s.remoteAddress || '').replace('::ffff:', '');
   C.add(s);
   s.on('data', d => parse(s, d, m => { try { on(s, JSON.parse(m)); } catch {} }));
   s.on('close', () => { C.delete(s); S.players.delete(s); if (S.host === s) S.host = null; bc(info()); });
   s.on('error', () => {});
 });
-srv.listen(PORT, '0.0.0.0', () => console.log(`Host (PC):  http://localhost:${PORT}/host\nJugadores:  ${URL_}${qr ? '' : '\n(sin QR: ejecuta npm i qrcode una vez)'}`));
+setInterval(() => { for (const s of C) if (!s.destroyed) s.write(Buffer.from([137, 0])); }, 25000);
+srv.listen(PORT, '0.0.0.0', () => console.log(`Host:  http://localhost:${PORT}/host${KEY ? '?key=' + KEY : ''}\nJugadores:  ${URL_}${qr ? '' : '\n(sin QR: ejecuta npm i qrcode una vez)'}`));
