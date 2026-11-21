@@ -2,6 +2,7 @@ const S = 'Resultados';
 
 function sh() {
   const b = SpreadsheetApp.getActiveSpreadsheet();
+  if (!b) throw new Error('No hay hoja de cálculo vinculada');
   let s = b.getSheetByName(S);
   if (!s) { s = b.insertSheet(S); s.appendRow(['Nombre', 'Puntaje', 'Aciertos', 'Segundos', 'Fecha']); }
   return s;
@@ -17,6 +18,8 @@ function doPost(e) {
     const s = sh(), v = s.getDataRange().getValues();
     for (let i = 1; i < v.length; i++) if (v[i][0] === n) { if (p[1] > v[i][1]) s.getRange(i + 1, 1, 1, 5).setValues([p]); return ok(); }
     s.appendRow(p); return ok();
+  } catch (err) {
+    return json({ ok: false, error: String(err && err.message ? err.message : err) });
   } finally { l.releaseLock(); }
 }
 
@@ -24,13 +27,18 @@ const C = 'Control';
 
 function ctl() {
   const b = SpreadsheetApp.getActiveSpreadsheet();
+  if (!b) throw new Error('No hay hoja de cálculo vinculada');
   let s = b.getSheetByName(C);
   if (!s) { s = b.insertSheet(C); s.getRange('A1:B2').setValues([['estado', 's0'], ['marca', 0]]); }
   return s;
 }
 
 function clave() {
-  return PropertiesService.getScriptProperties().getProperty('CLAVE') || 'admin';
+  try {
+    const prop = PropertiesService.getScriptProperties().getProperty('CLAVE');
+    if (prop) return prop;
+  } catch (e) {}
+  return '1708';
 }
 
 function json(o) { return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
@@ -80,20 +88,24 @@ function fijar(v, t) {
 }
 
 function doGet(e) {
-  const p = (e && e.parameter) || {}, k = clave(), s = String(p.sid || p.s || ''), auth = !!k && p.k === k && SIDOK.test(s);
-  if (p.a === 'get') return json({ v: estado() });
-  if (p.a === 'adm') {
-    if (!auth) return json({ ok: false, r: 'key' });
-    const mine = tomar(s);
-    return mine ? json({ ok: true, admin: true }) : json({ ok: false, r: 'busy', admin: false });
+  try {
+    const p = (e && e.parameter) || {}, k = clave(), s = String(p.sid || p.s || ''), auth = !!k && String(p.k) === String(k) && SIDOK.test(s);
+    if (p.a === 'get') return json({ v: estado() });
+    if (p.a === 'adm') {
+      if (!auth) return json({ ok: false, r: 'key' });
+      const mine = tomar(s);
+      return mine ? json({ ok: true, admin: true }) : json({ ok: false, r: 'busy', admin: false });
+    }
+    if (p.a === 'bye' || p.a === 'rel') { if (auth) soltar(s); return json({ ok: true }); }
+    if (p.a === 'set') {
+      const v = String(p.v || '');
+      if (!auth || !/^(s\d{1,2}|quiz|play|ranking)$/.test(v) || !tomar(s)) return json({ ok: false });
+      fijar(v, Number(p.t) || Date.now());
+      return json({ ok: true });
+    }
+    const v = sh().getDataRange().getValues().slice(1).map(r => ({ n: r[0], s: r[1], c: r[2], t: r[3] })).sort((a, b) => b.s - a.s || a.t - b.t);
+    return json(v);
+  } catch (err) {
+    return json({ ok: false, error: String(err && err.message ? err.message : err) });
   }
-  if (p.a === 'bye' || p.a === 'rel') { if (auth) soltar(s); return json({ ok: true }); }
-  if (p.a === 'set') {
-    const v = String(p.v || '');
-    if (!auth || !/^(s\d{1,2}|quiz|play|ranking)$/.test(v) || !tomar(s)) return json({ ok: false });
-    fijar(v, Number(p.t) || Date.now());
-    return json({ ok: true });
-  }
-  const v = sh().getDataRange().getValues().slice(1).map(r => ({ n: r[0], s: r[1], c: r[2], t: r[3] })).sort((a, b) => b.s - a.s || a.t - b.t);
-  return json(v);
 }
