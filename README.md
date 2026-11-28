@@ -39,19 +39,22 @@ El servidor detectará automáticamente las interfaces de red de tu equipo e imp
 
 ---
 
-## 📱 ¿Cómo se conectan los estudiantes?
+## 👨‍🏫 Modo Presentador (Administrador Automático)
 
-1. Los estudiantes se conectan a la **misma red Wi-Fi del aula** (o al **Punto de acceso / Hotspot** que compartas desde tu laptop o celular).
-2. Abren el navegador en sus celulares (Chrome, Safari, Firefox, etc.) e ingresan la IP que muestra la terminal o el botón **"Celulares"** en la barra superior (ej: `http://192.168.1.50:3000`).
-3. En el **Hub de entrada**, eligen la pestaña **Participante**, escriben su nombre y listo.
+- En el proyector o en tu máquina abre `http://localhost:3000`.
+- **Tu PC es Administrador de forma 100% automática e incondicional**: no pide contraseñas ni modales molestos al iniciar.
+- Tienes el control total: avanzar/retroceder diapositivas (`◀ ▶`, flechas del teclado, o comandos de terminal), botón **"● Celulares"** para proyectar la IP/enlace a los alumnos, **"Iniciar para todos"** en el quiz y botón **"Limpiar tabla"** en la clasificación.
+- Cada acción que realices en `localhost` se refleja **instantáneamente** en los celulares y dispositivos de los alumnos mediante *Server-Sent Events (SSE)* con latencia menor a 5 ms.
 
 ---
 
-## 👨‍🏫 Modo Presentador (Administrador)
+## 📱 ¿Cómo se conectan los alumnos (Participantes)?
 
-- En el proyector o en tu navegador abre `http://localhost:3000`.
-- En el Hub de entrada elige **Presentador (Admin)** y coloca la clave: **`1708`**.
-- Al cambiar de diapositiva o presionar **"Iniciar para todos"** en el quiz, todas las pantallas de los estudiantes cambiarán **instantáneamente** en tiempo real mediante *Server-Sent Events (SSE)* con latencia menor a 5 ms.
+1. Los alumnos se conectan a la **misma red Wi-Fi del aula** (o al **Punto de acceso / Hotspot** que compartas desde tu laptop).
+2. Abren el navegador en sus celulares (Chrome, Safari, etc.) e ingresan la URL que proyecta tu pantalla (ej: `http://192.168.1.50:3000`).
+3. **Ingreso ultra rápido**: Solo escriben su nombre o apodo para el quiz y pulsan "Entrar a la clase".
+4. **Reflejo en vivo**: Su celular sigue en tiempo real las diapositivas que tú cambias desde el proyector.
+5. **Quiz en simultáneo**: Cuando tú pulses "Iniciar para todos", todos los celulares desbloquean el quiz al mismo tiempo, responden las 10 preguntas y sus notas se guardan en tu PC.
 
 ---
 

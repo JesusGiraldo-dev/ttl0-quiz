@@ -52,6 +52,12 @@ function getLocalIPs() {
   return list.length > 0 ? list : [{ name: 'localhost', address: '127.0.0.1' }];
 }
 
+// --- Identificar si la conexión proviene de la máquina local (localhost) ---
+function isLocalRequest(req) {
+  const addr = (req.socket && req.socket.remoteAddress) || '';
+  return addr === '127.0.0.1' || addr === '::1' || addr === '::ffff:127.0.0.1' || addr === 'localhost';
+}
+
 // --- Broadcast SSE ---
 function broadcast(event, data) {
   const msg = `event: ${event}\ndata: ${JSON.stringify(data)}\n\n`;
@@ -99,14 +105,17 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // 2. Información del servidor y red
-  if (pathname === '/api/info') {
+  // 2. Información del servidor, red y rol del cliente
+  if (pathname === '/api/info' || pathname === '/api/whoami') {
+    const isLocal = isLocalRequest(req);
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({
       port: PORT,
       ips: getLocalIPs(),
       users: sseClients.size,
-      slide: currentSlide
+      slide: currentSlide,
+      isLocalhost: isLocal,
+      isAdmin: isLocal || (adminSid && adminSid === url.searchParams.get('sid'))
     }));
     return;
   }
@@ -116,6 +125,7 @@ const server = http.createServer((req, res) => {
     const a = url.searchParams.get('a');
     const k = url.searchParams.get('k') || '';
     const sid = url.searchParams.get('sid') || url.searchParams.get('s') || '';
+    const isLocal = isLocalRequest(req);
 
     // Manejo de GET
     if (req.method === 'GET') {
@@ -126,27 +136,29 @@ const server = http.createServer((req, res) => {
         return;
       }
 
-      // b) Autenticación de admin
+      // b) Autenticación / Verificación de admin
       if (a === 'adm') {
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        if (k !== ADMIN_PASS) {
-          res.end(JSON.stringify({ ok: false, r: 'key' }));
+        // Localhost siempre es administrador automático
+        if (!isLocal && k !== ADMIN_PASS) {
+          res.end(JSON.stringify({ ok: false, r: 'key', admin: false }));
           return;
         }
         const now = Date.now();
-        if (adminSid && adminSid !== sid && (now - adminTs < LEASE_MS)) {
+        // Si no es local y hay otro admin activo
+        if (!isLocal && adminSid && adminSid !== sid && (now - adminTs < LEASE_MS)) {
           res.end(JSON.stringify({ ok: false, r: 'busy', admin: false }));
           return;
         }
-        adminSid = sid;
+        adminSid = isLocal ? 'localhost' : sid;
         adminTs = now;
-        res.end(JSON.stringify({ ok: true, admin: true }));
+        res.end(JSON.stringify({ ok: true, admin: true, isLocalhost: isLocal }));
         return;
       }
 
       // c) Salir / soltar admin
       if (a === 'bye' || a === 'rel') {
-        if (adminSid === sid) {
+        if (adminSid === sid || isLocal) {
           adminSid = null;
           adminTs = 0;
         }
@@ -159,11 +171,12 @@ const server = http.createServer((req, res) => {
       if (a === 'set') {
         const v = url.searchParams.get('v') || '';
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        if (k !== ADMIN_PASS) {
-          res.end(JSON.stringify({ ok: false, r: 'key' }));
+        // Permitido si es localhost o si provee la clave de administrador
+        if (!isLocal && k !== ADMIN_PASS) {
+          res.end(JSON.stringify({ ok: false, r: 'forbidden', admin: false }));
           return;
         }
-        adminSid = sid;
+        adminSid = isLocal ? 'localhost' : sid;
         adminTs = Date.now();
         currentSlide = v;
         broadcast('slide', { v });
@@ -174,8 +187,9 @@ const server = http.createServer((req, res) => {
       // e) Reiniciar clasificación (admin)
       if (a === 'reset') {
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        if (k !== ADMIN_PASS) {
-          res.end(JSON.stringify({ ok: false, r: 'key' }));
+        // Permitido si es localhost o si provee la clave de administrador
+        if (!isLocal && k !== ADMIN_PASS) {
+          res.end(JSON.stringify({ ok: false, r: 'forbidden', admin: false }));
           return;
         }
         results = [];
@@ -265,15 +279,16 @@ server.listen(PORT, '0.0.0.0', () => {
   console.log('\x1b[36m%s\x1b[0m', '╔══════════════════════════════════════════════════════════════════╗');
   console.log('\x1b[36m║\x1b[1m\x1b[32m         TTL=0 · SERVIDOR LOCAL DE CLASE (REDES)                  \x1b[0m\x1b[36m║');
   console.log('\x1b[36m╠══════════════════════════════════════════════════════════════════╣\x1b[0m');
-  console.log('\x1b[36m║\x1b[0m \x1b[1m[Proyector / Este PC]:\x1b[0m                                           \x1b[36m║');
-  console.log(`\x1b[36m║\x1b[0m   \x1b[33mhttp://localhost:${PORT}\x1b[0m`.padEnd(68) + '\x1b[36m║\x1b[0m');
+  console.log('\x1b[36m║\x1b[0m \x1b[1m[Proyector / Tu PC (ADMINISTRADOR AUTOMÁTICO - Sin clave)]:\x1b[0m       \x1b[36m║');
+  console.log(`\x1b[36m║\x1b[0m   \x1b[33m\x1b[1mhttp://localhost:${PORT}\x1b[0m`.padEnd(77) + '\x1b[36m║\x1b[0m');
   console.log('\x1b[36m║\x1b[0m                                                                  \x1b[36m║');
-  console.log('\x1b[36m║\x1b[0m \x1b[1m[Estudiantes / Dispositivos en la misma red Wi-Fi o Hotspot]:\x1b[0m     \x1b[36m║');
+  console.log('\x1b[36m║\x1b[0m \x1b[1m[Alumnos / Celulares (PARTICIPANTES - Sincronizados en vivo)]:\x1b[0m    \x1b[36m║');
   ips.forEach(ip => {
     console.log(`\x1b[36m║\x1b[0m   \x1b[32m\x1b[1mhttp://${ip.address}:${PORT}\x1b[0m (${ip.name})`.padEnd(77) + '\x1b[36m║\x1b[0m');
   });
   console.log('\x1b[36m║\x1b[0m                                                                  \x1b[36m║');
-  console.log(`\x1b[36m║\x1b[0m  • Clave de Administrador: \x1b[1m\x1b[33m${ADMIN_PASS}\x1b[0m`.padEnd(72) + '\x1b[36m║\x1b[0m');
+  console.log(`\x1b[36m║\x1b[0m  • Modo Proyector (localhost): \x1b[1m\x1b[32mControl total de diapositivas y quiz\x1b[0m`.padEnd(80) + '\x1b[36m║\x1b[0m');
+  console.log(`\x1b[36m║\x1b[0m  • Modo Alumnos (Wi-Fi): \x1b[1m\x1b[36mReflejo en vivo + envío de respuestas\x1b[0m`.padEnd(80) + '\x1b[36m║\x1b[0m');
   console.log(`\x1b[36m║\x1b[0m  • Resultados guardados en: \x1b[34mresultados.json\x1b[0m`.padEnd(70) + '\x1b[36m║\x1b[0m');
   console.log(`\x1b[36m║\x1b[0m  • Sincronización en tiempo real (SSE): \x1b[32mACTIVADA\x1b[0m`.padEnd(71) + '\x1b[36m║\x1b[0m');
   console.log('\x1b[36m╚══════════════════════════════════════════════════════════════════╝\x1b[0m');
