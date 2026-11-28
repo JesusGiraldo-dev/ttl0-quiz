@@ -199,7 +199,25 @@ const server = http.createServer((req, res) => {
         return;
       }
 
-      // f) Obtener ranking de clasificación (sin parámetro 'a')
+      // f) Transmitir explicación de consola a todos los alumnos (admin)
+      if (a === 'explain') {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        if (!isLocal && k !== ADMIN_PASS) {
+          res.end(JSON.stringify({ ok: false, r: 'forbidden', admin: false }));
+          return;
+        }
+        const p = url.searchParams.get('p') || '';
+        try {
+          const data = JSON.parse(decodeURIComponent(p));
+          broadcast('explain', data);
+          res.end(JSON.stringify({ ok: true }));
+        } catch (err) {
+          res.end(JSON.stringify({ ok: false, error: 'invalid payload' }));
+        }
+        return;
+      }
+
+      // g) Obtener ranking de clasificación (sin parámetro 'a')
       const sorted = [...results].sort((x, y) => (y.s - x.s) || (x.t - y.t));
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(sorted));

@@ -175,6 +175,33 @@ body:not(.ad) .ao{display:none!important}
 #lan-modal[hidden]{display:none!important}
 .lan-card{background:var(--pn);border:1px solid var(--ln);border-radius:20px;max-width:440px;width:100%;padding:28px 24px;text-align:center;box-shadow:0 20px 60px #000000aa;position:relative}
 .lan-url-box{background:#050910;border:1px dashed var(--a);padding:14px;border-radius:12px;margin:14px 0;font:800 1.25em ui-monospace,Consolas,monospace;color:var(--g);word-break:break-all;user-select:all}
+.exp-btn{margin-left:auto;display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:6px;border:1px solid #eab30866;background:#eab30822;color:#facc15;font:700 11px system-ui,sans-serif;cursor:pointer;transition:all .2s;white-space:nowrap}
+.exp-btn:hover{background:#eab30844;transform:translateY(-1px);filter:brightness(1.2)}
+.exp-btn.pulse{animation:exp-glow 2s infinite}
+@keyframes exp-glow{0%,100%{box-shadow:0 0 0 rgba(234,179,8,0);border-color:#eab30866}50%{box-shadow:0 0 10px rgba(250,204,21,.6);border-color:#facc15}}
+#exp-modal{position:fixed;inset:0;z-index:120;background:#070b12f0;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;padding:16px}
+#exp-modal[hidden]{display:none!important}
+.exp-card{background:var(--pn);border:1px solid var(--ln);border-radius:20px;max-width:540px;width:100%;max-height:88vh;display:flex;flex-direction:column;box-shadow:0 24px 70px #000000bb;position:relative;overflow:hidden}
+.exp-head{display:flex;gap:12px;align-items:center;padding:16px 20px 12px;border-bottom:1px solid var(--ln);background:#050910}
+.exp-icon{font-size:30px;line-height:1}
+.exp-meta{display:flex;gap:8px;align-items:center;margin-top:4px;flex-wrap:wrap}
+.exp-os-tag{font:700 10px ui-monospace,monospace;padding:2px 6px;border-radius:4px;background:#1e293b;color:#94a3b8}
+.exp-cmd-code{font:700 13px ui-monospace,Consolas,monospace;color:var(--g)}
+.exp-badge{font:800 10px ui-monospace,monospace;padding:3px 8px;border-radius:99px;letter-spacing:.04em}
+.exp-badge.ok{background:#16653444;color:#4ade80;border:1px solid #22c55e66}
+.exp-badge.fail{background:#991b1b44;color:#f87171;border:1px solid #ef444466}
+.exp-badge.warn{background:#854d0e44;color:#facc15;border:1px solid #eab30866}
+.exp-badge.info{background:#1e40af44;color:#60a5fa;border:1px solid #3b82f666}
+.exp-body{flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:12px;font-size:13.5px;line-height:1.5}
+.exp-sec-title{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.exp-box{background:#050910;border:1px solid var(--ln);border-radius:12px;padding:12px 14px}
+.exp-box.accent{border-color:color-mix(in srgb,var(--a) 40%,transparent);background:color-mix(in srgb,var(--a) 6%,#050910)}
+.exp-part-list{display:flex;flex-direction:column;gap:8px}
+.exp-part-item{background:#0b1320;border:1px solid var(--ln);border-radius:8px;padding:8px 12px}
+.exp-part-token{font:700 12px ui-monospace,Consolas,monospace;color:#38bdf8;display:inline-block;margin-bottom:2px}
+.exp-part-desc{font-size:12.5px;color:var(--fg);margin:0}
+.exp-tip{display:flex;gap:10px;background:#1e3a5f33;border:1px solid #3b82f655;border-radius:10px;padding:10px 12px;font-size:12.5px;color:#93c5fd}
+.exp-foot{padding:12px 20px;border-top:1px solid var(--ln);background:#050910}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
 <symbol id="i-win" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M3 5.5l8-1.1v7H3zM12 4.3l9-1.3v8.4h-9zM3 12.6h8v7l-8-1.1zM12 12.6h9V21l-9-1.3z"/></symbol>
@@ -197,7 +224,7 @@ body:not(.ad) .ao{display:none!important}
 <div id="top"><div class="brand">TTL=<b id="ttl">7</b></div><span id="adb"></span><button id="lan-btn" class="lan-btn" onclick="openLanModal()" title="Unirse desde celular"><span class="wifi-dot">●</span> <span>Celulares</span></button><div id="dots"></div><div id="ctl"><button id="pb" onclick="go(-1)">◀</button><button id="nb" onclick="go(1)">▶</button></div><button id="fb" onclick="fs()" title="Pantalla completa"><svg class="ico"><use href="#i-fs"/></svg></button></div>
 <div id="sv" class="v"></div><div id="qv" class="v" hidden></div><div id="rv" class="v" hidden></div>
 </div>
-<div id="tmh"><div id="tm"><div id="chr"><i></i><i></i><i></i><span id="ct">&nbsp;ttl0@redes · terminal simulada</span></div><div id="otabs"></div><div id="o"></div><div id="ch"></div><div id="ipt"><span id="pr"></span><input id="in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" placeholder="help"></div></div></div>
+<div id="tmh"><div id="tm"><div id="chr"><i></i><i></i><i></i><span id="ct">&nbsp;ttl0@redes · terminal simulada</span><button id="exp-btn" class="exp-btn" onclick="openExplanation()" title="Explicar qué significa lo que salió en la consola">💡 Explicar salida</button></div><div id="otabs"></div><div id="o"></div><div id="ch"></div><div id="ipt"><span id="pr"></span><input id="in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" placeholder="help"></div></div></div>
 <div id="toast"></div>
 <div id="fo" hidden><div class="brand" style="font-size:44px">TTL=0</div><p id="ft">Para ver mejor, usa pantalla completa.</p><button class="cta" id="fy" onclick="fs();closeFo()">Pantalla completa</button><button class="cta alt" onclick="closeFo()">Continuar así</button></div>
 <div id="hub" hidden>
@@ -226,12 +253,36 @@ body:not(.ad) .ao{display:none!important}
   <div class="lan-card">
     <button class="hub-close" onclick="closeLanModal()" title="Cerrar">&times;</button>
     <div style="font-size:38px;margin-bottom:6px">📡</div>
-    <h2 style="margin:0 0 4px;font-size:1.35em">Unirse a la clase</h2>
-    <p style="font-size:0.9em;color:var(--mu);margin:0 0 14px">Conéctate al Wi-Fi o Hotspot de esta sala y abre este enlace en tu navegador:</p>
+    <h2 style="margin:0 0 4px;font-size:1.35em">Únete a la clase</h2>
+    <p style="font-size:0.9em;color:var(--mu);margin:0 0 10px">Escanea el QR o escribe la URL en tu navegador:</p>
+    <div id="lan-qr" style="display:flex;justify-content:center;margin:0 0 10px;border-radius:12px;overflow:hidden;background:#fff;padding:10px"></div>
     <div class="lan-url-box" id="lan-url-display">http://localhost:3000</div>
     <p style="font-size:0.85em;color:var(--mu);margin:0 0 14px">Funciona en cualquier celular o laptop con Chrome, Safari, etc.</p>
     <div id="lan-users-badge" style="font:700 12px ui-monospace,monospace;color:var(--a);margin-bottom:14px">0 dispositivos conectados</div>
     <button class="cta" style="width:100%" onclick="closeLanModal()">Listo</button>
+  </div>
+</div>
+<div id="exp-modal" hidden>
+  <div class="exp-card">
+    <button class="hub-close" onclick="closeExplanation()" title="Cerrar">&times;</button>
+    <div class="exp-head">
+      <div class="exp-icon">💡</div>
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <h2 style="margin:0;font-size:1.15em">Análisis de Consola</h2>
+          <span id="exp-status-badge" class="exp-badge ok">ÉXITO</span>
+        </div>
+        <div class="exp-meta">
+          <span id="exp-os-badge" class="exp-os-tag">Windows</span>
+          <span id="exp-cmd-text" class="exp-cmd-code">ping 8.8.8.8</span>
+        </div>
+      </div>
+    </div>
+    <div class="exp-body" id="exp-body"></div>
+    <div class="exp-foot">
+      <button id="btn-broadcast-exp" class="cta ao" style="width:100%;margin-bottom:8px;background:#2563eb;color:#fff" onclick="broadcastExplanation()">📡 Proyectar esta explicación a los alumnos</button>
+      <button class="cta" style="width:100%" onclick="closeExplanation()">Entendido / Volver a la consola</button>
+    </div>
   </div>
 </div>
 <script>
@@ -451,6 +502,8 @@ const HELP = { w: 'ping · tracert · pathping · nslookup · netstat -ano · ip
 async function run(s) {
   s = s.trim(); if (!s || busy) return;
   out(pr() + ' ' + s);
+  // Guardar contexto para explicación
+  lastCmd = { cmd: s, os: OS, sc: SC };
   let k = s.toLowerCase();
   if (OS === 'c') k = k.replace(/^sh /, 'show ').replace(/ int /, ' interface ').replace(/ br$/, ' brief');
   const [c, ...a] = k.split(/\s+/), c0 = s.split(/\s+/)[0];
@@ -480,7 +533,209 @@ async function run(s) {
     else if (c === 'powershell') { PS = 1; out('Windows PowerShell'); setP(); chips(); }
     else if (c === 'exit') { if (PS) PS = 0; else AD = 0; setP(); chips(); }
     else out(OS === 'c' ? "% Invalid input detected at '^' marker." : 'Comando no incluido en la demo: escribe help');
-  } finally { busy = 0; }
+  } finally {
+    busy = 0;
+    if ($('exp-btn')) $('exp-btn').classList.add('pulse');
+  }
+}
+
+// ========== MODO EXPLICACIÓN ==========
+let lastCmd = null, currentExpData = null;
+
+// Motor de explicación: devuelve objeto con toda la info para renderizar
+function buildExplanation(cmd, os, sc) {
+  const c = cmd.trim().toLowerCase();
+  const osLabel = { w: 'Windows', l: 'Linux', c: 'Cisco IOS' }[os] || os;
+  const scLabel = { ok: 'Red normal', dhcp: 'Sin DHCP', gw: 'Sin Internet (gateway)', dns: 'Falla DNS' }[sc] || sc;
+  let statusType = 'ok', statusLabel = 'ÉXITO', summary = '', parts = [], tip = '';
+
+  // Helper para agregar parte
+  const p = (token, desc) => parts.push({ token, desc });
+
+  if (c.startsWith('ping')) {
+    const target = c.split(/\s+/).filter(x => !x.startsWith('-') && x !== 'ping').pop() || '8.8.8.8';
+    if (sc === 'dhcp') {
+      statusType = 'fail'; statusLabel = 'SIN RED';
+      summary = `Sin dirección IP (APIPA 169.254.x.x): el PC no tiene una IP válida porque no hay servidor DHCP. Los paquetes no pueden salir de la interfaz.`;
+      p('169.254.x.x', 'Dirección APIPA — significa que DHCP no respondió y el sistema se autoasignó una IP de enlace local.');
+      p('ping: connect: Network is unreachable', 'El sistema no encontró ninguna ruta para enviar el paquete ICMP.');
+      tip = 'Ejecuta ipconfig (Windows) o ip a (Linux) para confirmar si tienes APIPA. Luego intenta /release y /renew (admin) o reinicia el adaptador.';
+    } else if (sc === 'gw') {
+      statusType = 'fail'; statusLabel = 'SIN INTERNET';
+      summary = `Puedes hacer ping dentro de tu LAN (192.168.1.x) pero no fuera. El gateway (router) no tiene conexión a Internet o no está enrutando.`;
+      p('Tiempo de espera agotado', 'El paquete ICMP salió del PC al gateway pero desde ahí no llegó al destino externo.');
+      p('TTL (Time To Live)', 'Contador de saltos: cada router lo resta en 1. Si llega a 0, el paquete se descarta y el router avisa con "Time Exceeded".');
+      p('Paquetes perdidos = 100%', 'Ningún Echo Reply volvió — el destino o algún router en el camino no respondió.');
+      tip = 'Haz ping a 192.168.1.1 (tu gateway). Si responde, el problema es entre el router y el ISP. Si no, el router está caído o la configuración de gateway es incorrecta.';
+    } else if (sc === 'dns') {
+      statusType = 'warn'; statusLabel = 'DNS CAÍDO';
+      summary = `Ping a ${target} falló porque el sistema no pudo resolver el nombre a una IP. El servidor DNS no responde o está mal configurado.`;
+      p('No se puede resolver / Name resolution failed', 'El SO intentó consultar el DNS configurado (ej. 192.168.1.250) pero no obtuvo respuesta.');
+      p('ping 8.8.8.8', 'Si haces ping directamente a la IP funciona: confirma que la red está bien pero el DNS no.');
+      tip = 'Usa nslookup google.com o dig google.com para diagnosticar el DNS. Puedes poner temporalmente 8.8.8.8 como DNS alternativo.';
+    } else {
+      // ok
+      statusType = 'ok'; statusLabel = 'ÉXITO';
+      summary = `${target} respondió correctamente. La ruta de red funciona de extremo a extremo: IP, gateway, DNS (si se usó nombre) y el host destino están operativos.`;
+      p('Haciendo ping a … [ip]', 'El sistema resolvió el nombre a IP (si era un nombre) usando DNS y envió los paquetes ICMP Echo Request (tipo 8).');
+      p('bytes=32 / 64 bytes', 'Tamaño del payload ICMP. Windows usa 32 bytes, Linux usa 56 (84 con cabecera).');
+      p('TTL=', 'Time To Live restante al llegar al PC. TTL inicial típico: Windows 128, Linux 64, Cisco 255. Cada salto resta 1.');
+      p('tiempo= / time=', 'RTT (Round Trip Time): cuánto tardó el paquete en ir y volver en milisegundos.');
+      p('Estadísticas / Statistics', 'Resumen: enviados, recibidos, perdidos y tiempos min/promedio/max.');
+      tip = 'Un TTL bajo en la respuesta indica muchos saltos (routers). Pérdida de 0% = ruta estable. Si hay pérdida esporádica puede ser congestión en la red.';
+    }
+  } else if (c.startsWith('tracert') || c.startsWith('traceroute')) {
+    statusType = sc === 'ok' ? 'ok' : 'warn'; statusLabel = sc === 'ok' ? 'RUTA TRAZADA' : 'RUTA INCOMPLETA';
+    summary = sc === 'ok'
+      ? 'Traceroute muestra cada router (salto) que cruzó el paquete, con su IP y tiempo. Permite ubicar exactamente dónde hay lentitud o corte.'
+      : 'La traza llegó hasta donde la red funciona y luego mostró * * * porque no hay respuesta más allá de ese punto.';
+    p('Salto N (número)', 'Cada línea es un router en el camino. El primer salto suele ser tu gateway (192.168.1.1).');
+    p('* * *', 'Ese router no responde sondas ICMP/UDP (firewall lo bloquea) PERO los paquetes de datos pueden seguir pasando normalmente.');
+    p('TTL=1,2,3…', 'Traceroute envía paquetes con TTL incremental. Cuando el TTL llega a 0, ese router responde con ICMP Time Exceeded (tipo 11) — así se "descubre".');
+    p('IPs repetidas', 'Pueden indicar balanceo de carga (distintos paths) o un bucle de enrutamiento.');
+    tip = os === 'w' ? 'Windows usa tracert con ICMP. Añade -d para no resolver nombres DNS (más rápido). En PowerShell también puedes usar Test-NetConnection -TraceRoute.' : 'Linux usa traceroute con UDP por defecto. -n omite la resolución DNS para ir más rápido. mtr combina ping + traceroute en tiempo real.';
+  } else if (c.startsWith('ipconfig') || c.startsWith('ip a') || c.startsWith('ip -br') || c.startsWith('ifconfig')) {
+    const isApipa = sc === 'dhcp';
+    statusType = isApipa ? 'warn' : 'ok'; statusLabel = isApipa ? 'SIN DHCP (APIPA)' : 'CONFIG. OK';
+    summary = isApipa
+      ? '¡Atención! La IP 169.254.x.x es APIPA (Automatic Private IP Addressing): el PC no recibió respuesta del servidor DHCP y se asignó una IP de emergencia. No tiene acceso a Internet ni a la LAN.'
+      : 'La configuración IP está completa: IP válida, máscara correcta y gateway configurado. El equipo puede comunicarse en la red.';
+    p('IPv4 / inet', 'Dirección IP del equipo en esta red. Si es 169.254.x.x = problema DHCP. Si es 192.168.x.x = red privada normal.');
+    p('Máscara / netmask', '/24 = 255.255.255.0 = 254 hosts posibles en la misma red. Define qué tráfico va directo y qué va al gateway.');
+    p('Gateway / Puerta de enlace', 'Router que conecta tu LAN con el exterior. Si está vacío = sin salida a Internet.');
+    p('DNS', 'Servidor que traduce nombres (google.com) a IPs. 8.8.8.8 = Google. Si está en blanco o es incorrecto, los nombres no resolverán.');
+    p('MAC / Dirección física', 'Identificador único del adaptador de red (capa 2). No cambia aunque cambies de red Wi-Fi.');
+    tip = isApipa ? 'Solución: ejecuta ipconfig /release y luego ipconfig /renew (como administrador) para pedir una IP al DHCP. Si sigue fallando, verifica el cable o el punto de acceso Wi-Fi.' : 'Guarda mentalmente: IP, máscara y gateway. Son los 3 datos mínimos para diagnosticar cualquier problema de red.';
+  } else if (c.startsWith('nslookup') || c.startsWith('dig')) {
+    if (sc !== 'ok') {
+      statusType = 'fail'; statusLabel = 'DNS FALLA';
+      summary = 'El servidor DNS no respondió. Puede estar caído, mal configurado, o la red no tiene salida.';
+      p('timed out / timeout', 'El cliente esperó respuesta del servidor DNS durante varios segundos y no llegó nada.');
+      p('no servers could be reached', 'Ningún servidor DNS en la lista respondió en tiempo.');
+      tip = 'Verifica que tienes gateway (ping 192.168.1.1). Si hay gateway pero falla DNS, el servidor DNS configurado (mira ipconfig) puede estar caído.';
+    } else {
+      statusType = 'ok'; statusLabel = 'DNS OK';
+      summary = 'El servidor DNS resolvió correctamente el nombre a una dirección IP.';
+      p('Non-authoritative answer', 'El resolvedor te dio la respuesta pero no es el servidor oficial del dominio — la tiene en caché o la obtuvo de otro servidor.');
+      p('Address / A record', 'La dirección IPv4 que corresponde al nombre consultado.');
+      p('NXDOMAIN', 'El dominio NO existe según el DNS. Verifica que escribiste bien el nombre.');
+      tip = 'TTL del DNS ≠ TTL de IP: el TTL de DNS indica cuántos segundos quedará en caché. Con dig puedes usar +short para solo ver la IP.';
+    }
+  } else if (c.startsWith('netstat') || c.startsWith('ss ') || c === 'ss') {
+    statusType = 'info'; statusLabel = 'SOCKETS ACTIVOS';
+    summary = 'Muestra las conexiones de red activas y los puertos en escucha de este equipo. Es la "lista de llamadas" de tu PC.';
+    p('LISTENING / LISTEN', 'Un programa está esperando conexiones en ese puerto. Ej: :3000 = el servidor del quiz.');
+    p('ESTABLISHED', 'Conexión TCP activa entre dos dispositivos. Puedes ver los celulares conectados al quiz.');
+    p('TIME_WAIT', 'La conexión está cerrando: esperando confirmar que el otro lado recibió el cierre (máx. 60s).');
+    p('0.0.0.0:3000', 'El servidor acepta conexiones desde CUALQUIER interfaz de red (LAN + localhost).');
+    p('127.0.0.1:3000', 'Solo acepta conexiones locales (desde el mismo PC).');
+    tip = 'netstat -ano (Windows) muestra el PID del proceso. ss -tulnp (Linux) es más moderno y rápido. Cisco solo ve sus propios sockets con show tcp brief.';
+  } else if (c.startsWith('arp') || c === 'ip neigh') {
+    statusType = 'info'; statusLabel = 'TABLA ARP';
+    summary = 'Muestra la tabla ARP: la lista de IPs que conoce con su correspondiente dirección MAC. Se construye automáticamente cuando el equipo necesita comunicarse en la LAN.';
+    p('Dirección de Internet / Address', 'IP del vecino en la LAN que has contactado recientemente.');
+    p('Dirección física / HWaddress', 'MAC del dispositivo con esa IP. Los primeros 3 octetos identifican al fabricante (OUI).');
+    p('dinámico / REACHABLE', 'ARP aprendido automáticamente. Tiene tiempo de vida (caduca en ~20 min si no hay tráfico).');
+    p('estático', 'ARP configurado manualmente. No caduca. Usado para seguridad o dispositivos fijos.');
+    tip = 'ARP solo funciona dentro de tu LAN. Para IPs fuera de tu red verías la MAC de tu gateway (router). Esto es normal.';
+  } else if (c.startsWith('route') || c === 'ip route' || c.includes('show ip route')) {
+    statusType = sc === 'dhcp' ? 'warn' : 'ok'; statusLabel = sc === 'dhcp' ? 'RUTA INCOMPLETA' : 'TABLA OK';
+    summary = sc === 'dhcp'
+      ? 'Sin DHCP no hay ruta por defecto (0.0.0.0/0). Solo existe la ruta de enlace local 169.254.x.x. No hay salida a Internet.'
+      : 'La tabla de enrutamiento tiene ruta por defecto (0.0.0.0/0 → gateway) y la ruta de red local. Permite llegar a cualquier destino.';
+    p('0.0.0.0/0 o 0.0.0.0 0.0.0.0', 'Ruta por defecto: a donde van todos los paquetes que no coinciden con ninguna ruta más específica (gateway de Internet).');
+    p('192.168.1.0/24 o 192.168.1.0 255.255.255.0', 'Ruta de red local: destinos dentro de tu LAN se envían directo (sin pasar por el gateway).');
+    p('En vínculo / scope link', 'El destino está en la misma red — se llega directamente sin gateway.');
+    p('Métrica', 'Costo de la ruta: menor métrica = preferida. Si hay dos rutas al mismo destino, gana la de menor métrica.');
+    tip = 'Longest Prefix Match: gana siempre la ruta más específica. /24 gana sobre /16, que gana sobre /0 (por defecto). Cisco: distancia administrativa RIP=120, OSPF=110, EIGRP=90, Estática=1.';
+  } else if (c.startsWith('pathping') || c.startsWith('mtr')) {
+    statusType = 'info'; statusLabel = 'ANÁLISIS POR SALTO';
+    summary = 'pathping/mtr combina traceroute + ping: primero traza la ruta y luego envía múltiples sondas a cada salto para medir la pérdida de paquetes por tramo.';
+    p('Pérdida / Loss%', 'Porcentaje de paquetes que se perdieron en ese salto. >5% indica congestión o problemas en ese segmento.');
+    p('RTT / Avg', 'Tiempo promedio de ida y vuelta a ese salto en milisegundos. Incrementos grandes entre saltos = latencia añadida por ese router.');
+    p('???', 'El salto no respondió sondas pero el tráfico puede estar pasando (firewall que bloquea ICMP/UDP).');
+    tip = 'Si un salto intermedio tiene 100% de pérdida pero los siguientes responden, ese router simplemente no responde sondas de diagnóstico — no está caído.';
+  } else if (c.startsWith('test-netconnection')) {
+    const portMatch = c.match(/-port\s+(\d+)/);
+    const portNum = portMatch ? portMatch[1] : null;
+    statusType = sc === 'ok' ? 'ok' : 'fail'; statusLabel = sc === 'ok' ? (portNum ? 'PUERTO ABIERTO' : 'HOST ALCANZABLE') : 'FALLO';
+    summary = portNum
+      ? `Test-NetConnection prueba específicamente si el puerto TCP ${portNum} está abierto y aceptando conexiones. Es como tocar el timbre de un apartamento exacto.`
+      : 'Test-NetConnection (PowerShell) prueba la conectividad a un host con ping y opcionalmente a un puerto TCP.';
+    p('TcpTestSucceeded : True', 'El puerto TCP respondió — el servicio está activo y acepta conexiones.');
+    p('TcpTestSucceeded : False', 'El puerto no respondió. Puede estar cerrado, el servicio caído, o un firewall lo bloquea.');
+    p('PingSucceeded : True/False', 'Resultado del ICMP ping al host. Un host puede no responder ping pero sí tener puertos TCP abiertos (firewall bloqueando ICMP).');
+    tip = 'Test-NetConnection -Port 443 es ideal para verificar si HTTPS está disponible en un servidor. Puertos comunes: 80=HTTP, 443=HTTPS, 3389=RDP, 22=SSH, 53=DNS.';
+  } else if (c.startsWith('hostname')) {
+    statusType = 'info'; statusLabel = 'NOMBRE DEL EQUIPO';
+    summary = 'hostname muestra el nombre de red del equipo. Es como el apodo del PC en la red local.';
+    p('PC-LAB-03 / ttl0-lab', 'Nombre del equipo. Se usa en redes Windows (NetBIOS/mDNS) para identificar el equipo sin necesitar su IP.');
+    tip = 'El hostname se configura en propiedades del sistema (Windows) o en /etc/hostname (Linux). En Cisco se configura con: hostname NombreRouter';
+  } else if (c.startsWith('getmac') || c.includes('show interfaces')) {
+    statusType = 'info'; statusLabel = 'DIRECCIÓN MAC';
+    summary = 'Muestra la dirección MAC (Media Access Control) del adaptador de red. Es la identidad física única del hardware de red.';
+    p('Dirección física / Hardware Addr', 'La MAC: 6 pares hexadecimales (48 bits). Los primeros 3 (OUI) identifican al fabricante. Ej: Intel, Cisco, Apple.');
+    p('\\\\Device\\\\Tcpip_...', 'En Windows, el nombre interno del adaptador de red a nivel del kernel.');
+    tip = 'La MAC no viaja más allá de tu router (es solo capa 2, LAN). Cada vez que un paquete pasa por un router, la MAC origen/destino cambia pero la IP permanece igual.';
+  } else if (c.startsWith('fallo')) {
+    const sc2 = c.split(/\s+/)[1] || '';
+    statusType = 'info'; statusLabel = 'ESCENARIO CAMBIADO';
+    const scDesc = { ok: 'Red normal: todo funciona.', dhcp: 'Sin DHCP: el PC tiene IP APIPA (169.254.x.x), sin gateway, sin Internet.', gw: 'Sin Internet: hay IP y LAN pero el gateway no tiene salida.', dns: 'Falla DNS: hay IP y gateway pero el servidor DNS no responde.' };
+    summary = `Se activó el escenario de falla: ${scDesc[sc2] || sc2}. Ahora puedes probar cómo se comportan los comandos en esta situación.`;
+    p('Escenario de falla', 'Simula un fallo de red específico para practicar diagnóstico. Los comandos mostrarán los mensajes de error reales que verías.');
+    tip = 'Practica: 1) fallo dhcp → ipconfig → ves APIPA. 2) fallo gw → ping 8.8.8.8 → timeout. 3) fallo dns → nslookup google.com → timeout. 4) fallo ok → vuelve a normal.';
+  } else {
+    statusType = 'info'; statusLabel = 'COMANDO';
+    summary = `Ejecutaste: "${cmd}". Este comando es parte del diagnóstico de redes. Escenario activo: ${scLabel}.`;
+    p(cmd, 'Comando de diagnóstico de red ejecutado en la terminal simulada.');
+    tip = 'Escribe "help" para ver todos los comandos disponibles. Escribe "fallo dhcp", "fallo gw", "fallo dns" o "fallo ok" para simular distintos escenarios de red.';
+  }
+
+  return { cmd, osLabel, statusType, statusLabel, summary, parts, tip };
+}
+
+function renderExplanation(data) {
+  let html = '';
+  // Sección: ¿Qué pasó?
+  html += `<div><div class="exp-sec-title">📋 ¿Qué pasó?</div><div class="exp-box accent">${esc(data.summary)}</div></div>`;
+  // Sección: Partes de la salida
+  if (data.parts && data.parts.length) {
+    html += `<div><div class="exp-sec-title">🔍 Partes de la salida</div><div class="exp-part-list">${data.parts.map(p => `<div class="exp-part-item"><div class="exp-part-token">${esc(p.token)}</div><p class="exp-part-desc">${esc(p.desc)}</p></div>`).join('')}</div></div>`;
+  }
+  // Sección: Tip
+  if (data.tip) {
+    html += `<div class="exp-tip">💡 <span>${esc(data.tip)}</span></div>`;
+  }
+  return html;
+}
+
+function openExplanation() {
+  if (!lastCmd) return toast('Ejecuta un comando primero para ver la explicación');
+  const data = buildExplanation(lastCmd.cmd, lastCmd.os, lastCmd.sc);
+  currentExpData = data;
+  const badge = $('exp-status-badge');
+  if (badge) { badge.textContent = data.statusLabel; badge.className = 'exp-badge ' + data.statusType; }
+  if ($('exp-os-badge')) $('exp-os-badge').textContent = data.osLabel;
+  if ($('exp-cmd-text')) $('exp-cmd-text').textContent = data.cmd;
+  if ($('exp-body')) $('exp-body').innerHTML = renderExplanation(data);
+  $('exp-modal').hidden = false;
+  if ($('exp-btn')) $('exp-btn').classList.remove('pulse');
+  // Mostrar botón broadcast solo si es admin
+  const bb = $('btn-broadcast-exp');
+  if (bb) bb.hidden = !ADM;
+}
+
+function closeExplanation() {
+  $('exp-modal').hidden = true;
+}
+
+function broadcastExplanation() {
+  if (!ADM || !currentExpData) return;
+  const p = encodeURIComponent(JSON.stringify(currentExpData));
+  fetch(API + '?a=explain&k=' + encodeURIComponent(PIN) + '&sid=' + SID + '&p=' + p)
+    .then(r => r.json())
+    .then(d => { if (d.ok) toast('💡 Explicación proyectada a todos los alumnos'); })
+    .catch(() => toast('Error al proyectar explicación'));
 }
 
 const setP = () => { $('pr').textContent = pr(); };
@@ -719,6 +974,23 @@ function initSSE() {
         if (d && d.count && $('lan-users-badge')) $('lan-users-badge').textContent = `${d.count} dispositivos conectados`;
       } catch (err) {}
     });
+    // Listener para Modo Explicación (alumnos reciben la explicación del admin)
+    sseSource.addEventListener('explain', e => {
+      try {
+        const data = JSON.parse(e.data);
+        if (data) {
+          if ($('exp-status-badge')) { $('exp-status-badge').textContent = data.statusLabel; $('exp-status-badge').className = 'exp-badge ' + data.statusType; }
+          if ($('exp-os-badge')) $('exp-os-badge').textContent = data.osLabel || '';
+          if ($('exp-cmd-text')) $('exp-cmd-text').textContent = data.cmd || '';
+          if ($('exp-body')) $('exp-body').innerHTML = renderExplanation(data);
+          $('exp-modal').hidden = false;
+          // Alumnos no tienen botón de broadcast
+          const bb = $('btn-broadcast-exp');
+          if (bb) bb.hidden = !ADM;
+          if (!ADM) toast('💡 El profe proyectó una explicación');
+        }
+      } catch (err) {}
+    });
   } catch (err) {}
 }
 
@@ -728,10 +1000,15 @@ function openLanModal() {
     const list = d.ips || [];
     const nonLocal = list.find(i => i.address !== '127.0.0.1' && !i.address.startsWith('172.17.')) || list[0] || { address: window.location.hostname };
     const portStr = d.port && d.port !== 80 ? `:${d.port}` : '';
-    $('lan-url-display').textContent = `http://${nonLocal.address}${portStr}`;
+    const url = `http://${nonLocal.address}${portStr}`;
+    $('lan-url-display').textContent = url;
     if ($('lan-users-badge')) $('lan-users-badge').textContent = `${d.users || 0} dispositivos conectados`;
+    // Generar QR
+    renderQR(url);
   }).catch(() => {
-    $('lan-url-display').textContent = window.location.origin;
+    const url = window.location.origin;
+    $('lan-url-display').textContent = url;
+    renderQR(url);
   });
 }
 function closeLanModal() {
@@ -910,5 +1187,85 @@ if (brandEl) {
   };
 }
 boot();
+// ========== QR CODE (pure JS, sin dependencias externas) ==========
+// Generador QR mínimo para URLs — basado en el algoritmo QR de ISO 18004
+// Implementación compacta inline (no requiere librerías externas)
+(function(G){
+// Tabla de Galois GF(256) para código Reed-Solomon
+var exp=new Uint8Array(512),log=new Uint8Array(256);
+(function(){var x=1;for(var i=0;i<255;i++){exp[i]=x;log[x]=i;x<<=1;if(x>255)x^=0x11d}for(var i=255;i<512;i++)exp[i]=exp[i-255]})();
+function gfMul(a,b){return(a&&b)?exp[(log[a]+log[b])%255]:0}
+function gfPoly(gen,degree){var p=[1];for(var i=0;i<degree;i++){var q=[1,exp[i]];var r=new Array(p.length+q.length-1).fill(0);for(var j=0;j<p.length;j++)for(var k=0;k<q.length;k++)r[j+k]^=gfMul(p[j],q[k]);p=r}return p}
+// Tabla de capacidad para modo byte, corrección M: versión→[módulos,bloques,dataBytes,ecBytes]
+var CAP=[[21,1,16,10],[25,1,28,16],[29,1,44,26],[33,2,64,36],[37,2,86,46],[41,2,108,60],[45,4,124,66],[49,4,154,86],[53,4,182,100],[57,4,216,122]];
+function getVer(n){for(var i=0;i<CAP.length;i++)if(n<=CAP[i][2])return i;return 9}
+function mkMatrix(sz){var m=[];for(var i=0;i<sz;i++){m.push(new Uint8Array(sz))}return m}
+function setFinder(m,r,c){for(var i=0;i<7;i++)for(var j=0;j<7;j++){var v=(i===0||i===6||j===0||j===6||i>=2&&i<=4&&j>=2&&j<=4)?1:0;if(r+i<m.length&&c+j<m.length)m[r+i][c+j]=v?3:2}}
+function setAlign(m,r,c){for(var i=-2;i<=2;i++)for(var j=-2;j<=2;j++){var v=(Math.abs(i)===2||Math.abs(j)===2||i===0&&j===0)?1:0;m[r+i][c+j]=v?3:2}}
+function setTiming(m,sz){for(var i=8;i<sz-8;i++){m[6][i]=m[i][6]=(i%2===0)?3:2}}
+function isFunc(m,r,c){return m[r][c]>=2}
+var ALIGN=[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50]];
+function buildBase(ver){var sz=CAP[ver][0],m=mkMatrix(sz);
+setFinder(m,0,0);setFinder(m,sz-7,0);setFinder(m,0,sz-7);
+// Separators
+for(var i=0;i<8;i++){if(m[7][i]<2)m[7][i]=2;if(m[i][7]<2)m[i][7]=2;if(m[sz-8][i]<2)m[sz-8][i]=2;if(m[i][sz-8]<2)m[i][sz-8]=2;if(m[7][sz-8+i]<2)m[7][sz-8+i]=2;if(m[i][sz-7+i]<2&&sz-7+i<sz)m[i][sz-7+i]=2;}
+setTiming(m,sz);
+// Dark module
+m[sz-8][8]=3;
+// Format placeholder
+for(var i=0;i<6;i++){if(m[8][i]<2)m[8][i]=2;if(m[i][8]<2)m[i][8]=2;}
+m[8][7]=2;m[8][8]=2;m[7][8]=2;
+for(var i=sz-7;i<sz;i++){if(m[8][i]<2)m[8][i]=2;}
+for(var i=sz-8;i<sz-7;i++){if(m[i][8]<2)m[i][8]=2;}
+// Alignment
+var ap=ALIGN[ver];for(var a=0;a<ap.length;a++)for(var b=0;b<ap.length;b++){var r=ap[a],c=ap[b];if(!isFunc(m,r,c))setAlign(m,r,c);}
+return m}
+function encode(url){var data=[];for(var i=0;i<url.length;i++)data.push(url.charCodeAt(i));
+var ver=getVer(data.length);var C=CAP[ver];
+var bits=[];
+function addBits(v,n){for(var i=n-1;i>=0;i--)bits.push((v>>i)&1)}
+addBits(0x4,4);addBits(data.length,8);
+for(var i=0;i<data.length;i++)addBits(data[i],8);
+addBits(0,Math.min(4,C[2]*8-bits.length));
+while(bits.length%8)bits.push(0);
+var bytes=[];for(var i=0;i<bits.length;i+=8){var b=0;for(var j=0;j<8;j++)b=(b<<1)|bits[i+j];bytes.push(b);}
+var pad=[0xEC,0x11];while(bytes.length<C[2])bytes.push(pad[(bytes.length-data.length-2)%2>-1?((bytes.length-(data.length+Math.ceil((data.length+2)*8/8>bits.length/8?0:0)))%2):0]);
+// Pad simpler
+while(bytes.length<C[2]){bytes.push(bytes.length%2===0?0xEC:0x11);}
+// RS
+var gen=gfPoly(null,C[3]);gen=gfPoly(0,C[3]);
+var msg=bytes.slice();while(msg.length<C[2]+C[3])msg.push(0);
+for(var i=0;i<C[2];i++){var coef=msg[i];if(coef===0)continue;for(var j=0;j<gen.length;j++)msg[i+j]^=gfMul(gen[j],coef);}
+var codewords=bytes.concat(msg.slice(C[2],C[2]+C[3]));
+return{ver:ver,sz:C[0],cw:codewords}}
+function place(m,cw){var sz=m.length,idx=0,bits=[];
+for(var i=0;i<cw.length;i++)for(var j=7;j>=0;j--)bits.push((cw[i]>>j)&1);
+var up=true;for(var col=sz-1;col>=0;col-=2){if(col===6)col--;
+for(var row=0;row<sz;row++){var r=up?sz-1-row:row;
+for(var d=0;d<2;d++){var c=col-d;if(c<0||c>=sz)continue;if(isFunc(m,r,c))continue;if(idx<bits.length)m[r][c]=bits[idx++]?1:0;else m[r][c]=0;}}
+up=!up;}}
+// Mask 0: (i+j)%2===0
+function applyMask(m){var sz=m.length;for(var r=0;r<sz;r++)for(var c=0;c<sz;c++)if(!isFunc(m,r,c)&&(r+c)%2===0)m[r][c]^=1;}
+// Format info mask=0 EC=M: 101010000010010 XOR 101010101010101 = 000000101000111 → 0x14EF reversed
+function setFormat(m){var sz=m.length;var fmt=[1,0,1,0,1,0,0,0,0,0,1,0,0,1,0]; // M, mask0
+for(var i=0;i<6;i++)m[8][i]=fmt[i]?3:2;m[8][7]=fmt[6]?3:2;m[8][8]=fmt[7]?3:2;m[7][8]=fmt[8]?3:2;
+for(var i=0;i<6;i++)m[5-i<0?0:5-i][8]=fmt[9+i]<0?2:(fmt[9+i]?3:2);
+for(var i=0;i<8;i++)m[sz-1-i][8]=fmt[i]?3:2;
+for(var i=8;i<sz;i++)m[8][i]=fmt[sz-1-i>=0&&sz-1-i<fmt.length?sz-1-i:0]?3:2;}
+function toSVG(m,cell){var sz=m.length,px=cell,tot=sz*px+2*px;
+var s='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+tot+' '+tot+'" width="'+tot+'" height="'+tot+'">';
+s+='<rect width="'+tot+'" height="'+tot+'" fill="white"/>';
+for(var r=0;r<sz;r++)for(var c=0;c<sz;c++){var v=m[r][c];if(v===1||v===3)s+='<rect x="'+(c*px+px)+'" y="'+(r*px+px)+'" width="'+px+'" height="'+px+'" fill="black"/>';}
+return s+'</svg>';}
+
+G.renderQR=function(url){
+var qr=$('lan-qr');if(!qr)return;
+try{
+var enc=encode(url);var m=buildBase(enc.ver);
+place(m,enc.cw);applyMask(m);setFormat(m);
+qr.innerHTML=toSVG(m,5);
+}catch(e){qr.innerHTML='<span style="color:#666;font-size:12px">QR no disponible</span>';}
+};
+})(window);
 </script>
 </body></html>
