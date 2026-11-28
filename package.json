@@ -1,0 +1,18 @@
+{
+  "name": "ttl0-quiz",
+  "version": "1.0.0",
+  "description": "TTL=0 · Diagnóstico de redes (Servidor Local)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "redes",
+    "quiz",
+    "offline",
+    "proyector"
+  ],
+  "author": "Jesús Giraldo",
+  "license": "MIT"
+}

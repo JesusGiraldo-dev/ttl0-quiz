@@ -168,6 +168,13 @@ body:not(.ad) .ao{display:none!important}
 .hub-form input{width:100%;padding:11px 14px;font-size:15px;border-radius:10px;border:1px solid var(--ln);background:#050910;color:var(--fg);text-align:center;outline:none}
 .hub-form input:focus{border-color:var(--a);box-shadow:0 0 0 2px color-mix(in srgb,var(--a) 25%,transparent)}
 .hub-form p{font-size:0.85em;color:var(--mu);margin:0 0 10px;line-height:1.4}
+.lan-btn{display:inline-flex;align-items:center;gap:6px;font:700 11px ui-monospace,Consolas,monospace;letter-spacing:.05em;padding:3px 10px;border-radius:99px;border:1px solid #3b82f666;background:#1e3a5f44;color:#60a5fa;cursor:pointer}
+.lan-btn:hover{background:#1e3a5f88;filter:brightness(1.15)}
+.wifi-dot{color:#4ade80;animation:bl 1.8s infinite}
+#lan-modal{position:fixed;inset:0;z-index:110;background:#070b12f0;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;padding:16px}
+#lan-modal[hidden]{display:none!important}
+.lan-card{background:var(--pn);border:1px solid var(--ln);border-radius:20px;max-width:440px;width:100%;padding:28px 24px;text-align:center;box-shadow:0 20px 60px #000000aa;position:relative}
+.lan-url-box{background:#050910;border:1px dashed var(--a);padding:14px;border-radius:12px;margin:14px 0;font:800 1.25em ui-monospace,Consolas,monospace;color:var(--g);word-break:break-all;user-select:all}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
 <symbol id="i-win" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M3 5.5l8-1.1v7H3zM12 4.3l9-1.3v8.4h-9zM3 12.6h8v7l-8-1.1zM12 12.6h9V21l-9-1.3z"/></symbol>
@@ -187,7 +194,7 @@ body:not(.ad) .ao{display:none!important}
 <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M7 4l13 8-13 8z"/></symbol>
 <symbol id="i-fs" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol><symbol id="i-arp" viewBox="0 0 24 24"><path d="M4 8h14M14 4l4 4-4 4M20 16H6M10 12l-4 4 4 4"/></symbol><symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="2"/><path d="M7 7V4M12 7V4M17 7V4M7 17v3M12 17v3M17 17v3"/></symbol><symbol id="i-port" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="8" rx="1"/><path d="M7 8v4M11 8v4M15 8v4"/></symbol><symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol></defs></svg>
 <div id="app">
-<div id="top"><div class="brand">TTL=<b id="ttl">7</b></div><span id="adb"></span><div id="dots"></div><div id="ctl"><button id="pb" onclick="go(-1)">◀</button><button id="nb" onclick="go(1)">▶</button></div><button id="fb" onclick="fs()" title="Pantalla completa"><svg class="ico"><use href="#i-fs"/></svg></button></div>
+<div id="top"><div class="brand">TTL=<b id="ttl">7</b></div><span id="adb"></span><button id="lan-btn" class="lan-btn" onclick="openLanModal()" title="Unirse desde celular"><span class="wifi-dot">●</span> <span>Celulares</span></button><div id="dots"></div><div id="ctl"><button id="pb" onclick="go(-1)">◀</button><button id="nb" onclick="go(1)">▶</button></div><button id="fb" onclick="fs()" title="Pantalla completa"><svg class="ico"><use href="#i-fs"/></svg></button></div>
 <div id="sv" class="v"></div><div id="qv" class="v" hidden></div><div id="rv" class="v" hidden></div>
 </div>
 <div id="tmh"><div id="tm"><div id="chr"><i></i><i></i><i></i><span id="ct">&nbsp;ttl0@redes · terminal simulada</span></div><div id="otabs"></div><div id="o"></div><div id="ch"></div><div id="ipt"><span id="pr"></span><input id="in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" placeholder="help"></div></div></div>
@@ -215,8 +222,28 @@ body:not(.ad) .ao{display:none!important}
     </div>
   </div>
 </div>
+<div id="lan-modal" hidden>
+  <div class="lan-card">
+    <button class="hub-close" onclick="closeLanModal()" title="Cerrar">&times;</button>
+    <div style="font-size:38px;margin-bottom:6px">📡</div>
+    <h2 style="margin:0 0 4px;font-size:1.35em">Unirse a la clase</h2>
+    <p style="font-size:0.9em;color:var(--mu);margin:0 0 14px">Conéctate al Wi-Fi o Hotspot de esta sala y abre este enlace en tu navegador:</p>
+    <div class="lan-url-box" id="lan-url-display">http://localhost:3000</div>
+    <p style="font-size:0.85em;color:var(--mu);margin:0 0 14px">Funciona en cualquier celular o laptop con Chrome, Safari, etc.</p>
+    <div id="lan-users-badge" style="font:700 12px ui-monospace,monospace;color:var(--a);margin-bottom:14px">0 dispositivos conectados</div>
+    <button class="cta" style="width:100%" onclick="closeLanModal()">Listo</button>
+  </div>
+</div>
 <script>
-const API = 'https://script.google.com/macros/s/AKfycbzLz23QG9w5eNHbrk_VwLlWevd6fNQf4FhEy5b4DWpm8DtXswXHoBuqxFhb2h9IBcc/exec', T = 20000, SH = ['▲', '◆', '●', '■'];
+const isLocal = window.location.protocol.startsWith('http') && (
+  window.location.hostname === 'localhost' ||
+  window.location.hostname === '127.0.0.1' ||
+  window.location.hostname.startsWith('192.168.') ||
+  window.location.hostname.startsWith('10.') ||
+  window.location.hostname.startsWith('172.') ||
+  window.location.port !== ''
+);
+const API = isLocal ? '/api' : 'https://script.google.com/macros/s/AKfycbzLz23QG9w5eNHbrk_VwLlWevd6fNQf4FhEy5b4DWpm8DtXswXHoBuqxFhb2h9IBcc/exec', T = 20000, SH = ['▲', '◆', '●', '■'];
 const $ = id => document.getElementById(id), em = t => t.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>'), esc = t => String(t).replace(/[&<>"']/g, c => '&#' + c.charCodeAt(0) + ';');
 const ic = (n, c = '') => `<svg class="ico ${c}"><use href="#i-${n}"/></svg>`, OSN = [['win', 'Windows'], ['linux', 'Linux'], ['cisco', 'Cisco IOS']];
 const dg = (n, m) => {
@@ -641,7 +668,67 @@ addEventListener('pagehide', () => {
     fetch(API + '?a=rel&k=' + encodeURIComponent(PIN) + '&sid=' + SID + '&s=' + SID, { mode: 'no-cors', keepalive: true }).catch(() => {});
   }
 });
+let sseSource = null;
+function initSSE() {
+  if (!isLocal || typeof EventSource === 'undefined') return;
+  try {
+    sseSource = new EventSource('/api/events');
+    sseSource.addEventListener('slide', e => {
+      try {
+        const d = JSON.parse(e.data);
+        if (d && d.v) {
+          if (!CTRL) { CTRL = 1; setMode(); }
+          if (!ADM) { $('adb').className = 'lv'; $('adb').textContent = 'LOCAL'; }
+          if (!ADM || !lastV) apply(d.v);
+        }
+      } catch (err) {}
+    });
+    sseSource.addEventListener('init', e => {
+      try {
+        const d = JSON.parse(e.data);
+        if (d && d.v) {
+          if (!CTRL) { CTRL = 1; setMode(); }
+          if (!ADM) { $('adb').className = 'lv'; $('adb').textContent = 'LOCAL'; }
+          if (!ADM || !lastV) apply(d.v);
+        }
+        if (d && d.users && $('lan-users-badge')) $('lan-users-badge').textContent = `${d.users} dispositivos conectados`;
+      } catch (err) {}
+    });
+    sseSource.addEventListener('ranking_update', () => {
+      if (!$('rv').hidden) load();
+    });
+    sseSource.addEventListener('users', e => {
+      try {
+        const d = JSON.parse(e.data);
+        if (d && d.count && $('lan-users-badge')) $('lan-users-badge').textContent = `${d.count} dispositivos conectados`;
+      } catch (err) {}
+    });
+  } catch (err) {}
+}
+
+function openLanModal() {
+  $('lan-modal').hidden = false;
+  if (!isLocal) {
+    $('lan-url-display').textContent = window.location.href.split('#')[0];
+    return;
+  }
+  fetch('/api/info').then(r => r.json()).then(d => {
+    const list = d.ips || [];
+    const nonLocal = list.find(i => i.address !== '127.0.0.1' && !i.address.startsWith('172.17.')) || list[0] || { address: window.location.hostname };
+    const portStr = d.port && d.port !== 80 ? `:${d.port}` : '';
+    $('lan-url-display').textContent = `http://${nonLocal.address}${portStr}`;
+    if ($('lan-users-badge')) $('lan-users-badge').textContent = `${d.users || 0} dispositivos conectados`;
+  }).catch(() => {
+    $('lan-url-display').textContent = window.location.origin;
+  });
+}
+function closeLanModal() {
+  $('lan-modal').hidden = true;
+}
+
 async function boot() {
+  if (!isLocal && $('lan-btn')) $('lan-btn').hidden = true;
+  if (isLocal) initSSE();
   if (location.hash === '#salir') {
     localStorage.removeItem('adm');
     history.replaceState(null, '', '#s0');
@@ -652,7 +739,7 @@ async function boot() {
     await adminLogin(false);
   }
   setMode(); route(); poll();
-  if (!ADM) pt = setInterval(poll, 3000);
+  if (!ADM && !isLocal) pt = setInterval(poll, 3000);
   if (!ADM && !sessionStorage.hubDone && location.hash !== '#admin') {
     openHub('user');
   }
