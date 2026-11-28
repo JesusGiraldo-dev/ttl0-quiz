@@ -693,8 +693,8 @@ function initSSE() {
       try {
         const d = JSON.parse(e.data);
         if (d && d.v) {
-          if (!CTRL) { CTRL = 1; setMode(); }
-          if (!ADM) { $('adb').className = 'lv'; $('adb').textContent = 'LOCAL'; }
+          if (!CTRL) CTRL = 1;
+          setMode();
           if (!ADM || !lastV) apply(d.v);
         }
       } catch (err) {}
@@ -703,8 +703,8 @@ function initSSE() {
       try {
         const d = JSON.parse(e.data);
         if (d && d.v) {
-          if (!CTRL) { CTRL = 1; setMode(); }
-          if (!ADM) { $('adb').className = 'lv'; $('adb').textContent = 'LOCAL'; }
+          if (!CTRL) CTRL = 1;
+          setMode();
           if (!ADM || !lastV) apply(d.v);
         }
         if (d && d.users && $('lan-users-badge')) $('lan-users-badge').textContent = `${d.users} dispositivos conectados`;
